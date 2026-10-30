@@ -1,0 +1,3 @@
+Built-in imagegen edit of the user's eight-pose opponent arm sheet.
+
+Remove the black background to transparent alpha. Preserve all eight blue glove, muscular arm and mint sleeve sprites, their colors, pixel edges and poses. Keep four columns by two rows in the same order, each sprite in its own cell with transparent gutters. No extra sprites, text, new design, shadow or backdrop. These are arms for the boxer facing the viewer: guard, extending, foreshortened contact and returning, for each side.

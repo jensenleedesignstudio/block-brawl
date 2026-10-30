@@ -1,0 +1,3 @@
+Built-in imagegen / background-extraction edit of the user's first-person blocking arms.
+
+Remove only the black background to genuine transparent alpha. Preserve both arms and gloves: the raised left glove, lower right glove angled inward, bright blue gloves, cream/cyan highlights, copper forearms and mint sleeves. Preserve pixel detail, proportions, wide landscape composition and arm positions. Sleeves enter from the bottom corners. Do not redesign, rearrange, mirror or add objects, text, ground, shadow or borders. Output a transparent blocking overlay with the same framing as the reference.

@@ -1,0 +1,400 @@
+/* ============================================================
+   FULLSCREEN PLAY STYLES
+   ============================================================ */
+
+/* Full-bleed arena with independently sized overlays: no enlarged HUD. */
+.app.fight-view {
+    --camera-width: clamp(180px, 20vw, 300px);
+    --timer-width: 92px;
+    --hp-width: min(300px, calc(50vw - 130px));
+    padding: 0;
+    width: 100vw;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+.app.fight-view > main,
+.app.fight-view .main-layout,
+.app.fight-view .stage-column {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: block;
+    max-width: none;
+}
+
+.app.fight-view .arena-shell {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+    background: #091523;
+    overflow: hidden;
+}
+
+.app.fight-view .arena-stage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+}
+
+.app.fight-view .arena-stage > canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.app.fight-view .arena-top,
+.app.fight-view .arena-bottom,
+.app.fight-view .stage-caption,
+.app.fight-view .fight-ticket,
+.app.fight-view .fight-telemetry {
+    display: none;
+}
+
+.app.fight-view .setup-panel {
+    position: static;
+    border: 0;
+    padding: 0;
+    box-shadow: none;
+    background: none;
+}
+
+.app.fight-view .setup-panel:before,
+.app.fight-view .setup-panel:after {
+    display: none;
+}
+
+.app.fight-view .setup-panel > .camera-panel {
+    position: fixed;
+    left: 14px;
+    right: auto;
+    top: 14px;
+    width: var(--camera-width);
+    max-width: none;
+    max-height: none;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    z-index: 5;
+    border: 2px solid #c1d4c1;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px #0008;
+    background: #152a2d;
+}
+
+.app.fight-view .camera-panel .camera-feed {
+    width: 100%;
+    aspect-ratio: 4/3;
+}
+
+.app.fight-view .camera-panel .camera-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 7px 9px;
+    background: #101e29db;
+    font-size: 10px;
+    pointer-events: none;
+}
+
+.app.fight-view:not(.game-shell) .camera-panel > :not(.camera-feed):not(.camera-title) {
+    display: none;
+}
+
+.app.fight-view .camera-panel .camera-error {
+    z-index: 3;
+    font-size: 11px;
+    padding: 12px;
+}
+
+.app.fight-view .fight-hud {
+    position: absolute;
+    inset: 18px 18px auto;
+    display: block;
+    height: 100px;
+    z-index: 6;
+    pointer-events: none;
+}
+
+.app.fight-view .fight-hud > .fighter-hud {
+    position: absolute;
+    top: 0;
+    width: var(--hp-width);
+    padding: 0;
+    filter: drop-shadow(1px 2px #06101c);
+    pointer-events: auto;
+}
+
+.app.fight-view .fight-hud > .self-hud {
+    left: auto;
+    right: calc(50% + var(--timer-width) / 2);
+}
+
+.app.fight-view .fight-hud > .rival-hud {
+    right: auto;
+    left: calc(50% + var(--timer-width) / 2);
+    padding: 0;
+}
+
+.app.fight-view .self-hud .hud-portrait {
+    left: -58px;
+    right: auto;
+}
+
+.app.fight-view .rival-hud .hud-portrait {
+    right: -58px;
+    left: auto;
+}
+
+.app.fight-view.has-motion-camera {
+    --hp-width: min(300px, calc(50vw - var(--camera-width) - 74px));
+}
+
+.app.fight-view.has-motion-camera .self-hud .hud-portrait {
+    display: none;
+}
+
+.app.fight-view .fighter-hud .hud-portrait {
+    width: 48px;
+    height: 62px;
+    border-width: 5px;
+}
+
+.app.fight-view .fighter-hud > div:first-child {
+    min-height: 20px;
+    padding: 2px 4px;
+    gap: 4px;
+}
+
+.app.fight-view .fighter-hud b {
+    font-size: 7px;
+    max-width: 50%;
+}
+
+.app.fight-view .fighter-hud > div > span:last-child {
+    font-size: 11px;
+}
+
+.app.fight-view .fighter-hud > div > span:last-child small {
+    font-size: 6px;
+}
+
+.app.fight-view .health-track {
+    height: 19px;
+    border-width: 2px;
+    padding: 2px;
+    margin-top: 4px;
+}
+
+.app.fight-view .fighter-hud .guard-meter,
+.app.fight-view .fighter-hud .stamina-meter {
+    font-size: 5px;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.app.fight-view .fighter-hud .guard-meter > i,
+.app.fight-view .fighter-hud .stamina-meter > i {
+    height: 6px;
+    padding: 0;
+    border-width: 1px;
+}
+
+.app.fight-view .fighter-hud > small {
+    font-size: 5px;
+    margin-top: 5px;
+}
+
+.timer {
+    cursor: pointer;
+}
+
+.timer:disabled {
+    opacity: 1;
+    cursor: default;
+}
+
+.app.fight-view .fight-hud > .timer {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: var(--timer-width);
+    min-height: 66px;
+    padding: 5px;
+    border-width: 3px;
+    pointer-events: auto;
+    touch-action: manipulation;
+}
+
+.app.fight-view .timer strong {
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.app.fight-view .timer small {
+    font-size: 5px;
+}
+
+.app.fight-view .timer > span {
+    font-size: 5px;
+    letter-spacing: 0;
+}
+
+.app.fight-view .timer:hover {
+    filter: brightness(1.2);
+}
+
+.app.fight-view .timer:active {
+    transform: translateX(-50%) translateY(1px);
+}
+
+.app.fight-view .ultimate-controls {
+    bottom: max(18px, env(safe-area-inset-bottom));
+    z-index: 4;
+}
+
+.fight-menu {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(390px, calc(100vw - 32px));
+    padding: 0;
+    border: 3px solid #b3c6b0;
+    background: #1b302b;
+    color: #eee4ca;
+    box-shadow: 8px 8px #071713;
+    max-height: calc(100dvh - 32px);
+    overflow: auto;
+}
+
+.fight-menu::backdrop {
+    background: #071522b8;
+    backdrop-filter: blur(3px);
+}
+
+.fight-menu > section {
+    padding: 28px;
+}
+
+.fight-menu h2 {
+    font: 20px/1.6 var(--pixel);
+    margin: 12px 0;
+}
+
+.fight-menu p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #bed0be;
+}
+
+.fight-menu button {
+    margin-top: 16px;
+    min-height: 48px;
+    justify-content: center;
+}
+
+.fight-menu small {
+    display: block;
+    margin-top: 20px;
+    font-size: 11px;
+    color: #a6bca9;
+}
+
+@media (max-width: 1100px) {
+    .app.fight-view {
+        --camera-width: clamp(170px, 23vw, 250px);
+    }
+    .app.fight-view.has-motion-camera {
+        --hp-width: min(300px, calc(50vw - 130px));
+    }
+    .app.fight-view.has-motion-camera .fight-hud {
+        top: calc(var(--camera-width) * 0.75 + 30px);
+    }
+}
+
+@media (max-width: 600px) {
+    .app.fight-view {
+        --camera-width: clamp(132px, 34vw, 180px);
+        --timer-width: 68px;
+    }
+    .app.fight-view .setup-panel > .camera-panel {
+        left: 8px;
+        top: 8px;
+    }
+    .app.fight-view .fight-hud {
+        inset: 8px;
+        height: 90px;
+    }
+    .app.fight-view,
+    .app.fight-view.has-motion-camera {
+        --hp-width: calc(50vw - 42px);
+    }
+    .app.fight-view .rival-hud .hud-portrait,
+    .app.fight-view .self-hud .hud-portrait {
+        display: none;
+    }
+    .app.fight-view.has-motion-camera .fight-hud {
+        top: calc(var(--camera-width) * 0.75 + 24px);
+    }
+    .app.fight-view .fight-hud > .timer {
+        width: 68px;
+        min-height: 54px;
+        padding: 4px;
+        border-width: 2px;
+    }
+    .app.fight-view .timer strong {
+        font-size: 12px;
+    }
+    .app.fight-view .timer small,
+    .app.fight-view .timer > span {
+        font-size: 4px;
+    }
+    .app.fight-view .fighter-hud b {
+        font-size: 5px;
+    }
+    .app.fight-view .fighter-hud > div > span:last-child {
+        font-size: 9px;
+    }
+    .app.fight-view .fighter-hud > div > span:last-child small {
+        display: none;
+    }
+    .app.fight-view .health-track {
+        height: 15px;
+    }
+    .app.fight-view .fighter-hud .guard-meter,
+    .app.fight-view .fighter-hud .stamina-meter {
+        font-size: 4px;
+    }
+    .app.fight-view .camera-panel .camera-title {
+        font-size: 8px;
+        padding: 4px 6px;
+    }
+    .fight-menu > section {
+        padding: 22px;
+    }
+}
+
+@media (max-height: 500px) and (min-width: 601px) {
+    .app.fight-view {
+        --camera-width: 170px;
+    }
+    .app.fight-view .setup-panel > .camera-panel {
+        top: 10px;
+    }
+    .app.fight-view:not(.has-motion-camera) .fight-hud {
+        top: 10px;
+    }
+}

@@ -1,0 +1,904 @@
+/* Arena-first shell. All tools overlay the same continuously mounted game. */
+.app.game-shell {
+    --shell-top: 72px;
+    --corner-width: 264px;
+    --hud-width: min(860px, calc(100vw - 48px));
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #101d18;
+}
+.app.game-shell.corner-open {
+    --hud-width: min(860px, calc(100vw - var(--corner-width) * 2 - 64px));
+}
+.app.game-shell > main,
+.app.game-shell .main-layout,
+.app.game-shell .stage-column {
+    display: block;
+    position: static;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+}
+.app.game-shell .arcade-welcome,
+.app.game-shell > footer,
+.app.game-shell .stage-caption,
+.app.game-shell .arena-top,
+.app.game-shell .arena-bottom {
+    display: none;
+}
+.app.game-shell .arena-shell {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    overflow: hidden;
+}
+.app.game-shell .arena-stage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+}
+.app.game-shell .arena-stage > canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+/* The toolbar remains accessible in both windowed and browser fullscreen play. */
+.app.game-shell > .site-header {
+    display: flex;
+    position: absolute;
+    inset: 12px 16px auto;
+    z-index: 20;
+    height: 52px;
+    min-height: 52px;
+    margin: 0;
+    padding: 0 16px;
+    gap: 16px;
+    border: 1px solid #c4a66c66;
+    border-radius: 9px;
+    background: linear-gradient(110deg, #253c32f5, #14241ff5);
+    box-shadow:
+        0 6px 24px #0005,
+        inset 0 1px #e6cc9320;
+}
+.app.game-shell .brand {
+    flex-shrink: 0;
+}
+.app.game-shell .brand > div {
+    font-size: 18px;
+    letter-spacing: -1px;
+    text-shadow: 0 2px #0005;
+}
+.app.game-shell .brand > div > span {
+    display: none;
+}
+.app.game-shell .cabinet-nav {
+    margin-left: auto;
+    gap: 5px;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.app.game-shell .cabinet-nav > a,
+.app.game-shell .cabinet-nav > button {
+    flex-shrink: 0;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 34px;
+    padding: 8px 10px;
+    font-size: 7px;
+    border-width: 1px;
+}
+.app.game-shell .cabinet-nav .cabinet-audio {
+    min-width: 36px;
+}
+/* Reuse every existing sidebar control in a scrollable floating corner. */
+.app.game-shell .setup-panel {
+    display: block;
+    position: absolute;
+    inset: calc(var(--shell-top) + 38px) 16px auto auto;
+    z-index: 12;
+    width: var(--corner-width);
+    min-width: 0;
+    max-width: calc(100vw - 32px);
+    max-height: min(600px, calc(100dvh - var(--shell-top) - 70px));
+    height: auto;
+    margin: 0;
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #a78e5c #1a2a22;
+    border: 1px solid #bca06a77;
+    border-radius: 8px 0 8px 8px;
+    background: linear-gradient(135deg, #253a30f5, #12251ff5);
+    box-shadow:
+        0 12px 36px #0006,
+        inset 0 1px #e4c58c1c;
+    transition:
+        translate 180ms ease,
+        opacity 180ms ease;
+}
+.app.game-shell .setup-panel:before,
+.app.game-shell .setup-panel:after {
+    display: none;
+}
+.app.game-shell.corner-closed .setup-panel {
+    translate: calc(100% + 24px) 0;
+    opacity: 0;
+    pointer-events: none;
+}
+.app.game-shell .corner-toggle {
+    position: absolute;
+    top: var(--shell-top);
+    left: auto;
+    right: 16px;
+    z-index: 14;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 36px;
+    padding: 0 14px;
+    border: 1px solid #bca06a88;
+    border-radius: 6px 6px 0 0;
+    background: #1b3029f5;
+    color: #e8d5aa;
+    font: 8px var(--pixel);
+    box-shadow: 0 2px 10px #0003;
+}
+.app.game-shell .corner-toggle span {
+    font: 25px/1 var(--ui-font);
+}
+.app.game-shell.corner-closed .corner-toggle {
+    border-radius: 6px;
+}
+.app.game-shell .setup-panel .panel-heading {
+    display: flex;
+}
+.app.game-shell .setup-panel .mode-select,
+.app.game-shell .setup-panel .control-select {
+    display: grid;
+}
+.app.game-shell .setup-panel .segmented {
+    display: flex;
+}
+.app.game-shell .setup-panel .challenger-card {
+    margin-bottom: 12px;
+}
+.app.game-shell .setup-panel .challenger-art {
+    height: 96px;
+    min-height: 0;
+}
+.app.game-shell .setup-panel .challenger-art > .boxer-art {
+    width: 90px;
+}
+.app.game-shell .setup-panel .challenger-name {
+    font-size: 12px;
+    padding: 5px;
+}
+.app.game-shell .setup-panel h2 {
+    font-size: 15px;
+    line-height: 1.6;
+}
+.app.game-shell .setup-panel .mode-illustration {
+    height: 40px;
+}
+.app.game-shell .setup-panel .mode-select > button {
+    min-height: 0;
+}
+.app.game-shell .setup-panel .section-label {
+    margin-top: 10px;
+}
+.app.game-shell .setup-panel .primary {
+    min-height: 40px;
+    font-size: 10px;
+}
+.app.game-shell .setup-panel > .camera-panel {
+    display: block;
+    position: relative;
+    inset: auto;
+    width: 100%;
+    max-height: none;
+    margin: 12px 0 0;
+    padding: 8px;
+    overflow: visible;
+    border: 1px solid #9eaa7966;
+    border-radius: 6px;
+    background: #172a23;
+    box-shadow: none;
+}
+.app.game-shell .camera-panel .camera-title {
+    position: static;
+    padding: 8px 0;
+}
+.app.game-shell .camera-panel .camera-feed {
+    aspect-ratio: 4/3;
+}
+/* Compact scorecards float above the ring, clear of the open corner on desktop. */
+.app.game-shell .fight-hud {
+    display: grid;
+    position: absolute;
+    inset: calc(var(--shell-top) + 10px) auto auto 50%;
+    width: var(--hud-width);
+    transform: translateX(-50%);
+    grid-template-columns: minmax(0, 1fr) 80px minmax(0, 1fr);
+    gap: 12px;
+    max-width: 950px;
+    height: auto;
+    margin: 0;
+    z-index: 6;
+    pointer-events: none;
+}
+.app.game-shell .fight-hud > .fighter-hud {
+    position: relative;
+    inset: auto;
+    width: auto;
+    min-width: 0;
+    padding: 0;
+    pointer-events: auto;
+}
+.app.game-shell .fight-hud .hud-portrait {
+    display: none;
+}
+.app.game-shell .fighter-hud > div:first-child {
+    min-height: 23px;
+    padding: 3px 6px;
+}
+.app.game-shell .fighter-hud b {
+    font-size: 11px;
+    max-width: 48%;
+}
+.app.game-shell .fighter-hud > div > span:last-child {
+    font-size: 13px;
+}
+.app.game-shell .fighter-hud > div > span:last-child small {
+    font-size: 7px;
+}
+.app.game-shell .health-track {
+    height: 13px;
+    margin-top: 3px;
+    padding: 2px;
+    border-width: 1px;
+}
+.app.game-shell .fighter-hud .guard-meter,
+.app.game-shell .fighter-hud .stamina-meter {
+    margin-top: 4px;
+    gap: 5px;
+    font-size: 7px;
+}
+.app.game-shell .fighter-hud .guard-meter > i,
+.app.game-shell .fighter-hud .stamina-meter > i {
+    height: 5px;
+    padding: 0;
+    border-width: 1px;
+}
+.app.game-shell .fighter-hud .guard-meter > i > b,
+.app.game-shell .fighter-hud .stamina-meter > i > b {
+    max-width: none;
+}
+.app.game-shell .fighter-hud .guard-meter > span:last-child,
+.app.game-shell .fighter-hud .stamina-meter > span:last-child {
+    font-size: 7px;
+}
+.app.game-shell .fighter-hud > small {
+    font-size: 5px;
+    margin-top: 5px;
+}
+.app.game-shell .timer {
+    width: 80px;
+    min-height: 76px;
+    padding: 8px 4px;
+    border-width: 1px;
+    pointer-events: auto;
+}
+.app.game-shell .timer strong {
+    font-size: 27px;
+    line-height: 1.4;
+}
+.app.game-shell .timer small,
+.app.game-shell .timer > span {
+    font-size: 5px;
+}
+.app.game-shell .ultimate-controls {
+    bottom: max(18px, env(safe-area-inset-bottom));
+}
+.app.game-shell .arena-preview-label {
+    bottom: 20px;
+    left: auto;
+    right: 20px;
+}
+/* Tool tabs replace the arena view with a floating workspace; the game stays mounted. */
+.app.game-shell .arcade-playbook {
+    display: none;
+}
+.app.game-shell .arcade-playbook[open] {
+    display: block;
+    position: absolute;
+    inset: calc(var(--shell-top) + 12px) 20px 20px;
+    z-index: 16;
+    margin: 0;
+    padding: 16px;
+    overflow: auto;
+    overscroll-behavior: contain;
+    border: 1px solid #c3a36b88;
+    border-radius: 10px;
+    background: linear-gradient(130deg, #24382ffb, #12251ffb);
+    box-shadow: 0 20px 60px #0008;
+}
+.app.game-shell .arcade-playbook > summary {
+    min-height: 40px;
+    padding: 8px 0 16px;
+    border-color: #bca06a44;
+}
+.app.game-shell .arcade-playbook > summary .playbook-plus {
+    transform: rotate(45deg);
+}
+.app.game-shell .tool-navigation {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 16px 0;
+}
+.app.game-shell .tool-navigation button {
+    min-height: 38px;
+    padding: 10px 14px;
+    border: 1px solid #bda06855;
+    border-radius: 5px;
+    background: #1b3028;
+    color: #e5d8b9;
+    font: 8px var(--pixel);
+}
+.app.game-shell .tool-navigation button[aria-pressed="true"] {
+    background: #d6b779;
+    color: #15241c;
+    border-color: #e3c88e;
+}
+.app.game-shell .tool-navigation .close-tools {
+    margin-left: auto;
+}
+.app.game-shell .arcade-playbook > div[hidden] {
+    display: none;
+}
+.app.game-shell .arcade-playbook .detailed-panel {
+    margin: 0;
+    padding: 22px;
+}
+.app.game-shell .standalone-notice {
+    position: absolute;
+    z-index: 15;
+    bottom: 20px;
+    right: 20px;
+    width: min(440px, 90vw);
+}
+@media (max-width: 1000px) {
+    .app.game-shell {
+        --corner-width: 240px;
+    }
+    .app.game-shell > .site-header {
+        padding-inline: 10px;
+        gap: 12px;
+    }
+    .app.game-shell .brand > div {
+        font-size: 13px;
+    }
+    .app.game-shell .cabinet-nav > a,
+    .app.game-shell .cabinet-nav > button {
+        padding-inline: 8px;
+        font-size: 6px;
+    }
+    .app.game-shell .fight-hud {
+        gap: 7px;
+        right: auto;
+        grid-template-columns: minmax(0, 1fr) 66px minmax(0, 1fr);
+    }
+    .app.game-shell .timer {
+        width: 66px;
+    }
+    .app.game-shell .fighter-hud b {
+        font-size: 9px;
+    }
+    .app.game-shell .fighter-hud > div > span:last-child {
+        font-size: 11px;
+    }
+}
+@media (max-width: 760px) {
+    .app.game-shell {
+        --shell-top: 102px;
+        --corner-width: min(264px, calc(100vw - 32px));
+    }
+    .app.game-shell > .site-header {
+        height: 86px;
+        min-height: 86px;
+        inset: 8px 8px auto;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 9px 10px;
+    }
+    .app.game-shell .brand > div {
+        font-size: 15px;
+    }
+    .app.game-shell .cabinet-nav {
+        width: 100%;
+        margin: 0;
+    }
+    .app.game-shell .cabinet-nav > a,
+    .app.game-shell .cabinet-nav > button {
+        min-height: 32px;
+    }
+    .app.game-shell .fight-hud {
+        inset: calc(var(--shell-top) + 8px) auto auto 50%;
+        width: calc(100vw - 24px);
+        margin: 0;
+    }
+    .app.game-shell .setup-panel {
+        top: calc(var(--shell-top) + 136px);
+        right: 12px;
+        left: auto;
+        bottom: auto;
+        max-height: calc(100dvh - var(--shell-top) - 150px);
+    }
+    .app.game-shell .corner-toggle {
+        top: calc(var(--shell-top) + 100px);
+        left: auto;
+        right: 12px;
+    }
+    .app.game-shell .arcade-playbook[open] {
+        inset: calc(var(--shell-top) + 4px) 8px 8px;
+        padding: 12px;
+    }
+    .app.game-shell .arcade-playbook .detailed-panel {
+        padding: 14px;
+    }
+    .app.game-shell .tool-navigation {
+        gap: 5px;
+    }
+    .app.game-shell .tool-navigation button {
+        padding: 9px;
+        font-size: 6px;
+    }
+    .app.game-shell .tool-navigation .close-tools {
+        margin-left: 0;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .app.game-shell .setup-panel {
+        transition: none;
+    }
+}
+
+/* The existing expandable round dashboard remains available over the arena. */
+.app.game-shell .fight-telemetry {
+    display: block;
+    position: static;
+    z-index: 8;
+    width: 100%;
+    max-height: min(34dvh, 320px);
+    overflow: auto;
+    margin: 0;
+    border: 1px solid #bda16a66;
+    border-radius: 6px;
+    background: #172b24f5;
+    box-shadow: 0 5px 20px #0005;
+}
+.app.game-shell .fight-telemetry > summary {
+    padding: 11px;
+}
+.app.game-shell .arena-preview-label {
+    bottom: 64px;
+}
+/* Override the previous fullscreen timer's absolute positioning so all three
+   scorecards participate in the same responsive grid. */
+.app.game-shell .fight-hud > .timer {
+    position: relative;
+    inset: auto;
+    transform: none;
+    width: 100%;
+    min-height: 76px;
+    padding: 8px 4px;
+    border-width: 1px;
+}
+.app.game-shell .fight-hud > .timer:active {
+    transform: translateY(1px);
+}
+.app.game-shell .arcade-playbook .detailed-panel {
+    display: block;
+}
+
+/* Compact setup keeps the ring and scorecards dominant. Every setting remains scrollable. */
+.app.game-shell .setup-panel .cabinet-label {
+    padding-block: 8px;
+    font-size: 7px;
+}
+.app.game-shell .setup-panel .challenger-card {
+    margin-bottom: 8px;
+}
+.app.game-shell .setup-panel .mode-select {
+    gap: 7px;
+}
+.app.game-shell .setup-panel .mode-select > button strong {
+    padding-block: 7px;
+    font-size: 8px;
+}
+.app.game-shell .setup-panel .control-select > button {
+    min-height: 38px;
+    padding: 7px;
+}
+.app.game-shell .setup-panel .control-select b {
+    font-size: 7px;
+}
+.app.game-shell .setup-panel .segmented > button {
+    min-height: 32px;
+    padding: 7px;
+}
+.app.game-shell .setup-panel > .primary {
+    position: sticky;
+    bottom: -1px;
+    z-index: 2;
+}
+.app.game-shell .setup-panel .start-note {
+    margin-block: 7px;
+    font-size: 11px;
+}
+
+/* A small afterimage of the accepted move, with no pointer or gameplay effects. */
+.action-ghost {
+    position: absolute;
+    left: 28px;
+    bottom: 100px;
+    z-index: 7;
+    width: 150px;
+    text-align: center;
+    pointer-events: none;
+    color: #def5e9;
+    animation: move-ghost-fade 1.25s ease-out both;
+}
+.ghost-figure {
+    position: relative;
+    width: 112px;
+    height: 168px;
+    margin: 0 auto 9px;
+}
+.app.game-shell .action-ghost .boxer-art {
+    position: absolute;
+    inset: 0;
+    width: 112px;
+    height: 168px;
+    aspect-ratio: 2/3;
+    clip-path: none;
+    filter: saturate(0.45) brightness(1.25) drop-shadow(0 0 8px #a3e9dc66);
+}
+.app.game-shell .action-ghost .ghost-trail-near {
+    opacity: 0.23;
+    translate: -11px 2px;
+    filter: grayscale(1) brightness(1.6);
+}
+.app.game-shell .action-ghost .ghost-trail-far {
+    opacity: 0.1;
+    translate: -23px 4px;
+    filter: grayscale(1) brightness(1.9);
+}
+.action-ghost-cross .ghost-figure {
+    transform: scaleX(-1);
+}
+.action-ghost-dodgeLeft .ghost-figure {
+    transform: translateX(-12px) rotate(-12deg);
+}
+.action-ghost-dodgeRight .ghost-figure {
+    transform: translateX(12px) rotate(12deg);
+}
+.action-ghost > span {
+    display: block;
+    margin-bottom: 5px;
+    color: #b1c7b9;
+    font: 6px var(--pixel);
+    letter-spacing: 1px;
+}
+.action-ghost > b {
+    display: block;
+    color: #f2e1b7;
+    font: 9px/1.5 var(--pixel);
+    text-shadow: 0 2px 4px #000;
+}
+@keyframes move-ghost-fade {
+    0% {
+        opacity: 0;
+        transform: translateY(8px) scale(0.96);
+    }
+    12%,
+    45% {
+        opacity: 0.95;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-25px) scale(1.02);
+    }
+}
+@media (max-width: 760px) {
+    .action-ghost {
+        left: 10px;
+        bottom: 100px;
+        width: 110px;
+    }
+    .ghost-figure {
+        width: 84px;
+        height: 126px;
+    }
+    .app.game-shell .action-ghost .boxer-art {
+        width: 84px;
+        height: 126px;
+    }
+    .action-ghost > b {
+        font-size: 7px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .action-ghost {
+        animation-name: move-ghost-opacity;
+    }
+    .app.game-shell .action-ghost .ghost-trail {
+        display: none;
+    }
+}
+@keyframes move-ghost-opacity {
+    0%,
+    45% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+/* Match portrait sizes to the shorter art windows instead of clipping heads. */
+.app.game-shell .setup-panel .challenger-art > .boxer-art {
+    height: 135px;
+    bottom: -35px;
+}
+.app.game-shell .setup-panel .mode-illustration .boxer-art {
+    width: 32px;
+    height: 48px;
+    bottom: -5px;
+}
+
+/* Map and telemetry share a left rail, so expanding stats cannot overlap the map. */
+.app.game-shell .ringside-rail {
+    position: absolute;
+    inset: auto auto 16px 16px;
+    z-index: 8;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    width: min(340px, calc(100vw - 32px));
+    pointer-events: none;
+}
+.app.game-shell .ringside-rail > * {
+    pointer-events: auto;
+    flex-shrink: 0;
+}
+.ring-map {
+    display: block;
+    width: 120px;
+    height: auto;
+    filter: drop-shadow(0 4px 10px #0004);
+}
+.app.game-shell .fighter-hud > div:first-child {
+    padding: 4px 12px;
+}
+.app.game-shell .fighter-hud > div:first-child > span:last-child {
+    padding-right: 4px;
+}
+.app.game-shell .health-track {
+    margin-inline: 8px;
+    width: auto;
+}
+.app.game-shell .fighter-hud .guard-meter,
+.app.game-shell .fighter-hud .stamina-meter {
+    padding-inline: 8px;
+}
+.app.game-shell .fighter-hud > small {
+    padding: 0 10px 5px;
+}
+.model-status {
+    position: absolute;
+    top: calc(var(--shell-top) + 125px);
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: calc(100% - 32px);
+    padding: 10px 14px;
+    border: 1px solid #c9ac6d77;
+    border-radius: 5px;
+    background: #17271fed;
+    color: #f1d7a2;
+    z-index: 7;
+    text-align: center;
+    font: 8px/1.6 var(--pixel);
+    pointer-events: none;
+}
+.app.game-shell .setup-panel .model-help {
+    color: #c5cfb6;
+    font: 11px/1.5 var(--ui-font);
+    padding: 8px;
+    border: 1px solid #a6ac7c33;
+    border-radius: 4px;
+}
+@media (max-width: 760px) {
+    .app.game-shell .ringside-rail {
+        left: 10px;
+        bottom: 12px;
+        gap: 14px;
+        width: min(280px, calc(100vw - 20px));
+    }
+    .ring-map {
+        width: 92px;
+    }
+    .app.game-shell .ringside-rail .fight-telemetry {
+        max-height: 28dvh;
+    }
+    .app.game-shell .fighter-hud > div:first-child {
+        padding-inline: 7px;
+    }
+}
+/* Keep the live camera independent of the collapsible match/setup corner. */
+.app.game-shell.has-motion-camera {
+    --hud-width: min(860px, calc(100vw - var(--corner-width) * 2 - 64px));
+}
+.app.game-shell .camera-overhang {
+    position: absolute;
+    top: calc(var(--shell-top) + 10px);
+    left: 16px;
+    width: calc((100vw - var(--hud-width)) / 2 - 32px);
+    max-height: calc(100dvh - var(--shell-top) - 42px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    z-index: 10;
+    border: 1px solid #c5ab7277;
+    border-radius: 7px;
+    background: #182b23f5;
+    box-shadow: 0 8px 24px #0006;
+    scrollbar-width: thin;
+}
+.app.game-shell .camera-overhang > .camera-panel {
+    display: block;
+    position: static;
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-image: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+}
+.app.game-shell .camera-overhang .camera-title {
+    position: static;
+    padding: 9px 10px;
+    font-size: 9px;
+}
+.app.game-shell .camera-overhang .camera-feed {
+    width: 100%;
+    aspect-ratio: 4/3;
+    margin: 0;
+    border: 0;
+}
+.app.game-shell .camera-overhang .camera-feed video,
+.app.game-shell .camera-overhang .camera-feed canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.app.game-shell .camera-options {
+    padding: 10px;
+    border-top: 1px solid #ba9c6333;
+}
+.app.game-shell .camera-options > summary {
+    cursor: pointer;
+    color: #d9c494;
+    font: 7px/1.5 var(--pixel);
+    padding: 3px 0;
+}
+.app.game-shell .camera-options .camera-debug {
+    margin-top: 10px;
+}
+.app.game-shell .camera-options .micro,
+.app.game-shell .camera-options .overlay-toggle {
+    display: block;
+}
+.fight-menu .leave-match {
+    color: #f3b9a6;
+    border-color: #b8755b88;
+    margin-top: 24px;
+}
+.app.game-shell .party-hint {
+    display: block;
+    color: #c7d1c8;
+    font: 12px/1.6 var(--body, sans-serif);
+    margin: 10px 0;
+}
+.app.game-shell .party-invite {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    font-size: 11px;
+    margin-bottom: 8px;
+}
+.app.game-shell .join-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px;
+}
+.app.game-shell .join-row input {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.app.game-shell .join-row button {
+    white-space: nowrap;
+    padding-inline: 10px;
+}
+.app.game-shell .party-player-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font: inherit;
+}
+.app.game-shell .lobby p > span {
+    flex-shrink: 0;
+}
+/* On tablet widths, leave enough room for both scorecards before the corner begins. */
+@media (min-width: 761px) and (max-width: 1100px) {
+    .app.game-shell .fight-hud {
+        width: calc(100vw - 32px);
+    }
+    .app.game-shell .setup-panel {
+        top: calc(var(--shell-top) + 136px);
+        max-height: calc(100dvh - var(--shell-top) - 152px);
+    }
+    .app.game-shell .corner-toggle {
+        top: calc(var(--shell-top) + 100px);
+    }
+    .app.game-shell .camera-overhang {
+        top: calc(var(--shell-top) + 136px);
+        width: var(--corner-width);
+        max-height: calc(100dvh - var(--shell-top) - 300px);
+    }
+}
+@media (max-width: 760px) {
+    .app.game-shell .camera-overhang {
+        top: calc(var(--shell-top) + 116px);
+        left: 12px;
+        width: calc(50vw - 24px);
+        max-height: calc(100dvh - var(--shell-top) - 240px);
+    }
+    .app.game-shell .camera-overhang .camera-title {
+        font-size: 7px;
+        padding: 7px;
+    }
+}

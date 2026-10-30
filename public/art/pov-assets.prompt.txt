@@ -1,0 +1,7 @@
+Prepared using the built-in imagegen tool from the user's two POV reference images.
+
+opponent-body.png
+Edit target: the front-facing moustached boxer. Preserve the reference face, hair, moustache, mint shirt, suspenders, green gold-striped trousers, purple boots, pixel detail and proportions. Remove gray background and ground shadow. Remove both gloves and bare forearms below the rolled sleeves. Reconstruct the shirt behind the gloves. One complete centered base-body sprite with clean empty sleeve ends, bent-knee stance, actual transparency and padding. No text or extra objects.
+
+first-person-arm.png
+Edit target: the first-person blue gloves reference. Extract only the left-side arm and glove entering from bottom-left. Preserve perspective, pixel shading, cream/cyan highlight, navy outline, copper skin and mint sleeve. Remove gray backdrop and the other arm. Complete the cropped sleeve base. One isolated diagonal arm with transparent padding; mirror in code for the other hand.

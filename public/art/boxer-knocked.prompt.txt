@@ -1,0 +1,3 @@
+Built-in imagegen / background-extraction edit of the user's kneeling boxer image.
+
+Remove only the black background to genuine transparent alpha. Preserve the exact character, kneeling pose, face, moustache, hair, blue gloves, mint shirt, green trousers with yellow stripes, purple boots, proportions and crisp pixel shading. Do not redesign, rotate, add objects or change the pose. One complete sprite fully visible, centered in a square canvas with approximately 6% transparent padding around its tight bounding box. No shadow, ground, text or border. Intended as the knocked-down boxer sprite in the game.

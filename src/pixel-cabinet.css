@@ -1,0 +1,1502 @@
+/* ============================================================
+   PIXEL CABINET STYLES
+   ============================================================ */
+
+/* Production pixel frame system. SVG border slices retain true stepped corners
+   at every panel size; the navy edge and hard shadows never blur. */
+:root {
+    --glove-blue: #0868f5;
+    --glove-blue-light: #35adff;
+    --pixel-navy: #020b20;
+    --pixel-cyan: #43d5ef;
+    --pixel-mint: #a0e6d9;
+    --pixel-gold: #ffd04a;
+    --frame-cyan: url("/art/cabinet-frame-cyan.svg");
+    --frame-gold: url("/art/cabinet-frame-gold.svg");
+    --paper: #fff3ce;
+    --muted: #a0bfcf;
+}
+
+.app {
+    max-width: 1920px;
+    padding-inline: 16px;
+}
+
+.site-header {
+    height: 100px;
+    min-height: 100px;
+    border-top: 0;
+    padding-top: 0;
+    background: #05162b;
+    border-bottom: 4px solid #16425f;
+    box-shadow: 0 3px #020a19;
+}
+
+.site-header:before,
+.site-header:after {
+    bottom: -6px;
+}
+
+.brand > div {
+    font-size: clamp(26px, 3.7vw, 62px);
+    text-shadow:
+        3px 0 #071c2e,
+        0 3px #071c2e,
+        -3px 0 #071c2e,
+        0 -3px #071c2e,
+        4px 4px #80c4bf,
+        7px 7px #01091a;
+    letter-spacing: -3px;
+}
+
+.brand em {
+    text-shadow:
+        3px 0 #4c281e,
+        0 3px #4c281e,
+        -3px 0 #4c281e,
+        0 -3px #4c281e,
+        4px 4px #e88e26,
+        7px 7px #01091a;
+}
+
+.brand > div > span {
+    font-size: 5px;
+    margin-top: 10px;
+    color: var(--pixel-mint);
+    letter-spacing: 1.5px;
+}
+
+.cabinet-nav {
+    gap: 7px;
+}
+
+.cabinet-nav > a,
+.cabinet-nav > button {
+    border: 8px solid transparent;
+    border-image: var(--frame-cyan) 12 stretch;
+    background: #04162d;
+    background-clip: padding-box;
+    box-shadow:
+        4px 5px 0 #010817,
+        inset 0 3px #143750;
+    color: var(--pixel-mint);
+    padding: 7px 8px;
+    font-size: 7px;
+    min-height: 45px;
+}
+
+.cabinet-nav .active {
+    border-image-source: var(--frame-gold);
+    background: #0b2942;
+    box-shadow:
+        4px 5px #010817,
+        inset 0 2px #40544d;
+    color: #ffda66;
+}
+
+.cabinet-nav .cabinet-audio {
+    min-width: 53px;
+    color: #50d4ff;
+}
+
+.pixel-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    image-rendering: pixelated;
+    filter: drop-shadow(1px 2px 0 #020b20);
+    vertical-align: middle;
+}
+
+main {
+    padding-top: 14px;
+}
+
+.page-heading {
+    display: none;
+}
+
+.main-layout {
+    grid-template-columns: minmax(0, 1fr) clamp(285px, 22vw, 350px);
+    gap: 14px;
+    scroll-margin-top: 12px;
+}
+
+.stage-caption {
+    border: 0;
+    border-top: 3px solid #8ce5e3;
+    border-bottom: 3px solid #031129;
+    background: #073252;
+    padding: 10px 15px;
+    box-shadow: inset 0 -2px #1889ad;
+    font-size: 8px;
+    color: #ffdb66;
+}
+
+.stage-caption b {
+    color: var(--pixel-mint);
+}
+
+.stage-caption:before {
+    border: 2px solid #020d20;
+    width: 10px;
+    height: 10px;
+    background: #ffe4a2;
+    box-shadow:
+        inset 2px 2px white,
+        inset -2px -2px #ad6b27;
+}
+
+.stage-caption:after {
+    display: none;
+}
+
+.arena-shell,
+.setup-panel,
+.detailed-panel,
+.quick-controls {
+    border: 12px solid transparent;
+    border-image: var(--frame-cyan) 12 stretch;
+    background-color: #04172e;
+    background-clip: padding-box;
+    box-shadow:
+        6px 7px 0 #010817,
+        inset 0 2px #3b90ae;
+}
+
+.arena-shell {
+    overflow: visible;
+}
+
+.arena-top {
+    padding: 6px 12px;
+    background: #04182e;
+    border-bottom: 2px solid #17415a;
+    color: var(--pixel-mint);
+}
+
+.arena-top small {
+    color: #82afb9;
+}
+
+.arena-stage {
+    overflow: hidden;
+}
+
+.arena-stage:after {
+    opacity: 0.18;
+    pointer-events: none;
+}
+
+.arena-bottom {
+    padding: 8px 12px;
+    border-top: 2px solid #195574;
+    background: #04182d;
+}
+
+.arena-preview-label {
+    padding: 7px 10px;
+    border: 2px solid #4ba0ad;
+    background: #031a2be8;
+    font-size: 5px;
+    color: var(--pixel-mint);
+}
+
+.fight-hud {
+    inset: 18px 18px auto;
+    grid-template-columns: minmax(0, 1fr) 114px minmax(0, 1fr);
+    gap: 18px;
+}
+
+.fighter-hud,
+.fight-view .fighter-hud {
+    padding-left: 63px;
+    filter: drop-shadow(2px 3px #020b20);
+}
+
+.fighter-hud.opponent,
+.fight-view .fighter-hud.opponent {
+    padding-left: 0;
+    padding-right: 63px;
+}
+
+.hud-portrait {
+    width: 53px;
+    height: 66px;
+    top: -1px;
+    left: 0;
+    border: 7px solid transparent;
+    border-image: var(--frame-cyan) 12 stretch;
+    background-color: #063a62;
+    background-image: url("/art/opponent-body.png");
+    background-position: 50% 7%;
+    background-size: 430% auto;
+    background-clip: padding-box;
+    box-shadow: 3px 4px #010817;
+    transform: none;
+}
+
+.opponent .hud-portrait {
+    right: 0;
+    left: auto;
+    border-image-source: var(--frame-gold);
+    background-color: #6b271f;
+    transform: scaleX(-1);
+}
+
+.fighter-hud > div:first-child {
+    min-height: 22px;
+    background: linear-gradient(135deg, #125ebd 0 70%, transparent 70%);
+    border-top: 2px solid #3997db;
+    padding: 3px 5px;
+    margin-bottom: 4px;
+    gap: 6px;
+}
+
+.fighter-hud.opponent > div:first-child {
+    background: linear-gradient(225deg, #9f3c24 0 70%, transparent 70%);
+    border-top-color: #ee973d;
+}
+
+.fighter-hud b {
+    font: 9px/1.6 var(--pixel);
+    color: #fff6d7;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 48%;
+    white-space: nowrap;
+}
+
+.player-badge {
+    display: none;
+}
+
+.fighter-hud > div > span:last-child {
+    font: 13px/1.5 var(--pixel);
+    color: #fff5db;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+.fighter-hud > div > span:last-child small {
+    font: 7px var(--pixel);
+    color: #a7e7df;
+}
+
+.health-track,
+.opponent .health-track {
+    height: 24px;
+    transform: none;
+    border: 3px solid #f3eed0;
+    padding: 2px;
+    background: #0b1630;
+    box-shadow:
+        0 0 0 2px #020c20,
+        2px 3px #020b20;
+    margin-top: 0;
+}
+
+.health-track i,
+.opponent .health-track i {
+    box-shadow: none;
+    background:
+        repeating-linear-gradient(90deg, transparent 0 21px, #063937 21px 24px),
+        linear-gradient(#d8ffb2 0 20%, #83ff64 20% 43%, #37da4e 43% 80%, #198a46 80%);
+}
+
+.fighter-hud .guard-meter,
+.fighter-hud .stamina-meter {
+    margin-top: 6px;
+    font: 5px/1.6 var(--pixel);
+    gap: 7px;
+    color: #d5f1e9;
+}
+
+.fighter-hud .guard-meter > i,
+.fighter-hud .stamina-meter > i {
+    height: 9px;
+    border: 2px solid #a6d0e2;
+    padding: 1px;
+    background: #020c20;
+    box-shadow: 0 0 0 1px #020b20;
+}
+
+.fighter-hud .guard-meter > i > b {
+    background: linear-gradient(#d3fffa 0 30%, #5de5fb 30% 60%, #168bcc 60%);
+}
+
+.fighter-hud .stamina-meter > i > b {
+    background: linear-gradient(#fff0ac 0 30%, #ffd344 30% 60%, #da8e22 60%);
+}
+
+.fighter-hud .guard-meter > span:last-child,
+.fighter-hud .stamina-meter > span:last-child {
+    font-size: 4px;
+    min-width: 22px;
+}
+
+.fighter-hud > small {
+    font-size: 4px;
+    margin-top: 6px;
+    color: #a4c2cf;
+}
+
+.timer {
+    border: 9px solid transparent;
+    border-image: var(--frame-gold) 12 stretch;
+    background: #03182b;
+    background-clip: padding-box;
+    box-shadow: 4px 5px #020819;
+    transform: none;
+    padding: 7px 2px;
+    align-self: start;
+    min-width: 0;
+}
+
+.timer strong {
+    display: block;
+    font: 24px/1.7 var(--pixel);
+    letter-spacing: -2px;
+    color: #ffdc62;
+    text-shadow: 3px 3px #705125;
+    white-space: nowrap;
+}
+
+.timer small {
+    font: 6px/1.8 var(--pixel);
+    color: #ffe286;
+}
+
+.timer > span {
+    font: 5px/1.8 var(--pixel);
+    color: #74adb7;
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
+
+.setup-panel {
+    padding: 8px;
+}
+
+.setup-panel:before,
+.setup-panel:after {
+    display: none;
+}
+
+.cabinet-label {
+    font: 11px/1.7 var(--pixel);
+    padding: 10px 5px;
+    border-bottom: 3px solid #185f80;
+    background: linear-gradient(#0c3550, #05182f);
+    color: #fff0c8;
+    text-shadow: 2px 2px #020b20;
+}
+
+.cabinet-label > span {
+    color: #ffce42;
+}
+
+.challenger-card {
+    margin: 0 0 11px;
+}
+
+.challenger-art {
+    height: clamp(190px, 17vw, 285px);
+    margin-top: 10px;
+    border: 7px solid transparent;
+    border-image: var(--frame-cyan) 12 stretch;
+    background-clip: padding-box;
+    box-shadow: 3px 4px #010817;
+}
+
+.challenger-art > .boxer-art {
+    height: clamp(270px, 24vw, 390px);
+    width: clamp(190px, 17vw, 270px);
+    bottom: -65px;
+}
+
+.challenger-name {
+    font-size: 22px;
+    line-height: 1.5;
+    background: linear-gradient(#d66b28 0 8%, #9e391e 8% 75%, #6c271e 75%);
+    color: #fff0d0;
+    border-top: 3px solid #ffd061;
+    padding: 9px 4px;
+    text-shadow: 3px 3px #46211b;
+}
+
+.setup-panel > .panel-heading,
+.setup-panel > h2,
+.setup-panel > .panel-sub {
+    display: none;
+}
+
+.setup-checklist {
+    margin: 8px 0 6px;
+    gap: 4px;
+}
+
+.setup-checklist li {
+    padding: 5px;
+    border-color: #235069;
+}
+
+.setup-checklist li > span {
+    font-size: 5px;
+}
+
+.setup-checklist li > b {
+    font-size: 3px;
+}
+
+.setup-checklist li > i {
+    font-size: 8px;
+}
+
+.section-label {
+    margin-top: 12px;
+    padding: 9px 4px;
+    color: #ffdf68;
+    font: 7px/1.7 var(--pixel);
+    border-top: 2px solid #113f5c;
+    border-bottom: 2px solid #113f5c;
+    background: #061a30;
+}
+
+.section-label > span {
+    background: #16466a;
+    color: var(--pixel-mint);
+}
+
+.primary,
+.secondary,
+.mode-select > button,
+.control-select > button,
+.segmented > button,
+.library-filters > button,
+.move-buttons > button {
+    border: 8px solid transparent;
+    border-image: var(--frame-cyan) 12 stretch;
+    background-clip: padding-box;
+    box-shadow: 4px 5px #010817;
+    transition:
+        background-color 0.12s,
+        transform 0.08s;
+}
+
+.primary {
+    border-width: 11px;
+    background: linear-gradient(#31b1ff 0 5%, #0873ff 5% 12%, #0754ed 12% 78%, #0734a7 78%);
+    color: #fff5d7;
+    padding: 12px 9px;
+    font: 14px/1.6 var(--pixel);
+    text-shadow: 3px 3px #063777;
+    letter-spacing: -0.5px;
+    box-shadow:
+        5px 6px #020918,
+        inset 0 3px #8fe5ff,
+        inset 0 -4px #021c73;
+}
+
+.primary:hover:not(:disabled) {
+    border-image-source: var(--frame-gold);
+    background: linear-gradient(#59c8ff 0 8%, #197aff 8% 78%, #1247b8 78%);
+    color: #fff6df;
+    box-shadow:
+        5px 6px #020918,
+        inset 0 2px #a6efff;
+}
+
+.primary:active:not(:disabled) {
+    transform: translateY(4px);
+    background: #073568;
+    border-image-source: var(--frame-cyan);
+    box-shadow:
+        1px 2px #020918,
+        inset 0 3px #021b3a;
+    color: #a5e4ed;
+}
+
+.primary:before,
+.primary:after {
+    display: none;
+}
+
+.primary:disabled {
+    opacity: 0.55;
+    background: #092d55;
+    text-shadow: none;
+    box-shadow: 2px 3px #020918;
+}
+
+.primary > svg {
+    color: #ffe07c;
+    filter: drop-shadow(2px 2px #754b20);
+}
+
+.secondary {
+    background-color: #0a3151;
+    color: var(--pixel-mint);
+    font-family: var(--pixel);
+    font-size: 7px;
+}
+
+.secondary:hover:not(:disabled) {
+    border-image-source: var(--frame-gold);
+    background: #15476a;
+}
+
+.mode-select {
+    gap: 8px;
+}
+
+.mode-select > button {
+    padding: 0;
+    background: #04172d;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+}
+
+.mode-select > button.selected {
+    border-image-source: var(--frame-gold);
+    box-shadow: 4px 5px #020a1b;
+    background: #063b92;
+}
+
+.mode-select > button strong {
+    font: 10px/1.6 var(--pixel);
+    padding: 8px 3px;
+    color: #d7eee8;
+    background: #05223d;
+    border-top: 2px solid #2b6e91;
+}
+
+.mode-select > button.selected strong {
+    color: #ffdf68;
+    background: #072f7d;
+    border-top-color: #f6c14c;
+}
+
+.mode-select > button small {
+    font-size: 8px;
+    padding: 2px 3px 5px;
+    color: #91b9ca;
+}
+
+.mode-select .selection-check {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    color: #ffdd71;
+    z-index: 2;
+}
+
+.mode-illustration {
+    height: 86px;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: linear-gradient(#1557b5, #084088);
+    border-bottom: 2px solid #04214c;
+}
+
+.mode-illustration:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: repeating-linear-gradient(90deg, #052a64 0 9px, #0d3874 9px 11px);
+    border-top: 2px solid #3775ae;
+}
+
+.mode-illustration .boxer-art {
+    position: absolute;
+    width: 65px;
+    height: 93px;
+    left: 10%;
+    bottom: -4px;
+    z-index: 1;
+    clip-path: inset(0 9%);
+}
+
+.cpu-chip {
+    position: absolute;
+    right: 11%;
+    top: 28px;
+    border: 2px solid #6dc9df;
+    background: #052146;
+    padding: 9px 6px;
+    color: #a1ecdf;
+    font: 7px var(--pixel);
+    box-shadow: 3px 3px #020b20;
+}
+
+.duel-illustration {
+    background: linear-gradient(#082c4c, #04172d);
+}
+
+.duel-illustration > .boxer-art {
+    left: 0;
+    width: 62px;
+    height: 89px;
+}
+
+.duel-illustration > .duel-rival {
+    left: auto;
+    right: 0;
+    transform: scaleX(-1);
+    filter: sepia(0.3) saturate(0.8);
+}
+
+.segmented {
+    padding: 0;
+    gap: 7px;
+    border: 0;
+    background: none;
+    box-shadow: none;
+}
+
+.segmented > button {
+    background: #04182e;
+    color: var(--pixel-mint);
+    font: 8px/1.7 var(--pixel);
+    padding: 8px 3px;
+}
+
+.segmented > button.selected {
+    border-image-source: var(--frame-gold);
+    background: linear-gradient(#ffe978, #ffca3e);
+    color: #172235;
+    box-shadow:
+        3px 4px #020b20,
+        inset 0 -3px #d6972c;
+}
+
+.control-select {
+    gap: 7px;
+}
+
+.control-select > button {
+    padding: 7px 3px;
+    gap: 6px;
+    background: #04182d;
+    color: var(--pixel-mint);
+}
+
+.control-select > button.selected {
+    border-image-source: var(--frame-gold);
+    background: #092b44;
+    box-shadow: 3px 4px #020b20;
+    color: #ffdf77;
+}
+
+.control-select > button.selected svg {
+    color: #8de3dd;
+}
+
+.control-select > button b {
+    font-size: 6px;
+    line-height: 1.8;
+}
+
+.control-select button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.start-note {
+    margin-top: 13px;
+    font-size: 9px;
+    color: #90b8c9;
+}
+
+.setup-panel > .primary {
+    margin-top: 15px;
+}
+
+.difficulty-note {
+    font-size: 9px;
+    color: #9bc8ce;
+    line-height: 1.7;
+    margin-top: 10px;
+}
+
+kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 36px;
+    border: 3px solid #020b20;
+    border-top-color: #b2d7df;
+    border-left-color: #7fa8c0;
+    border-right-color: #274766;
+    border-bottom: 6px solid #213a58;
+    border-radius: 0;
+    background: linear-gradient(#52738f, #35516f);
+    padding: 4px 8px;
+    color: #fff4d7;
+    font: 12px/1.4 var(--pixel);
+    text-shadow: 2px 2px #18334e;
+    box-shadow:
+        0 0 0 2px #020b20,
+        3px 4px #01091b,
+        inset 2px 2px #a2c1ca,
+        inset -2px -2px #1e3c5a;
+    white-space: nowrap;
+}
+
+.fight-telemetry {
+    padding: 0;
+    border-top: 3px solid #27637e;
+    background: #051b30;
+}
+
+.telemetry-heading {
+    cursor: pointer;
+    list-style: none;
+    padding: 10px 13px;
+    margin: 0;
+    border: 0;
+    min-height: 33px;
+}
+
+.telemetry-heading::-webkit-details-marker {
+    display: none;
+}
+
+.fight-telemetry[open] > .telemetry-heading {
+    border-bottom: 2px solid #1e506b;
+}
+
+.fight-telemetry .telemetry-grid {
+    margin: 0 13px;
+}
+
+.fight-telemetry .ringside-feed {
+    padding: 10px 13px;
+}
+
+.telemetry-heading > span {
+    font-size: 5px;
+    color: var(--pixel-mint);
+}
+
+.telemetry-heading > small {
+    color: #d0b370;
+    font-size: 4px;
+}
+
+.below-arena {
+    padding-block: 13px;
+    margin-top: 4px;
+}
+
+.below-arena .auto-icon {
+    display: none;
+}
+
+.below-arena b {
+    font-size: 6px;
+}
+
+.below-arena p {
+    font-size: 10px;
+}
+
+.feature-strip {
+    padding-block: 11px;
+}
+
+.feature-strip .boxer-art {
+    width: 32px;
+    height: 47px;
+}
+
+.quick-controls {
+    padding: 12px;
+    margin-top: 18px;
+}
+
+.quick-controls kbd {
+    font-size: 8px;
+    height: 30px;
+    min-width: 27px;
+}
+
+.quick-controls .boxer-art {
+    width: 30px;
+    height: 42px;
+}
+
+.quick-controls .key-list {
+    gap: 10px;
+}
+
+.fight-ticket {
+    margin: 20px 0 0;
+}
+
+.detailed-panel {
+    padding: 14px;
+}
+
+.detailed-panel:before,
+.detailed-panel:after {
+    display: none;
+}
+
+.detail-heading {
+    border-bottom: 3px solid #123c58;
+}
+
+.detail-heading h2 {
+    font-size: 13px;
+    color: #fff0c8;
+    text-shadow: 2px 2px #020b20;
+}
+
+.detail-heading .eyebrow {
+    color: var(--pixel-mint);
+}
+
+.library-filters > button {
+    border-width: 5px;
+    padding: 5px;
+    font-size: 5px;
+}
+
+.library-filters > button[aria-pressed="true"],
+.move-buttons > button[aria-pressed="true"] {
+    border-image-source: var(--frame-gold);
+    background: #123650;
+    color: #ffda67;
+    box-shadow: 2px 3px #020b20;
+}
+
+.move-buttons > button {
+    padding: 6px;
+    background: #04182c;
+}
+
+.move-buttons kbd {
+    font-size: 7px;
+    height: 32px;
+    min-width: 35px;
+}
+
+.intel-card {
+    border: 6px solid #020b20;
+    border-top: 3px solid #42b9d5;
+    box-shadow:
+        3px 4px #010817,
+        inset 2px 2px #174867;
+    background: #051a30;
+}
+
+.intel-card h2 {
+    font-family: var(--pixel);
+    color: #fff1c5;
+}
+
+.roster-card.selected {
+    border-color: #ffd04a;
+    background: #0b3151;
+    box-shadow:
+        0 0 0 3px #0a152a,
+        inset 0 0 0 2px #a97e29,
+        4px 5px #010817;
+}
+
+.roster-card {
+    border-width: 3px;
+    border-color: #174361;
+    box-shadow: 4px 5px #010817;
+}
+
+.telemetry-heading:focus-visible {
+    outline: 3px solid #ffd461;
+    outline-offset: -3px;
+}
+
+.fight-view .arena-shell {
+    border-width: 10px;
+    box-shadow: 5px 6px #010817;
+}
+
+.fight-view .setup-panel {
+    border: 0;
+    border-image: none;
+    box-shadow: none;
+}
+
+.fight-view .setup-panel:before,
+.fight-view .setup-panel:after {
+    display: none;
+}
+
+.arena-shell:fullscreen {
+    border-image: none;
+}
+
+.fighter-hud .guard-meter > i > b,
+.fighter-hud .stamina-meter > i > b {
+    max-width: none;
+    white-space: normal;
+    overflow: visible;
+}
+
+@media (min-width: 1700px) {
+    .main-layout {
+        grid-template-columns: minmax(0, 1fr) 350px;
+    }
+    .fight-hud {
+        grid-template-columns: minmax(0, 1fr) 128px minmax(0, 1fr);
+    }
+    .timer strong {
+        font-size: 29px;
+    }
+    .mode-illustration {
+        height: 102px;
+    }
+    .mode-illustration .boxer-art {
+        width: 78px;
+        height: 112px;
+    }
+    .duel-illustration > .boxer-art {
+        width: 73px;
+        height: 104px;
+    }
+}
+
+@media (max-width: 1250px) {
+    .site-header {
+        height: 88px;
+        min-height: 88px;
+    }
+    .brand > div {
+        font-size: 36px;
+    }
+    .brand > div > span {
+        font-size: 4px;
+    }
+    .cabinet-nav > a,
+    .cabinet-nav > button {
+        padding: 5px;
+        font-size: 5px;
+        border-width: 6px;
+    }
+    .cabinet-nav .manual-nav {
+        font-size: 5px;
+    }
+    .cabinet-nav .cabinet-audio {
+        min-width: 40px;
+    }
+    .main-layout {
+        grid-template-columns: minmax(0, 1fr) 285px;
+        gap: 12px;
+    }
+    .arena-shell,
+    .setup-panel {
+        border-width: 9px;
+    }
+    .setup-panel {
+        padding: 6px;
+    }
+    .cabinet-label {
+        font-size: 9px;
+    }
+    .challenger-art {
+        height: 195px;
+    }
+    .challenger-art > .boxer-art {
+        height: 285px;
+        width: 200px;
+    }
+    .mode-illustration {
+        height: 75px;
+    }
+    .mode-illustration .boxer-art {
+        height: 85px;
+        width: 58px;
+    }
+    .duel-illustration > .boxer-art {
+        width: 52px;
+        height: 76px;
+    }
+    .mode-select > button strong {
+        font-size: 8px;
+    }
+    .control-select button b {
+        font-size: 5px;
+    }
+    .primary {
+        font-size: 11px;
+        padding: 10px 6px;
+    }
+    .fight-hud {
+        grid-template-columns: minmax(0, 1fr) 86px minmax(0, 1fr);
+        gap: 12px;
+        inset: 13px;
+    }
+    .fighter-hud,
+    .fight-view .fighter-hud {
+        padding-left: 43px;
+    }
+    .fighter-hud.opponent,
+    .fight-view .fighter-hud.opponent {
+        padding-left: 0;
+        padding-right: 43px;
+    }
+    .hud-portrait {
+        width: 36px;
+        height: 49px;
+        border-width: 5px;
+    }
+    .fighter-hud b {
+        font-size: 6px;
+    }
+    .fighter-hud > div > span:last-child {
+        font-size: 10px;
+    }
+    .fighter-hud > div > span:last-child small {
+        font-size: 5px;
+    }
+    .health-track,
+    .opponent .health-track {
+        height: 18px;
+    }
+    .timer {
+        border-width: 7px;
+        padding: 5px 1px;
+    }
+    .timer strong {
+        font-size: 18px;
+        letter-spacing: -1px;
+    }
+    .timer small {
+        font-size: 5px;
+    }
+    .fighter-hud .guard-meter,
+    .fighter-hud .stamina-meter {
+        font-size: 4px;
+        gap: 4px;
+        margin-top: 4px;
+    }
+    .fighter-hud .guard-meter > i,
+    .fighter-hud .stamina-meter > i {
+        height: 7px;
+        border-width: 1px;
+    }
+    .fighter-hud .guard-meter > span:last-child,
+    .fighter-hud .stamina-meter > span:last-child {
+        display: none;
+    }
+}
+
+@media (max-width: 960px) {
+    .site-header {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 15px 0;
+        gap: 13px;
+    }
+    .brand > div {
+        font-size: 42px;
+    }
+    .cabinet-nav {
+        width: 100%;
+        justify-content: center;
+    }
+    .cabinet-nav > a,
+    .cabinet-nav > button {
+        font-size: 6px;
+        padding: 6px;
+        min-height: 40px;
+    }
+    .main-layout {
+        grid-template-columns: minmax(0, 1fr) 260px;
+    }
+    .fight-hud {
+        grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr);
+        gap: 8px;
+        inset: 10px;
+    }
+    .fighter-hud,
+    .fight-view .fighter-hud {
+        padding-left: 0;
+    }
+    .fighter-hud.opponent,
+    .fight-view .fighter-hud.opponent {
+        padding-right: 0;
+    }
+    .hud-portrait {
+        display: none;
+    }
+    .fighter-hud b {
+        font-size: 5px;
+    }
+    .fighter-hud > div > span:last-child {
+        font-size: 9px;
+    }
+    .timer strong {
+        font-size: 14px;
+    }
+    .timer small {
+        font-size: 4px;
+    }
+    .timer > span {
+        font-size: 4px;
+    }
+    .control-select {
+        grid-template-columns: 1fr 1fr;
+    }
+    .control-select button b {
+        font-size: 4px;
+    }
+    .control-select button svg {
+        width: 16px;
+        height: 16px;
+    }
+    .mode-select > button strong {
+        font-size: 7px;
+    }
+    .mode-select > button small {
+        display: none;
+    }
+    .setup-checklist {
+        display: none;
+    }
+    .challenger-art {
+        height: 170px;
+    }
+    .challenger-art > .boxer-art {
+        height: 250px;
+        width: 175px;
+    }
+    .challenger-name {
+        font-size: 18px;
+    }
+    .health-track i,
+    .opponent .health-track i {
+        background:
+            repeating-linear-gradient(90deg, transparent 0 12px, #063937 12px 15px),
+            linear-gradient(#c4ff9e 0 24%, #62f64b 24% 65%, #1dac47 65%);
+    }
+    .detail-heading h2 {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 760px) {
+    .app {
+        padding-inline: 10px;
+    }
+    .main-layout {
+        grid-template-columns: 1fr;
+        gap: 17px;
+    }
+    .stage-caption {
+        font-size: 6px;
+        padding: 9px 12px;
+    }
+    .arena-shell,
+    .setup-panel {
+        border-width: 9px;
+    }
+    .fight-hud {
+        grid-template-columns: minmax(0, 1fr) 88px minmax(0, 1fr);
+        inset: 12px;
+        gap: 12px;
+    }
+    .fighter-hud,
+    .fight-view .fighter-hud {
+        padding-left: 40px;
+    }
+    .fighter-hud.opponent,
+    .fight-view .fighter-hud.opponent {
+        padding-left: 0;
+        padding-right: 40px;
+    }
+    .hud-portrait {
+        display: block;
+        width: 33px;
+        height: 48px;
+        border-width: 5px;
+    }
+    .timer strong {
+        font-size: 19px;
+    }
+    .timer small {
+        font-size: 5px;
+    }
+    .fighter-hud b {
+        font-size: 6px;
+    }
+    .fighter-hud > div > span:last-child {
+        font-size: 10px;
+    }
+    .challenger-card {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    .challenger-art {
+        height: 210px;
+        grid-column: 1;
+        margin-top: 0;
+    }
+    .challenger-art > .boxer-art {
+        height: 300px;
+        width: 210px;
+    }
+    .setup-checklist {
+        display: grid;
+        margin-top: 10px;
+    }
+    .setup-checklist li > b {
+        font-size: 4px;
+    }
+    .section-label {
+        font-size: 7px;
+    }
+    .mode-illustration {
+        height: 95px;
+    }
+    .mode-illustration .boxer-art {
+        width: 74px;
+        height: 105px;
+        left: 15%;
+    }
+    .duel-illustration > .boxer-art {
+        left: 10%;
+    }
+    .duel-illustration > .duel-rival {
+        left: auto;
+        right: 10%;
+    }
+    .mode-select > button strong {
+        font-size: 10px;
+    }
+    .mode-select > button small {
+        display: block;
+        font-size: 9px;
+    }
+    .control-select button b {
+        font-size: 7px;
+    }
+    .control-select button svg {
+        width: 22px;
+        height: 22px;
+    }
+    .primary {
+        font-size: 15px;
+    }
+    .quick-controls {
+        border-width: 8px;
+    }
+    .fight-ticket {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-header {
+        padding: 14px 0;
+        gap: 13px;
+    }
+    .brand > div {
+        font-size: 30px;
+        letter-spacing: -2px;
+    }
+    .brand > div > span {
+        letter-spacing: 1px;
+    }
+    .cabinet-nav {
+        gap: 4px;
+    }
+    .cabinet-nav > a,
+    .cabinet-nav > button {
+        font-size: 4px;
+        min-height: 37px;
+        padding: 4px;
+        border-width: 6px;
+    }
+    .cabinet-nav .manual-nav {
+        display: none;
+    }
+    .cabinet-nav .cabinet-audio {
+        min-width: 35px;
+    }
+    .cabinet-nav svg {
+        width: 14px;
+        height: 14px;
+    }
+    .arena-shell,
+    .setup-panel {
+        border-width: 7px;
+    }
+    .fight-hud {
+        inset: 8px;
+        gap: 7px;
+        grid-template-columns: minmax(0, 1fr) 58px minmax(0, 1fr);
+    }
+    .fighter-hud,
+    .fight-view .fighter-hud {
+        padding-left: 26px;
+    }
+    .fighter-hud.opponent,
+    .fight-view .fighter-hud.opponent {
+        padding-left: 0;
+        padding-right: 26px;
+    }
+    .hud-portrait {
+        width: 22px;
+        height: 36px;
+        border-width: 4px;
+    }
+    .fighter-hud > div:first-child {
+        padding: 1px 2px;
+        min-height: 15px;
+        margin-bottom: 3px;
+        gap: 2px;
+    }
+    .fighter-hud b {
+        font-size: 4px;
+        max-width: 55%;
+    }
+    .fighter-hud > div > span:last-child {
+        font-size: 6px;
+    }
+    .fighter-hud > div > span:last-child small {
+        display: none;
+    }
+    .health-track,
+    .opponent .health-track {
+        height: 13px;
+        border-width: 2px;
+        padding: 1px;
+    }
+    .fighter-hud .guard-meter,
+    .fighter-hud .stamina-meter {
+        gap: 2px;
+        font-size: 3px;
+        margin-top: 3px;
+    }
+    .fighter-hud .guard-meter > i,
+    .fighter-hud .stamina-meter > i {
+        height: 5px;
+        padding: 0;
+    }
+    .fighter-hud > small {
+        font-size: 3px;
+        margin-top: 4px;
+    }
+    .timer {
+        border-width: 5px;
+        padding: 3px 0;
+    }
+    .timer strong {
+        font-size: 12px;
+        letter-spacing: -1px;
+    }
+    .timer small,
+    .timer > span {
+        font-size: 3px;
+    }
+    .timer > span {
+        margin-top: 3px;
+    }
+    .stage-caption {
+        font-size: 5px;
+    }
+    .arena-top {
+        font-size: 4px;
+        padding: 6px 8px;
+    }
+    .arena-bottom {
+        font-size: 3px;
+        padding: 7px;
+    }
+    .arena-preview-label {
+        font-size: 3px;
+        bottom: 8px;
+        left: 8px;
+        padding: 5px;
+    }
+    .challenger-card {
+        gap: 8px;
+    }
+    .cabinet-label {
+        font-size: 9px;
+    }
+    .challenger-art {
+        height: 165px;
+        border-width: 5px;
+    }
+    .challenger-art > .boxer-art {
+        width: 165px;
+        height: 235px;
+        bottom: -55px;
+    }
+    .challenger-name {
+        font-size: 15px;
+    }
+    .mode-illustration {
+        height: 80px;
+    }
+    .mode-illustration .boxer-art {
+        width: 62px;
+        height: 90px;
+        left: 9%;
+    }
+    .duel-illustration > .boxer-art {
+        left: 0;
+    }
+    .duel-illustration > .duel-rival {
+        left: auto;
+        right: 0;
+    }
+    .cpu-chip {
+        right: 10%;
+        font-size: 6px;
+        padding: 7px 4px;
+    }
+    .mode-select > button strong {
+        font-size: 8px;
+    }
+    .control-select button b {
+        font-size: 5px;
+    }
+    .primary {
+        font-size: 12px;
+    }
+    .detail-heading h2 {
+        font-size: 8px;
+    }
+    .telemetry-heading > small {
+        font-size: 3px;
+    }
+    .telemetry-heading > span {
+        font-size: 4px;
+    }
+    .detailed-panel {
+        border-width: 8px;
+        padding: 12px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .primary,
+    .secondary,
+    .mode-select > button,
+    .control-select > button,
+    .segmented > button,
+    .library-filters > button,
+    .move-buttons > button {
+        transition: none;
+    }
+}

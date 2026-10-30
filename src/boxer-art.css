@@ -1,0 +1,120 @@
+/* ============================================================
+   BOXER ART STYLES
+   ============================================================ */
+
+.boxer-art {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 64px;
+    aspect-ratio: 1;
+    background-image: url("/art/boxer-moves.png");
+    background-size: 300% 200%;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    vertical-align: middle;
+}
+
+.fighter-select-art .boxer-art {
+    width: 112px;
+    aspect-ratio: 2/3;
+}
+
+.fighter-select-art {
+    gap: 8px;
+    background: #182b2b;
+    border-bottom-color: #526653;
+}
+
+.fighter-select-art .rival {
+    transform: scaleX(-1);
+    filter: saturate(0.8) brightness(0.93);
+}
+
+.boxer-art {
+    clip-path: inset(0 4%);
+}
+
+.season-tag > .boxer-art {
+    width: 90px;
+}
+
+.auto-icon:has(.boxer-art) {
+    width: 68px;
+    height: 76px;
+    background: #233b37;
+    border-color: #63795d;
+}
+
+.auto-icon .boxer-art {
+    width: 66px;
+    aspect-ratio: 2/3;
+}
+
+.feature-strip .boxer-art {
+    width: 46px;
+    aspect-ratio: 2/3;
+}
+
+.mode-select .boxer-art {
+    width: 64px;
+    aspect-ratio: 2/3;
+    margin: auto;
+}
+
+.guide-controls > div {
+    padding: 10px 0;
+    border-bottom: 1px solid #3a5047;
+}
+
+.guide-controls .boxer-art {
+    width: 86px;
+    aspect-ratio: 2/3;
+}
+
+.guide-controls > div > span:last-child {
+    flex: 1;
+}
+
+.key-list > div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 6px;
+}
+
+.key-list .boxer-art {
+    grid-row: span 2;
+    width: 42px;
+    aspect-ratio: 2/3;
+}
+
+.key-list kbd {
+    justify-self: start;
+}
+
+.result > .boxer-art {
+    width: 150px;
+    aspect-ratio: 2/3;
+}
+
+@media (max-width: 600px) {
+    .season-tag > .boxer-art {
+        width: 64px;
+    }
+    .guide-controls {
+        gap: 5px;
+    }
+    .guide-controls > div {
+        gap: 8px;
+    }
+    .guide-controls .boxer-art {
+        width: 58px;
+    }
+    .guide-controls kbd {
+        min-width: 40px;
+        font-size: 9px;
+    }
+    .feature-strip .boxer-art {
+        width: 34px;
+    }
+}

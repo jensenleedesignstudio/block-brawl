@@ -1,0 +1,836 @@
+/* ============================================================
+   RELEASE POLISH STYLES
+   ============================================================ */
+
+/* Motion follows the cabinet's hard pixel edges; combat remains authoritative. */
+:root {
+    --motion-fast: 140ms;
+    --motion-enter: 360ms;
+    --motion-ease: cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 20px;
+}
+
+button,
+a,
+input,
+summary {
+    touch-action: manipulation;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+summary:focus-visible {
+    outline: 3px solid var(--pixel-gold);
+    outline-offset: 4px;
+}
+
+button {
+    transition:
+        transform var(--motion-fast) var(--motion-ease),
+        background-color var(--motion-fast),
+        border-color var(--motion-fast),
+        color var(--motion-fast),
+        box-shadow var(--motion-fast);
+}
+
+button:disabled {
+    transform: none;
+}
+
+.site-header,
+.stage-column,
+.setup-panel {
+    animation: cabinet-arrive 0.5s var(--motion-ease) both;
+}
+
+.setup-panel {
+    animation-delay: 80ms;
+}
+
+.mode-select > button,
+.control-select > button,
+.segmented > button,
+.roster-card,
+.move-buttons > button {
+    transition:
+        transform 180ms var(--motion-ease),
+        background-color 180ms,
+        border-color 180ms,
+        box-shadow 180ms;
+}
+
+@media (hover: hover) {
+    .mode-select > button:hover:not(:disabled),
+    .roster-card:hover:not(:disabled) {
+        transform: translateY(-3px);
+    }
+    .primary:hover:not(:disabled) {
+        filter: brightness(1.1);
+        transform: translateY(-2px);
+    }
+    .cabinet-nav > a:hover,
+    .cabinet-nav > button:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.primary:active:not(:disabled),
+.mode-select > button:active:not(:disabled),
+.roster-card:active:not(:disabled) {
+    transform: translateY(2px);
+}
+
+.primary > .pixel-icon {
+    transition: transform 180ms var(--motion-ease);
+}
+
+.primary:hover:not(:disabled) > .pixel-icon {
+    transform: translateX(3px);
+}
+
+.setup-checklist i,
+.selection-check {
+    animation: selection-arrive 240ms var(--motion-ease) both;
+}
+
+.modal-backdrop {
+    animation: veil-arrive 180ms ease-out both;
+    overscroll-behavior: contain;
+}
+
+.modal-backdrop > .modal,
+.fight-menu[open] > section,
+.arcade-settings[open] {
+    animation: panel-arrive var(--motion-enter) var(--motion-ease) both;
+}
+
+.fight-menu::backdrop,
+.arcade-settings::backdrop {
+    animation: veil-arrive 180ms ease-out both;
+}
+
+.modal {
+    max-height: 90dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.result > .boxer-art {
+    animation: champion-arrive 0.65s var(--motion-ease) both;
+}
+
+.result-stats > div {
+    animation: cabinet-arrive 0.45s var(--motion-ease) both;
+    animation-delay: 120ms;
+}
+
+.result-stats > div:nth-child(2) {
+    animation-delay: 190ms;
+}
+
+.result-stats > div:nth-child(3) {
+    animation-delay: 260ms;
+}
+
+.health-track {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.health-track > i {
+    position: relative;
+    z-index: 1;
+    transition: width 180ms ease-out;
+}
+
+.health-echo {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    bottom: 2px;
+    background: #ffce69;
+    transition: width 650ms cubic-bezier(0.4, 0, 0.2, 1) 140ms;
+    max-width: calc(100% - 4px);
+}
+
+.opponent .health-echo {
+    left: auto;
+    right: 2px;
+}
+
+.fighter-hud .guard-meter > i > b,
+.fighter-hud .stamina-meter > i > b,
+.ultimate-button > i,
+.detail-meter > i {
+    transition: width 100ms linear;
+}
+
+.low-health .health-track {
+    border-color: #ff9479;
+}
+
+.low-health .health-track > i,
+.opponent.low-health .health-track > i {
+    background: linear-gradient(#ffc291 0 24%, #ff745d 24% 65%, #b83742 65%);
+}
+
+.feedback-hit .hud-portrait {
+    filter: brightness(1.5);
+}
+
+.feedback-parry .health-track {
+    box-shadow: 0 0 12px #63e5ff88;
+}
+
+.timer strong {
+    font-variant-numeric: tabular-nums;
+}
+
+.timer-critical strong {
+    color: #ff977c;
+    animation: clock-warning 1s ease-in-out infinite;
+}
+
+.round-overlay:not(.pause) > strong {
+    animation: round-stamp 650ms var(--motion-ease) both;
+}
+
+.round-overlay.pause,
+.knockdown-overlay {
+    animation: veil-arrive 180ms ease-out both;
+}
+
+.combat-feedback {
+    position: absolute;
+    z-index: 4;
+    top: 35%;
+    left: 65%;
+    pointer-events: none;
+    text-align: center;
+    color: #ffe29a;
+    font: 24px/1.6 var(--pixel);
+    text-shadow: 3px 3px #041023;
+    animation: hit-callout 420ms ease-out both;
+}
+
+.combat-feedback.received {
+    left: 20%;
+    color: #ffa18a;
+}
+
+.combat-feedback small {
+    display: block;
+    font: 6px/1.8 var(--pixel);
+    white-space: nowrap;
+}
+
+.combat-feedback.parry {
+    color: #87f4ef;
+}
+
+.combat-feedback.block {
+    color: #c6dbed;
+    font-size: 13px;
+}
+
+.ringside-feed .feed-event {
+    animation: feed-arrive 200ms ease-out both;
+}
+
+.ultimate-button.ready:not(:disabled) {
+    animation: charge-ready 1.8s ease-in-out infinite;
+}
+
+@keyframes cabinet-arrive {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes selection-arrive {
+    from {
+        opacity: 0;
+        transform: scale(0.65);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes veil-arrive {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes panel-arrive {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes champion-arrive {
+    from {
+        opacity: 0;
+        transform: translateY(20px) rotate(-8deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+    }
+}
+
+@keyframes round-stamp {
+    0% {
+        opacity: 0;
+        transform: scale(1.25) translateY(8px);
+    }
+    30%,
+    75% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    100% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+}
+
+@keyframes hit-callout {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 10px) scale(0.85);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -18px);
+    }
+}
+
+@keyframes clock-warning {
+    50% {
+        opacity: 0.6;
+    }
+}
+
+@keyframes charge-ready {
+    50% {
+        box-shadow: 0 0 18px #ffd04a66;
+    }
+}
+
+@keyframes feed-arrive {
+    from {
+        opacity: 0;
+        transform: translateX(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .combat-feedback {
+        font-size: 15px;
+        top: 42%;
+    }
+    .combat-feedback small {
+        font-size: 4px;
+    }
+    .combat-feedback.block {
+        font-size: 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+    .combat-feedback {
+        transform: translateX(-50%);
+    }
+}
+
+/* Second motion pass: a living attract screen and readable move demonstrations. */
+.challenger-art {
+    isolation: isolate;
+}
+
+.challenger-art > .boxer-art {
+    transform-origin: 50% 90%;
+    animation: corner-breathe 3.2s ease-in-out infinite;
+}
+
+.challenger-name {
+    animation: nameplate-in 320ms var(--motion-ease) both;
+}
+
+.challenger-rank {
+    animation: feed-arrive 350ms ease-out both;
+}
+
+.challenger-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        115deg,
+        transparent 25%,
+        #b6e9ff0b 42%,
+        #fff3cf16 48%,
+        transparent 62%
+    );
+    background-size: 300% 100%;
+    animation: portrait-light 9s ease-in-out infinite;
+}
+
+.move-detail {
+    animation: move-panel-in 280ms var(--motion-ease) both;
+}
+
+.move-display > .boxer-art {
+    transform-origin: 50% 90%;
+    --demo-facing: 1;
+    animation: demo-guard 2.6s ease-in-out infinite;
+}
+
+.move-display.mirrored > .boxer-art {
+    --demo-facing: -1;
+}
+
+.demo-jab .move-display > .boxer-art,
+.demo-cross .move-display > .boxer-art {
+    animation: demo-straight 2.3s var(--motion-ease) infinite;
+}
+
+.demo-hook .move-display > .boxer-art {
+    animation: demo-hook 2.6s var(--motion-ease) infinite;
+}
+
+.demo-ultimate .move-display > .boxer-art {
+    animation: demo-uppercut 2.8s var(--motion-ease) infinite;
+}
+
+.demo-duck .move-display > .boxer-art {
+    animation: demo-duck 2.8s var(--motion-ease) infinite;
+}
+
+.demo-dodge .move-display > .boxer-art {
+    animation: demo-slip 3s var(--motion-ease) infinite;
+}
+
+.diagram-crosshair {
+    animation: lab-breathe 4s ease-in-out infinite;
+}
+
+.move-explanation {
+    animation: explanation-in 320ms var(--motion-ease) both;
+}
+
+.move-specs > div {
+    animation: cabinet-arrive 360ms var(--motion-ease) both;
+    animation-delay: 60ms;
+}
+
+.move-specs > div:nth-child(2) {
+    animation-delay: 110ms;
+}
+
+.move-specs > div:nth-child(3) {
+    animation-delay: 160ms;
+}
+
+.arena-preview-label .live-dot,
+.cabinet-status .live-dot {
+    animation: status-beacon 3s ease-in-out infinite;
+}
+
+.fight-telemetry[open] > .telemetry-grid {
+    animation: explanation-in 220ms ease-out both;
+}
+
+@keyframes corner-breathe {
+    0%,
+    100% {
+        translate: 0 0;
+        rotate: -0.4deg;
+    }
+    50% {
+        translate: 0 -4px;
+        rotate: 0.4deg;
+    }
+}
+
+@keyframes nameplate-in {
+    from {
+        opacity: 0;
+        translate: 0 8px;
+    }
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@keyframes portrait-light {
+    0%,
+    65% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+@keyframes move-panel-in {
+    from {
+        opacity: 0.35;
+        translate: 0 5px;
+    }
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@keyframes explanation-in {
+    from {
+        opacity: 0;
+        translate: 6px 0;
+    }
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@keyframes demo-guard {
+    0%,
+    100% {
+        transform: scaleX(var(--demo-facing)) translateY(0);
+    }
+    50% {
+        transform: scaleX(var(--demo-facing)) translateY(-4px);
+    }
+}
+
+@keyframes demo-straight {
+    0%,
+    30%,
+    65%,
+    100% {
+        transform: scaleX(var(--demo-facing)) translate(0, 0) rotate(0);
+    }
+    40% {
+        transform: scaleX(var(--demo-facing)) translate(-4px, 2px) rotate(-2deg);
+    }
+    48% {
+        transform: scaleX(var(--demo-facing)) translate(10px, -3px) rotate(3deg);
+    }
+}
+
+@keyframes demo-hook {
+    0%,
+    25%,
+    70%,
+    100% {
+        transform: rotate(0) translateX(0);
+    }
+    36% {
+        transform: rotate(-5deg) translateX(-5px);
+    }
+    48% {
+        transform: rotate(5deg) translateX(7px);
+    }
+}
+
+@keyframes demo-uppercut {
+    0%,
+    25%,
+    75%,
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+    38% {
+        transform: translateY(9px) rotate(-4deg);
+    }
+    48% {
+        transform: translateY(-14px) rotate(3deg);
+    }
+    60% {
+        transform: translateY(-2px) rotate(0);
+    }
+}
+
+@keyframes demo-duck {
+    0%,
+    25%,
+    75%,
+    100% {
+        transform: translateY(0) scaleY(1);
+    }
+    42%,
+    58% {
+        transform: translateY(12px) scaleY(0.87);
+    }
+}
+
+@keyframes demo-slip {
+    0%,
+    20%,
+    80%,
+    100% {
+        transform: translateX(0) rotate(0);
+    }
+    35% {
+        transform: translateX(-18px) rotate(-6deg);
+    }
+    65% {
+        transform: translateX(18px) rotate(6deg);
+    }
+}
+
+@keyframes lab-breathe {
+    0%,
+    100% {
+        opacity: 0.5;
+        scale: 0.97;
+    }
+    50% {
+        opacity: 1;
+        scale: 1.03;
+    }
+}
+
+@keyframes status-beacon {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.45;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .move-display.mirrored > .boxer-art {
+        transform: scaleX(-1);
+    }
+}
+
+/* Rotate the original sunburst in place, independently of the portrait. */
+@property --challenger-aura-angle {
+    syntax: "<angle>";
+    initial-value: 15deg;
+    inherits: false;
+}
+
+.challenger-art {
+    background-image:
+        repeating-conic-gradient(
+            from var(--challenger-aura-angle) at 50% 60%,
+            #dc692522 0deg 10deg,
+            transparent 10deg 25deg
+        ),
+        radial-gradient(ellipse, #703d28, #101f32 75%);
+    animation: challenger-aura-spin 24s linear infinite;
+}
+
+@keyframes challenger-aura-spin {
+    from {
+        --challenger-aura-angle: 15deg;
+    }
+    to {
+        --challenger-aura-angle: 375deg;
+    }
+}
+
+/* Finishers use short title beats; input and the arena remain visible. */
+.ultimate-cinematic {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    overflow: hidden;
+    box-shadow:
+        inset 0 22px #020b2099,
+        inset 0 -22px #020b2099;
+    animation: finisher-veil 1.4s ease-out both;
+}
+
+.ultimate-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 47%;
+    padding: 12px 20px;
+    text-align: center;
+    background: linear-gradient(90deg, transparent, #07152deb 20% 80%, transparent);
+    border-block: 2px solid #ffcf4566;
+    animation: finisher-title 1.35s cubic-bezier(0.16, 0.8, 0.25, 1) both;
+    color: #ffe19a;
+    text-shadow: 3px 3px #071124;
+}
+
+.ultimate-title small,
+.ultimate-title span {
+    display: block;
+    font: 6px/1.8 var(--pixel);
+    letter-spacing: 2px;
+}
+
+.ultimate-title b {
+    display: block;
+    font: clamp(12px, 2vw, 26px) / 1.8 var(--pixel);
+    font-style: italic;
+}
+
+.ultimate-title span {
+    color: #a9dfe8;
+    font-size: 5px;
+}
+
+.rival-ultimate .ultimate-title {
+    border-color: #ff8c69;
+    color: #ffa889;
+}
+
+.knockdown-banner {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #07112388;
+    animation: down-banner 1.15s ease-out both;
+}
+
+.knockdown-banner small {
+    font: 7px/2 var(--pixel);
+    color: #bce9ed;
+    letter-spacing: 2px;
+}
+
+.knockdown-banner b {
+    font: clamp(14px, 3.2vw, 40px) / 1.8 var(--pixel);
+    color: #ffce69;
+    text-shadow: 4px 4px #722d2e;
+    animation: down-stamp 1.15s var(--motion-ease) both;
+}
+
+.knockdown-overlay > strong {
+    animation: count-beat 300ms var(--motion-ease) both;
+}
+
+@keyframes finisher-title {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px) skewX(-8deg);
+    }
+    16%,
+    65% {
+        opacity: 1;
+        transform: translateX(0) skewX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(35px);
+    }
+}
+
+@keyframes finisher-veil {
+    0% {
+        opacity: 0;
+    }
+    15%,
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes down-banner {
+    0% {
+        opacity: 0;
+    }
+    12%,
+    65% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes down-stamp {
+    0% {
+        transform: scale(1.4) rotate(-4deg);
+    }
+    18%,
+    65% {
+        transform: scale(1) rotate(-2deg);
+    }
+    100% {
+        transform: scale(1.05) rotate(-2deg);
+    }
+}
+
+@keyframes count-beat {
+    from {
+        transform: scale(1.16);
+        opacity: 0.6;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ultimate-cinematic,
+    .knockdown-banner {
+        display: none;
+    }
+}

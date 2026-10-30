@@ -1,15 +1,133 @@
-.app.fight-view{position:fixed;inset:0;z-index:8;max-width:none;width:100%;height:100dvh;padding:0;background:#15101e;overflow:hidden}
-.fight-view>.site-header,.fight-view>footer,.fight-view .page-heading,.fight-view .quick-controls,.fight-view .below-arena,.fight-view .feature-strip,.fight-view .standalone-notice{display:none}
-.fight-view>main{height:100%;padding:0}
-.fight-view .main-layout{display:block;height:100%}
-.fight-view .stage-column{height:100%;display:flex;align-items:center;justify-content:center;padding:56px 12px 12px}
-.fight-view.has-motion-camera .stage-column{padding-right:clamp(175px,22vw,300px)}
-.fight-view .arena-shell{width:min(100%,calc((100dvh - 150px)*1000/580));max-height:100%;margin:auto}
-.fight-view .setup-panel{position:static;padding:0;border:0;box-shadow:none;background:none}
-.fight-view .setup-panel:before,.fight-view .setup-panel>:not(.camera-panel){display:none}
-.fight-view .setup-panel>.camera-panel{display:block;position:absolute;right:12px;top:58px;width:clamp(150px,20vw,275px);margin:0;max-height:calc(100dvh - 74px);overflow:auto;z-index:5;box-shadow:0 5px 20px #0008}
-.fight-view .camera-panel .micro,.fight-view .camera-panel .overlay-toggle{display:none}
-.fight-view-controls{position:absolute;left:12px;right:12px;top:10px;display:flex;justify-content:flex-end;gap:10px;z-index:6}
-.fight-view-controls .secondary{padding:8px;font-size:7px}
-@media(max-width:600px){.fight-view.has-motion-camera .stage-column{padding:210px 8px 8px}.fight-view .arena-shell{width:min(100%,calc((100dvh - 280px)*1000/580))}.fight-view .setup-panel>.camera-panel{width:150px;top:50px;padding:6px}.fight-view .camera-debug{font-size:6px}}
-.hand-tracking-status,.glove-start-status{font-size:10px;line-height:1.5;color:#e2c6ed;margin-top:8px}
+/* ============================================================
+   FIGHT VIEW STYLES
+   ============================================================ */
+
+.app.fight-view {
+    position: fixed;
+    inset: 0;
+    z-index: 8;
+    max-width: none;
+    width: 100%;
+    height: 100dvh;
+    padding: 0;
+    background: #0f1412;
+    overflow: hidden;
+}
+
+.fight-view > .site-header,
+.fight-view > footer,
+.fight-view .page-heading,
+.fight-view .quick-controls,
+.fight-view .below-arena,
+.fight-view .feature-strip,
+.fight-view .standalone-notice {
+    display: none;
+}
+
+.fight-view > main {
+    height: 100%;
+    padding: 0;
+}
+
+.fight-view .main-layout {
+    display: block;
+    height: 100%;
+}
+
+.fight-view .stage-column {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 12px 12px;
+}
+
+.fight-view.has-motion-camera .stage-column {
+    padding-right: clamp(175px, 22vw, 300px);
+}
+
+.fight-view .arena-shell {
+    width: min(100%, calc((100dvh - 150px) * 1000 / 580));
+    max-height: 100%;
+    margin: auto;
+}
+
+.fight-view .setup-panel {
+    position: static;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    background: none;
+}
+
+.fight-view .setup-panel:before,
+.fight-view:not(.game-shell) .setup-panel > :not(.camera-panel) {
+    display: none;
+}
+
+.fight-view .setup-panel > .camera-panel {
+    display: block;
+    position: absolute;
+    right: 12px;
+    top: 58px;
+    width: clamp(150px, 20vw, 275px);
+    margin: 0;
+    max-height: calc(100dvh - 74px);
+    overflow: auto;
+    z-index: 5;
+    box-shadow: 0 5px 20px #00000088;
+}
+
+.fight-view .camera-panel .micro,
+.fight-view .camera-panel .overlay-toggle {
+    display: none;
+}
+
+.fight-view-controls {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    z-index: 6;
+}
+
+.fight-view-controls .secondary {
+    padding: 8px;
+    font-size: 7px;
+}
+
+@media (max-width: 600px) {
+    .fight-view.has-motion-camera .stage-column {
+        padding: 210px 8px 8px;
+    }
+    .fight-view .arena-shell {
+        width: min(100%, calc((100dvh - 280px) * 1000 / 580));
+    }
+    .fight-view .setup-panel > .camera-panel {
+        width: 150px;
+        top: 50px;
+        padding: 6px;
+    }
+    .fight-view .camera-debug {
+        font-size: 6px;
+    }
+}
+
+.hand-tracking-status,
+.glove-start-status {
+    font-size: 10px;
+    line-height: 1.5;
+    color: #bed1c9;
+    margin-top: 8px;
+}
+
+.fight-view .stage-caption {
+    display: none;
+}
+
+.fight-view .camera-panel .ultimate-gesture-tip {
+    display: block;
+}

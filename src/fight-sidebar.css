@@ -1,0 +1,72 @@
+/* ============================================================
+   FIGHT SIDEBAR STYLES
+   ============================================================ */
+
+/* Keep the windowed fight sidebar within its grid track after fullscreen. */
+.setup-panel.in-fight-panel {
+    min-width: 0;
+    container-type: inline-size;
+}
+
+.app:not(.fight-view) .in-fight-panel .match-info {
+    margin: 12px 0;
+    padding: 10px 0;
+    gap: 8px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.in-fight-panel .match-info > * {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.in-fight-panel .compact-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+    margin: 12px 0;
+}
+
+.in-fight-panel .compact-controls > div {
+    display: grid;
+    grid-template-columns: 30px 64px minmax(0, 1fr);
+    gap: 8px;
+    min-width: 0;
+    padding: 5px 4px;
+    align-items: center;
+    border-bottom: 1px solid #38718a55;
+    font-size: 11px;
+}
+
+.in-fight-panel .compact-controls .boxer-art {
+    width: 30px;
+    height: 36px;
+    min-width: 0;
+    margin: 0;
+}
+
+.in-fight-panel .compact-controls kbd {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: 28px;
+    min-height: 0;
+    padding: 4px 2px;
+    font-size: 7px;
+    line-height: 16px;
+    white-space: nowrap;
+    border-width: 2px;
+    box-shadow: 2px 2px #020b20;
+}
+
+.in-fight-panel .compact-controls > div > span:last-child {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
+}
+
+@container (min-width:420px) {
+    .in-fight-panel .compact-controls {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

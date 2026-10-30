@@ -1,0 +1,263 @@
+/* Vintage field-house cabinet. Combat meters retain their established colors. */
+:root {
+    --arcade-glass: #1b2b20ed;
+    --arcade-edge: #aa915655;
+    --paper: #f1dfb4;
+    --muted: #b4ad92;
+    --pixel-mint: #d4cfac;
+    --pixel-gold: #e5b75e;
+    --pixel-cyan: #b5995e;
+    --pixel-navy: #141a13;
+    --brass: #c4a164;
+    --sage: #9da981;
+    --panel: #26372d;
+    --line: #777754;
+    --frame-cyan: url("/art/cabinet-frame-olive.svg");
+    --frame-gold: url("/art/cabinet-frame-brass.svg");
+    background: #1b2119;
+    color: var(--paper);
+}
+body {
+    background:
+        radial-gradient(ellipse at 18% 0, #71604455, transparent 58%),
+        repeating-linear-gradient(90deg, #241f18 0 100px, #32291d 101px 103px, #282219 104px 205px);
+    color: var(--paper);
+}
+.app .pixel-backdrop {
+    opacity: 0.3;
+}
+.app .site-header {
+    background:
+        repeating-linear-gradient(0deg, #ffffff03 0 1px, transparent 1px 4px),
+        linear-gradient(100deg, #233c2e, #14261c 65%, #2d3b29);
+    border-block: 3px solid #a17d3f;
+    box-shadow:
+        0 5px #100f0b,
+        inset 0 1px #ebcc85;
+}
+.app .brand > div {
+    color: #f2dfac;
+    text-shadow:
+        2px 2px #312a19,
+        4px 4px #9b7a3d,
+        7px 7px #10160e;
+}
+.app .brand em {
+    color: #e2bd70;
+    text-shadow:
+        2px 2px #55341b,
+        4px 4px #93703a,
+        7px 7px #10160e;
+}
+.app .brand > div > span {
+    color: #b7b58d;
+    letter-spacing: 2px;
+}
+.app .cabinet-nav > a,
+.app .cabinet-nav > button {
+    background: #1d2c21;
+    color: #ead8ac;
+    box-shadow:
+        3px 4px #11160f,
+        inset 0 2px #667454;
+}
+.app .cabinet-nav .active {
+    background: #3b4430;
+    color: #ffdda0;
+}
+.app .cabinet-nav .cabinet-audio {
+    color: #e4bc70;
+}
+.app .arcade-welcome {
+    border-color: #82764f;
+    color: #dfcca0;
+}
+.app .eyebrow,
+.app .panel-stamp,
+.app .welcome-ticket {
+    color: #c8ad72;
+}
+.app .stage-caption,
+.app .arena-top,
+.app .arena-bottom {
+    background: #1d3024;
+    border-color: #a68c55;
+    color: #d8c493;
+    box-shadow: inset 0 -2px #384733;
+}
+.app .stage-caption b {
+    color: #f0d9a5;
+}
+.app .arena-shell,
+.app .setup-panel,
+.app .detailed-panel,
+.app .quick-controls {
+    background-color: #1a2b20;
+    box-shadow: 5px 6px #11160e;
+}
+.app .setup-panel {
+    background-image:
+        repeating-linear-gradient(0deg, #ffffff03 0 1px, transparent 1px 5px),
+        radial-gradient(ellipse at top, #354832, #17271e 75%);
+}
+.app .cabinet-label,
+.app .section-label {
+    background: #17291e;
+    border-color: #75633b;
+    color: #f4deb0;
+}
+.app .cabinet-label > span {
+    color: #d9b66e;
+}
+.app .section-label > span {
+    background: #4c5237;
+    color: #e9d5a2;
+}
+.app .challenger-card {
+    background: #19281e;
+    border-color: #a58b52;
+}
+.app .challenger-art {
+    background: radial-gradient(ellipse at 50% 42%, #a06c38 0, #65482c 34%, #292a1e 70%);
+    border-color: #a18449;
+    box-shadow: inset 0 0 0 4px #1a2017;
+}
+.app .challenger-name {
+    background: linear-gradient(#6d4c28, #3e2d1b);
+    color: #f5dfad;
+    border-color: #bb9450;
+    text-shadow: 3px 3px #231d12;
+}
+.app .secondary,
+.app .mode-select > button,
+.app .control-select > button,
+.app .segmented > button,
+.app .library-filters > button,
+.app .move-buttons > button {
+    background-color: #223428;
+    color: #ded2ab;
+    box-shadow: 3px 4px #11160f;
+}
+.app .secondary:hover:not(:disabled) {
+    background: #3c4b30;
+}
+.app .mode-select > button.selected,
+.app .control-select > button.selected {
+    background: #4c5030;
+    color: #ffe3a1;
+}
+.app .mode-select > button strong {
+    background: #1a281d;
+    border-color: #6d724a;
+    color: #e0d1a3;
+}
+.app .mode-select > button.selected strong {
+    background: #796137;
+    color: #fff0be;
+    border-color: #c8a75f;
+}
+.app .mode-illustration,
+.app .duel-illustration {
+    background: radial-gradient(ellipse at 50% 70%, #6d7950, #233529 80%);
+}
+.app .cpu-chip {
+    background: #243d2b;
+    border-color: #b49b61;
+    color: #ebd7a3;
+}
+.app .segmented > button.selected {
+    background: linear-gradient(#f1d898, #c79b4e);
+    color: #24291b;
+    box-shadow:
+        3px 4px #11160f,
+        inset 0 -3px #8b6c35;
+}
+.app .primary {
+    border-image-source: var(--frame-gold);
+    background: linear-gradient(#5295c5 0 5%, #2364ad 5% 12%, #18468f 12% 78%, #103364 78%);
+    color: #fff0c6;
+    box-shadow:
+        4px 5px #11160f,
+        inset 0 2px #a3c4cf,
+        inset 0 -4px #162c47;
+    text-shadow: 2px 3px #152d45;
+}
+.app .primary:hover:not(:disabled) {
+    background: linear-gradient(#78afd0 0 6%, #347dc0 6% 78%, #194575 78%);
+}
+.app .primary:active:not(:disabled) {
+    background: #233f63;
+}
+.app .compact-controls kbd,
+.app .quick-controls kbd {
+    background: linear-gradient(#535a49, #2f392d);
+    border-color: #9c9c77 #535e43 #151e14;
+    color: #f2dfad;
+    box-shadow: 3px 4px #10170e;
+}
+.app .match-info,
+.app .fight-tip {
+    border-color: #7f7951;
+    color: #c7bd99;
+}
+.app .difficulty-note {
+    color: #b8ba9a;
+}
+.app .setup-checklist li {
+    border-color: #5f6846;
+    background: #25372a;
+    color: #cabb92;
+}
+.app .setup-checklist li.complete {
+    border-color: #a18d55;
+    color: #e1c88c;
+}
+.app .detailed-panel,
+.app .prep-card,
+.app .roster-card,
+.app .move-detail,
+.app .session-strip {
+    background-color: #223127;
+    border-color: #756e47;
+}
+.app .timer {
+    background: #20291c;
+    border-image-source: var(--frame-gold);
+    color: #f3d28b;
+}
+.app .timer strong {
+    color: #ffe1a0;
+    text-shadow: 3px 3px #47371c;
+}
+.app .hud-portrait {
+    border-image-source: var(--frame-gold);
+    background-color: #263c2b;
+}
+.app .fighter-hud {
+    background-color: #15261de8;
+}
+.app.fight-view .arena-shell {
+    background: #1b261c;
+}
+.app .fighter-hud.opponent {
+    background-color: #35271ee8;
+}
+.app .pixel-icon {
+    filter: drop-shadow(1px 2px #182016);
+}
+.app .arena-preview-label {
+    background: #18261ee8;
+    border-color: #b09b65;
+    color: #e8d6a6;
+}
+.app .field-heading,
+.app .panel-heading,
+.app .prep-card,
+.app .archive-empty,
+.app .arcade-status {
+    border-color: #756e47;
+}
+.app .text-button {
+    color: #dfc78f;
+}
+/* Health, guard, stamina and animated effects deliberately retain their colors. */

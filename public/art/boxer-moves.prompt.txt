@@ -1,0 +1,3 @@
+Generated using the built-in imagegen tool with the user's attached boxer as the character and style reference.
+
+Prompt: Create a transparent 3-column, 2-row game sprite atlas of the same stocky, expressive moustached boxer with short dark hair, blue gloves, mint rolled-sleeve shirt, suspenders, green trousers with ochre stripe and purple boots. Match the reference's chunky pixel clusters, dark outlines, stepped shading and muted arcade palette. Six full-body poses in reading order: guard, jab, hook, block, duck, raised-glove uppercut. Keep scale consistent, center each pose in its cell, and omit text and grid lines.

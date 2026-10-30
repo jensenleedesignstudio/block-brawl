@@ -1,0 +1,9 @@
+# Online parties
+
+Select ONLINE VS, enter a fighter name, and choose Create party. Share the six-character code or Copy invite link. An invite opens the game in online mode with the code prefilled; the friend confirms Join party. Both players choose controls and ready up using the existing match flow.
+
+This extends the existing Socket.IO two-player implementation. `src/party.ts` validates codes and creates public invites without reconnect tokens or unrelated URL query data. `src/App.tsx` presents the lobby and manual copy fallback. `src/game-shell.css` keeps party inputs within the corner panel. Before a match, explicit departures now free the seat immediately and reindex the remaining fighter. Match-time departure, disconnect, rematch, simulation, health, timer and input rules are unchanged by this work.
+
+`Dockerfile` and `.dockerignore` package the production client and Node server together without local credentials or Python training artifacts. README documents Node/container startup, HTTPS, WebSockets, and single-instance hosting. No public deployment was performed and no public URL has been provisioned. Rooms remain in memory and disappear when the server restarts. A static-only website host is insufficient for this server. CPU models need the separate local Python model service; parties need only Node.
+
+Validation: production build and lint pass; 108 core regression tests, 3 network tests, and 2 invite tests pass. Network coverage includes invalid codes, normalized codes, lobby departure/host transfer, vacant seat reuse, ready gating, authoritative combat, disconnect/resume, rematch, and online motion controls. Chrome manual checks created a party, opened its invite in a second tab, confirmed code prefill, and joined with both fighters connected and READY UP available. Cross-internet latency and Docker image execution have not been tested.

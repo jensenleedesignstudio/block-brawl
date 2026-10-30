@@ -1,0 +1,801 @@
+/* ============================================================
+   ONE CONTINUOUS ARCADE WORLD
+   ============================================================ */
+
+:root {
+    background: #11152f;
+    --arcade-glass: #0b1932e8;
+    --arcade-edge: #82caca55;
+}
+
+body {
+    background: transparent;
+    overflow-x: hidden;
+}
+
+.pixel-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100dvh;
+    image-rendering: pixelated;
+    pointer-events: none;
+    transition: opacity 800ms ease;
+}
+
+.pixel-backdrop.quiet {
+    opacity: 0.5;
+}
+
+.app {
+    width: min(100%, 1600px);
+    padding: 0 clamp(18px, 3.5vw, 64px);
+    position: relative;
+    isolation: isolate;
+}
+
+/* ------------------------------------------------------------
+   A LIGHT HEADER AND ONE CLEAR INVITATION TO PLAY
+   ------------------------------------------------------------ */
+
+.site-header {
+    height: 100px;
+    min-height: 100px;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    gap: 24px;
+}
+
+.site-header::before,
+.site-header::after {
+    display: none;
+}
+
+.brand > div {
+    font-size: clamp(25px, 3.1vw, 45px);
+    letter-spacing: -2px;
+    text-shadow:
+        3px 3px #102139,
+        5px 5px #040d20;
+}
+
+.brand > div > span {
+    font-size: 5px;
+    letter-spacing: 2.4px;
+    color: #9bcbd5;
+    margin-top: 12px;
+}
+
+.cabinet-nav {
+    gap: 10px;
+}
+
+.cabinet-nav > a,
+.cabinet-nav > button {
+    border: 1px solid #9ccbd52b;
+    border-image: none;
+    background: #0c1c354d;
+    box-shadow: none;
+    min-height: 38px;
+    padding: 10px 12px;
+    font-size: 6px;
+    color: #b2cbd9;
+    transition:
+        background 180ms,
+        color 180ms,
+        translate 180ms;
+}
+
+.cabinet-nav .active {
+    border-image: none;
+    border-color: #ffcf4570;
+    color: #ffe09a;
+    background: #ffe09a0b;
+    box-shadow: inset 0 -2px #ffcf4588;
+}
+
+.cabinet-nav .cabinet-audio {
+    min-width: 40px;
+}
+
+main {
+    padding-top: 0;
+}
+
+.arcade-welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 18px;
+    padding: 16px 0 26px;
+    animation: world-arrive 650ms var(--motion-ease) both;
+}
+
+.arcade-welcome .eyebrow {
+    font-size: 5px;
+    color: #a3d7d8;
+    letter-spacing: 1.5px;
+}
+
+.arcade-welcome h1 {
+    font: clamp(13px, 1.5vw, 22px) / 1.8 var(--pixel);
+    margin: 12px 0 0;
+    letter-spacing: -0.5px;
+    color: #fff1cc;
+    text-shadow: 2px 3px #07152a;
+    transform: none;
+}
+
+.welcome-ticket {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 5px;
+    color: #a2bccc;
+    font: 5px/1.8 var(--pixel);
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.welcome-ticket i {
+    width: 3px;
+    height: 3px;
+    background: #ffcf45;
+}
+
+/* ------------------------------------------------------------
+   THE STAGE AND PLAYER SELECT SHARE ONE QUIET FRAME
+   ------------------------------------------------------------ */
+
+.main-layout {
+    grid-template-columns: minmax(0, 1fr) 302px;
+    gap: 22px;
+    align-items: start;
+    padding: 16px;
+    background: linear-gradient(135deg, #8edfe012, #13213c66 50%);
+    border: 1px solid #8bcfd52b;
+    box-shadow:
+        0 18px 70px #030c2044,
+        inset 0 1px #d7ffff0d;
+    position: relative;
+}
+
+.stage-column,
+.setup-panel {
+    min-width: 0;
+}
+
+.stage-caption {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: 0 2px 12px;
+    font-size: 5px;
+    color: #8fb7c9;
+}
+
+.stage-caption::before {
+    display: none;
+}
+
+.stage-caption b {
+    color: #ffe3a0;
+    letter-spacing: 2px;
+}
+
+.arena-shell {
+    border: 1px solid #83cedc77;
+    border-image: none;
+    box-shadow:
+        0 0 0 3px #08162c,
+        0 10px 35px #020b2044;
+    background: #0b1b32;
+    transition: box-shadow 300ms ease;
+}
+
+.arena-top {
+    background: #08192ce6;
+    border-bottom: 1px solid #8cc6d52b;
+    padding: 8px 12px;
+    font-size: 5px;
+}
+
+.arena-top small,
+.arena-bottom > span:last-child {
+    display: none;
+}
+
+.arena-bottom {
+    padding: 9px 12px;
+    background: #08192ce6;
+    border-top: 1px solid #8cc6d52b;
+    font-size: 4px;
+    color: #a6c8d0;
+}
+
+.fight-telemetry {
+    border-top: 1px solid #8cc6d526;
+    background: #08192c;
+}
+
+.telemetry-heading {
+    padding: 8px 12px;
+}
+
+.telemetry-heading > span {
+    font-size: 4px;
+}
+
+.telemetry-heading > small {
+    font-size: 3px;
+}
+
+/* ------------------------------------------------------------
+   COMPACT SELECTIONS, WITH DETAIL ONLY WHEN NEEDED
+   ------------------------------------------------------------ */
+
+.setup-panel {
+    border: 0;
+    border-image: none;
+    box-shadow: none;
+    background: transparent;
+    padding: 0 0 0 3px;
+}
+
+.setup-panel::before,
+.setup-panel::after,
+.setup-checklist {
+    display: none;
+}
+
+.challenger-card {
+    margin-bottom: 10px;
+}
+
+.cabinet-label {
+    background: transparent;
+    border: 0;
+    padding: 0 0 12px;
+    font-size: 7px;
+    color: #fff1cc;
+    text-shadow: none;
+    letter-spacing: 1px;
+}
+
+.cabinet-label > span {
+    color: #ffcf45;
+}
+
+.challenger-art {
+    height: 180px;
+    margin-top: 0;
+    border: 1px solid #8cc6d54d;
+    border-image: none;
+    box-shadow: inset 0 0 40px #020b2055;
+}
+
+.challenger-art > .boxer-art {
+    width: 184px;
+    height: 266px;
+    bottom: -64px;
+}
+
+.challenger-art::before {
+    border-color: #dfc27d26;
+    inset: 5px;
+}
+
+.challenger-name {
+    font-size: 18px;
+    padding: 7px 4px;
+    border-top: 1px solid #ffd06188;
+    background: #833f2ddf;
+    box-shadow: none;
+}
+
+.challenger-rank {
+    font-size: 4px;
+}
+
+.section-label {
+    margin-top: 12px;
+    padding: 5px 0 8px;
+    border: 0;
+    background: transparent;
+    font-size: 5px;
+    letter-spacing: 1px;
+    color: #b3cfda;
+}
+
+.section-label > span {
+    background: none;
+    color: #6a99ac;
+    padding: 0 8px 0 0;
+}
+
+.mode-select {
+    gap: 10px;
+}
+
+.mode-select > button {
+    border: 1px solid #83b8ce44;
+    border-image: none;
+    background: #0a1b3277;
+    padding: 5px 7px 9px;
+    box-shadow: 0 3px #06132a;
+    transition:
+        border-color 200ms,
+        background 200ms,
+        transform 200ms;
+}
+
+.mode-select > button.selected {
+    border-image: none;
+    border-color: #ffcf45;
+    background: linear-gradient(145deg, #28466c, #152e4a);
+    box-shadow:
+        0 3px #ad7a2c,
+        inset 0 0 18px #ffcf4509;
+}
+
+.mode-illustration {
+    height: 62px;
+}
+
+.mode-illustration .boxer-art {
+    width: 55px;
+    height: 77px;
+}
+
+.duel-illustration > .boxer-art {
+    width: 48px;
+    height: 69px;
+}
+
+.mode-select > button strong {
+    font-size: 7px;
+    margin-top: 5px;
+}
+
+.mode-select > button small,
+.difficulty-note,
+.control-select button small {
+    display: none;
+}
+
+.cpu-chip {
+    font-size: 4px;
+    padding: 4px;
+}
+
+.segmented {
+    gap: 6px;
+    border: 0;
+    background: none;
+    padding: 0;
+}
+
+.segmented > button {
+    padding: 10px 3px;
+    border: 1px solid #83b8ce33;
+    border-image: none;
+    background: #0a1b3277;
+    box-shadow: none;
+    font-size: 6px;
+}
+
+.segmented > button.selected {
+    border-image: none;
+    border-color: #78d6d3;
+    background: #214d62;
+    color: #d1fff0;
+    box-shadow: inset 0 -2px #78d6d355;
+}
+
+.control-select {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.control-select > button {
+    justify-content: center;
+    padding: 11px 6px;
+    gap: 8px;
+    border: 1px solid #83b8ce33;
+    border-image: none;
+    background: #0a1b3277;
+    box-shadow: none;
+}
+
+.control-select > button.selected {
+    border-image: none;
+    border-color: #78d6d3;
+    background: #214d62;
+    box-shadow: none;
+}
+
+.control-select button b {
+    font-size: 5px;
+}
+
+.control-select button > i {
+    display: none;
+}
+
+.setup-panel > .primary {
+    margin-top: 16px;
+    min-height: 48px;
+    font-size: 12px;
+    border: 1px solid #fff0b3;
+    border-image: none;
+    background: linear-gradient(#ffdb73, #f5ae45);
+    color: #372b2a;
+    text-shadow: none;
+    box-shadow:
+        0 4px #a66735,
+        0 7px #06132a,
+        0 0 25px #ffcc4522;
+    position: relative;
+    overflow: hidden;
+}
+
+.setup-panel > .primary::after {
+    content: "";
+    position: absolute;
+    inset: -20% -60%;
+    pointer-events: none;
+    background: linear-gradient(110deg, transparent 43%, #fff9d944 49%, transparent 55%);
+    animation: start-shimmer 6s ease-in-out infinite;
+}
+
+.start-note {
+    font-size: 10px;
+    color: #89aab9;
+    margin-top: 11px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* ------------------------------------------------------------
+   AN OPTIONAL PLAYBOOK INSTEAD OF A LONG LANDING PAGE
+   ------------------------------------------------------------ */
+
+.arcade-playbook {
+    margin-top: 24px;
+    border-top: 1px solid #8cc6d52b;
+    border-bottom: 1px solid #8cc6d52b;
+    background: #0b19324d;
+}
+
+.arcade-playbook > summary {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 19px 16px;
+    cursor: pointer;
+    list-style: none;
+    color: #c3d9df;
+    font: 6px/1.8 var(--pixel);
+    transition: background 200ms;
+}
+
+.arcade-playbook > summary::-webkit-details-marker {
+    display: none;
+}
+
+.arcade-playbook > summary:hover {
+    background: #83c9d40b;
+}
+
+.arcade-playbook > summary small {
+    color: #7e9dac;
+    font-size: 4px;
+    letter-spacing: 1px;
+}
+
+.playbook-plus {
+    margin-left: auto;
+    color: #ffda76;
+    font-size: 14px;
+    transition: rotate 250ms;
+}
+
+.arcade-playbook[open] .playbook-plus {
+    rotate: 45deg;
+}
+
+.arcade-playbook[open] > section {
+    animation: world-arrive 400ms var(--motion-ease) both;
+}
+
+.arcade-playbook .detailed-panel {
+    margin: 0 0 20px;
+    border: 1px solid #83b8ce33;
+    border-image: none;
+    box-shadow: none;
+    background: #0b1932e8;
+    padding: 22px;
+}
+
+footer {
+    margin: 0;
+    border: 0;
+    padding: 22px 0 28px;
+    color: #7a9aaf;
+    font-size: 4px;
+    letter-spacing: 1px;
+}
+
+footer > span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ------------------------------------------------------------
+   MATCH ENTRY AND SMALL SCREENS
+   ------------------------------------------------------------ */
+
+.app.fight-view .arcade-welcome,
+.app.fight-view .arcade-playbook,
+.app.fight-view .pixel-backdrop {
+    display: none;
+}
+
+.app.fight-view .main-layout {
+    border: 0;
+    box-shadow: none;
+    background: none;
+}
+
+.app.fight-view .arena-stage {
+    animation: enter-the-ring 600ms var(--motion-ease) both;
+}
+
+@keyframes world-arrive {
+    from {
+        opacity: 0;
+        translate: 0 12px;
+    }
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@keyframes enter-the-ring {
+    from {
+        opacity: 0;
+        scale: 1.025;
+    }
+    to {
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+@keyframes start-shimmer {
+    0%,
+    65% {
+        translate: -30% 0;
+    }
+    100% {
+        translate: 30% 0;
+    }
+}
+
+@media (min-width: 1700px) {
+    .main-layout {
+        grid-template-columns: minmax(0, 1fr) 326px;
+    }
+    .challenger-art {
+        height: 205px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .app {
+        padding-inline: 22px;
+    }
+    .main-layout {
+        grid-template-columns: minmax(0, 1fr) 270px;
+        gap: 16px;
+        padding: 12px;
+    }
+    .brand > div {
+        font-size: 30px;
+    }
+    .cabinet-nav > a,
+    .cabinet-nav > button {
+        font-size: 5px;
+        padding: 9px;
+    }
+    .challenger-art {
+        height: 160px;
+    }
+    .challenger-art > .boxer-art {
+        width: 168px;
+        height: 245px;
+    }
+}
+
+@media (max-width: 800px) {
+    .site-header {
+        min-height: 110px;
+        height: auto;
+        padding: 18px 0 10px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .brand > div {
+        font-size: 35px;
+    }
+    .cabinet-nav {
+        width: auto;
+        gap: 6px;
+    }
+    .cabinet-nav .active,
+    .cabinet-nav .manual-nav {
+        display: none;
+    }
+    .arcade-welcome {
+        padding-block: 18px 22px;
+    }
+    .welcome-ticket {
+        display: none;
+    }
+    .main-layout {
+        grid-template-columns: 1fr;
+        padding: 12px;
+        gap: 22px;
+    }
+    .setup-panel {
+        padding: 0;
+    }
+    .challenger-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 8px 18px;
+    }
+    .cabinet-label {
+        grid-column: 1 / -1;
+        padding-bottom: 3px;
+    }
+    .challenger-art {
+        grid-column: 1;
+        height: 175px;
+    }
+    .challenger-art > .boxer-art {
+        width: 185px;
+        height: 270px;
+    }
+    .mode-illustration {
+        height: 65px;
+    }
+    .mode-select > button {
+        padding: 6px 12px 10px;
+    }
+    .mode-select > button strong {
+        font-size: 8px;
+    }
+    .section-label {
+        font-size: 6px;
+    }
+    .control-select button b {
+        font-size: 6px;
+    }
+    .setup-panel > .primary {
+        font-size: 14px;
+    }
+    footer {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .app {
+        padding-inline: 12px;
+    }
+    .site-header {
+        min-height: 105px;
+        gap: 16px;
+    }
+    .brand > div {
+        font-size: 29px;
+    }
+    .brand > div > span {
+        font-size: 4px;
+        letter-spacing: 1.5px;
+    }
+    .cabinet-nav {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    .cabinet-nav > button {
+        min-height: 32px;
+        padding: 8px 10px;
+        font-size: 4px;
+    }
+    .cabinet-nav .cabinet-audio {
+        margin-left: auto;
+    }
+    .arcade-welcome h1 {
+        font-size: 12px;
+    }
+    .arcade-welcome .eyebrow {
+        font-size: 4px;
+    }
+    .main-layout {
+        padding: 9px;
+    }
+    .stage-caption {
+        font-size: 4px;
+    }
+    .stage-caption > span:last-child {
+        display: none;
+    }
+    .challenger-art {
+        height: 155px;
+    }
+    .challenger-art > .boxer-art {
+        width: 165px;
+        height: 242px;
+    }
+    .challenger-name {
+        font-size: 15px;
+    }
+    .arcade-playbook > summary {
+        padding-inline: 10px;
+        font-size: 5px;
+        gap: 10px;
+    }
+    .arcade-playbook > summary small {
+        font-size: 3px;
+        letter-spacing: 0;
+    }
+    footer > span:last-child {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Keep the golden start button consistent through hover and press. */
+.setup-panel > .primary::after {
+    display: block;
+}
+
+.setup-panel > .primary:hover:not(:disabled) {
+    background: linear-gradient(#ffe9a3, #ffc161);
+    border-image: none;
+    color: #372b2a;
+    box-shadow:
+        0 4px #a66735,
+        0 7px #06132a,
+        0 0 28px #ffcc4533;
+}
+
+.setup-panel > .primary:active:not(:disabled) {
+    background: #f5b04d;
+    border-image: none;
+    color: #372b2a;
+    box-shadow: 0 1px #a66735;
+}
+
+.setup-panel > .primary > svg {
+    color: #60452c;
+    filter: none;
+}

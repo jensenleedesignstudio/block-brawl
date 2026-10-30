@@ -2,9 +2,18 @@ node_modules/
 dist/
 dist-server/
 .env
+.env.*
+!.env.example
 *.log
 .DS_Store
 
 .test-build/
 
 public/mediapipe/
+
+.venv/
+.venv-*/
+__pycache__/
+*.pyc
+training/models/
+training/runs/

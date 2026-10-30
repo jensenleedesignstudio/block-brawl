@@ -1,0 +1,1496 @@
+/* ============================================================
+   CABINET DETAILS STYLES
+   ============================================================ */
+
+/* Engraved labels, layered metal, and information panels for the full cabinet. */
+.site-header {
+    position: relative;
+    border-top: 5px solid #193d58;
+    background: linear-gradient(90deg, #0c2b4380, transparent 55%);
+    padding-top: 7px;
+}
+
+.site-header:before,
+.site-header:after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    width: 9px;
+    height: 9px;
+    background: linear-gradient(135deg, #fff0b0, #8b6a3d);
+    border: 2px solid #142e46;
+    box-shadow: 1px 1px #020913;
+    z-index: 1;
+}
+
+.site-header:before {
+    left: 0;
+}
+
+.site-header:after {
+    right: 0;
+}
+
+.cabinet-nav .manual-nav {
+    font-size: 7px;
+}
+
+.brand > div {
+    font-size: clamp(28px, 3.4vw, 57px);
+}
+
+.app {
+    --detail-edge: #2c667f;
+    --detail-blue: #8ed3db;
+    --detail-yellow: #ffda74;
+}
+
+.fight-ticket {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #32617c;
+    border-left: 5px solid #ffcb4b;
+    background: repeating-linear-gradient(90deg, #ffffff02 0 1px, transparent 1px 5px), #0b2239;
+    padding: 16px 19px;
+    margin-bottom: 20px;
+    box-shadow:
+        inset 0 1px #6594a033,
+        3px 4px #020a15;
+}
+
+.ticket-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.ticket-punch {
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    color: #ffdc70;
+    border: 1px solid #bd9b4a;
+    width: 43px;
+    height: 43px;
+    background: #19364a;
+}
+
+.ticket-title > div > span {
+    display: block;
+    font: 5px/1.8 var(--pixel);
+    letter-spacing: 1px;
+    color: #8acbd4;
+    margin-bottom: 7px;
+}
+
+.ticket-title b {
+    font: 8px/1.7 var(--pixel);
+    color: #fff0c3;
+}
+
+.fight-ticket dl {
+    display: flex;
+    gap: 26px;
+    margin: 0;
+}
+
+.fight-ticket dl > div {
+    border-left: 1px solid #335b70;
+    padding-left: 18px;
+}
+
+.fight-ticket dt {
+    font: 5px/1.8 var(--pixel);
+    color: #749bb4;
+    margin-bottom: 7px;
+}
+
+.fight-ticket dd {
+    font: 7px/1.8 var(--pixel);
+    color: #cae7e4;
+    margin: 0;
+}
+
+.fight-ticket > a {
+    font: 6px/1.8 var(--pixel);
+    color: #ffdb6d;
+    text-align: right;
+}
+
+.stage-caption {
+    position: relative;
+    padding-left: 20px;
+    border-top: 4px solid #71c6d1;
+    background: linear-gradient(90deg, #123e57, #081b30 80%);
+}
+
+.stage-caption:after {
+    content: "● ● ●";
+    margin-left: auto;
+    font-size: 6px;
+    letter-spacing: 5px;
+    color: #7ad6df;
+}
+
+.stage-caption > span:last-child {
+    margin-left: auto;
+}
+
+.arena-shell {
+    position: relative;
+    border-width: 4px;
+    border-image: linear-gradient(140deg, #90d8de, #287d9b 30%, #16445e 55%, #69c0cd) 1;
+}
+
+.arena-top {
+    box-shadow: inset 0 1px #a6e6e31a;
+}
+
+.arena-top > span {
+    letter-spacing: 0.6px;
+}
+
+.arena-bottom {
+    box-shadow: inset 0 1px #76b9c433;
+}
+
+.setup-panel {
+    position: relative;
+    background:
+        linear-gradient(90deg, #244c6218, transparent 25%, transparent 75%, #244c6218), #071c31;
+    border-width: 4px;
+}
+
+.setup-panel:before {
+    height: 4px;
+    top: 0;
+    background: repeating-linear-gradient(90deg, #79cbd6 0 18px, #285168 18px 21px);
+}
+
+.cabinet-label {
+    background: linear-gradient(90deg, #153b53, #0b2034 45%, #153b53);
+    text-shadow: 2px 2px #020c18;
+    letter-spacing: 0.4px;
+}
+
+.challenger-art {
+    box-shadow:
+        inset 0 0 0 3px #071828,
+        0 0 0 1px #132f44;
+}
+
+.challenger-art:before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 7px;
+    border: 1px solid #ae8b4a55;
+    z-index: 1;
+}
+
+.challenger-rank {
+    border-left: 3px solid #ffc759;
+    padding: 5px 7px;
+    background: #071728b3;
+}
+
+.challenger-name {
+    background: linear-gradient(#d36b31 0 8%, #9b3b22 8% 75%, #69291f 75%);
+    border-top-color: #ffd36d;
+    box-shadow: 0 -3px #673b27;
+}
+
+.setup-checklist {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    list-style: none;
+    margin: 14px 0 4px;
+    padding: 0;
+}
+
+.setup-checklist li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    padding: 8px 6px;
+    border: 1px solid #34556b;
+    background: #09182a;
+    color: #6b859d;
+}
+
+.setup-checklist li > span {
+    font: 6px var(--pixel);
+    color: #6b859d;
+}
+
+.setup-checklist li > b {
+    grid-column: 1/-1;
+    grid-row: 2;
+    font: 4px/1.8 var(--pixel);
+    overflow-wrap: anywhere;
+}
+
+.setup-checklist li > i {
+    font: 10px monospace;
+    font-style: normal;
+}
+
+.setup-checklist .complete {
+    border-color: #467b80;
+    box-shadow: inset 0 -2px #204851;
+    color: #a4dace;
+}
+
+.setup-checklist .complete i {
+    color: #8be3ad;
+}
+
+.section-label {
+    background: linear-gradient(90deg, #13364a88, transparent);
+    padding: 8px 0;
+    border-top: 1px solid #244860;
+    letter-spacing: 0.5px;
+}
+
+.primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.primary:before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    right: 5px;
+    height: 2px;
+    background: #d7edff88;
+    pointer-events: none;
+}
+
+.primary:after {
+    content: "";
+    position: absolute;
+    bottom: 3px;
+    left: 5px;
+    right: 5px;
+    height: 2px;
+    background: #041c64;
+    pointer-events: none;
+}
+
+.fight-telemetry {
+    border-top: 3px solid #3a8099;
+    background: linear-gradient(#0a263c, #06192d);
+    padding: 15px;
+    color: #bcd6de;
+}
+
+.telemetry-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 1px solid #264d65;
+    padding-bottom: 11px;
+}
+
+.telemetry-heading > span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font: 6px/1.7 var(--pixel);
+    color: #ffdf82;
+}
+
+.telemetry-heading > small {
+    font: 4px/1.8 var(--pixel);
+    color: #7ba4bc;
+}
+
+.telemetry-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 18px;
+    padding: 15px 0;
+}
+
+.telemetry-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.telemetry-numbers > div {
+    border-right: 1px solid #2c5068;
+}
+
+.telemetry-numbers span,
+.telemetry-numbers small {
+    display: block;
+    font: 4px/1.8 var(--pixel);
+    color: #82a8bb;
+}
+
+.telemetry-numbers b {
+    display: block;
+    font: 20px/1.8 var(--pixel);
+    color: #e6f3e3;
+    font-variant-numeric: tabular-nums;
+}
+
+.telemetry-numbers small {
+    color: #a99e83;
+}
+
+.telemetry-charge > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    font: 5px/1.8 var(--pixel);
+    color: #cbe6e6;
+}
+
+.telemetry-charge b {
+    color: #ffdc76;
+}
+
+.detail-meter {
+    height: 10px;
+    padding: 2px;
+    border: 1px solid #558999;
+    background: #020f20;
+    margin: 8px 0;
+}
+
+.detail-meter i {
+    height: 100%;
+    display: block;
+    max-width: 100%;
+    background:
+        repeating-linear-gradient(90deg, transparent 0 8px, #092d4c 8px 10px),
+        linear-gradient(#c2eff2, #35bddc);
+}
+
+.telemetry-charge p {
+    font-size: 10px;
+    line-height: 1.6;
+    color: #90afc1;
+}
+
+.telemetry-charge > small {
+    font: 4px/1.8 var(--pixel);
+    color: #688fa7;
+    display: block;
+    margin-top: 8px;
+}
+
+.ringside-feed {
+    border-top: 1px dashed #35516a;
+    padding-top: 11px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    flex-wrap: wrap;
+}
+
+.ringside-feed > span:first-child {
+    font: 5px/1.8 var(--pixel);
+    color: #ffdb74;
+    letter-spacing: 0.7px;
+}
+
+.ringside-feed p {
+    font-size: 10px;
+    line-height: 1.6;
+    color: #769eb5;
+}
+
+.feed-event {
+    font: 4px/1.8 var(--pixel);
+    color: #aac7d3;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.feed-event i {
+    width: 4px;
+    height: 4px;
+    background: #88acbc;
+}
+
+.feed-event.hit i {
+    background: #f8ac6b;
+}
+
+.feed-event.parry i {
+    background: #b3a0ff;
+}
+
+.detailed-panel {
+    scroll-margin-top: 20px;
+    position: relative;
+    margin-top: 24px;
+    padding: 22px;
+    border: 2px solid #37748c;
+    background: linear-gradient(120deg, #18384e55, transparent 55%), #071c30;
+    box-shadow:
+        inset 0 0 0 3px #102c42,
+        4px 5px #020b18;
+}
+
+.detailed-panel:before,
+.detailed-panel:after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    width: 5px;
+    height: 5px;
+    background: #94bcbf;
+    box-shadow:
+        inset 1px 1px #e0efe1,
+        inset -1px -1px #537c8b;
+}
+
+.detailed-panel:before {
+    left: 6px;
+}
+
+.detailed-panel:after {
+    right: 6px;
+}
+
+.detail-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    padding-bottom: 19px;
+    border-bottom: 1px solid #2d5068;
+    margin-bottom: 20px;
+}
+
+.detail-heading h2 {
+    font: 14px/1.8 var(--pixel);
+    margin-top: 10px;
+    color: #f6e8b9;
+}
+
+.detail-heading .eyebrow {
+    font-size: 5px;
+    letter-spacing: 1px;
+    color: #73cbd8;
+}
+
+.panel-stamp {
+    font: 5px/1.8 var(--pixel);
+    color: #88a9bb;
+    padding: 9px 12px;
+    border: 1px solid #345b72;
+    white-space: nowrap;
+    background: repeating-linear-gradient(135deg, #ffffff03 0 2px, transparent 2px 6px), #091c2e;
+}
+
+.roster-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.roster-card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 15px;
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    padding: 12px 12px 0;
+    background: #061529;
+    border: 2px solid #2d566e;
+    box-shadow: inset 0 0 0 2px #112c42;
+}
+
+.roster-card:hover:not(:disabled) {
+    border-color: #78c7d6;
+    background: #0c2b42;
+}
+
+.roster-card.selected {
+    border-color: #f7c753;
+    background: #152c40;
+    box-shadow:
+        inset 0 0 0 2px #83652e,
+        0 3px #020a15;
+}
+
+.roster-card:disabled {
+    opacity: 0.7;
+}
+
+.roster-card.selected:disabled {
+    opacity: 1;
+}
+
+.roster-art {
+    position: relative;
+    min-height: 160px;
+    background:
+        repeating-linear-gradient(135deg, #2e779b15 0 3px, transparent 3px 9px),
+        radial-gradient(ellipse, #214b58, #091b2e);
+    overflow: hidden;
+}
+
+.roster-art > .boxer-art {
+    position: absolute;
+    width: 122px;
+    height: 173px;
+    left: 50%;
+    bottom: -2px;
+    transform: translateX(-50%);
+    clip-path: inset(0 9%);
+}
+
+.roster-number {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    font: 20px var(--pixel);
+    color: #53869b44;
+    z-index: 1;
+}
+
+.roster-difficulty {
+    position: absolute;
+    bottom: 7px;
+    left: 7px;
+    font: 5px/1.8 var(--pixel);
+    color: #f4d887;
+    background: #061626d9;
+    padding: 5px;
+    z-index: 1;
+}
+
+.roster-copy {
+    padding: 8px 0;
+}
+
+.roster-copy > small {
+    font: 4px/1.8 var(--pixel);
+    color: #86b6c8;
+}
+
+.roster-copy h3 {
+    font: 12px/1.8 var(--pixel);
+    margin: 8px 0;
+    color: #fce5a4;
+}
+
+.roster-copy p {
+    font-size: 11px;
+    line-height: 1.7;
+    color: #abc1cc;
+    margin-bottom: 10px;
+}
+
+.roster-copy dl {
+    margin: 0;
+    display: grid;
+    gap: 7px;
+}
+
+.roster-copy dl > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    border-bottom: 1px dotted #35566b;
+    padding-bottom: 6px;
+}
+
+.roster-copy dt {
+    font: 4px/1.8 var(--pixel);
+    color: #7797ad;
+}
+
+.roster-copy dd {
+    font: 4px/1.8 var(--pixel);
+    color: #b2d7da;
+    margin: 0;
+}
+
+.roster-focus {
+    display: block;
+    font-size: 10px;
+    color: #8bc5c8;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+
+.roster-selection {
+    grid-column: 1/-1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 -12px;
+    padding: 12px 6px;
+    background: #0c263b;
+    border-top: 1px solid #355971;
+    font: 5px/1.7 var(--pixel);
+    color: #82afc5;
+}
+
+.selected .roster-selection {
+    background: #57472b;
+    color: #ffe09a;
+    border-top-color: #a5853d;
+}
+
+.roster-lock {
+    font-size: 11px;
+    color: #93acbd;
+    line-height: 1.7;
+    margin-top: 14px;
+}
+
+.library-layout {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 24px;
+}
+
+.library-filters {
+    display: flex;
+    gap: 4px;
+    background: #030f20;
+    border: 1px solid #315972;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.library-filters button {
+    flex: 1;
+    font: 5px/1.8 var(--pixel);
+    padding: 9px 3px;
+    color: #98bacd;
+}
+
+.library-filters button[aria-pressed="true"] {
+    background: #28516c;
+    color: #ffdf7f;
+    box-shadow: inset 0 -2px #e1b554;
+}
+
+.move-buttons {
+    display: grid;
+    gap: 7px;
+}
+
+.move-buttons > button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border: 1px solid #2f536d;
+    background: #07172a;
+    text-align: left;
+    min-height: 55px;
+}
+
+.move-buttons > button:hover {
+    background: #17364e;
+}
+
+.move-buttons > button[aria-pressed="true"] {
+    border-color: #ffcf5c;
+    background: #17364e;
+    box-shadow: inset 3px 0 #ffcd55;
+}
+
+.move-buttons kbd {
+    min-width: 42px;
+    font-size: 6px;
+    height: 30px;
+    padding: 4px;
+}
+
+.move-buttons > button > span {
+    font: 6px/1.8 var(--pixel);
+    color: #cee6e6;
+}
+
+.move-buttons small {
+    display: block;
+    font:
+        10px/1.6 "Space Grotesk",
+        sans-serif;
+    color: #6e99b2;
+    margin-top: 3px;
+}
+
+.move-buttons .move-arrow {
+    margin-left: auto;
+    color: #e6c06d;
+    font-size: 12px;
+}
+
+.move-detail {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.85fr) minmax(0, 1.15fr);
+    background: #06172a;
+    border: 1px solid #2c536b;
+    min-width: 0;
+}
+
+.move-display {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    min-height: 330px;
+    background:
+        linear-gradient(#081d3099, #0d2b3a99),
+        repeating-linear-gradient(0deg, transparent 0 29px, #548d9e33 29px 30px),
+        repeating-linear-gradient(90deg, transparent 0 29px, #548d9e33 29px 30px);
+}
+
+.move-display > .boxer-art {
+    width: 210px;
+    height: 300px;
+    z-index: 1;
+    clip-path: inset(0 8%);
+}
+
+.move-display.mirrored > .boxer-art {
+    transform: scaleX(-1);
+}
+
+.diagram-crosshair {
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    border: 1px solid #3e7e9277;
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 28px #3e7e9212,
+        0 0 0 55px #3e7e9209;
+}
+
+.diagram-crosshair:before,
+.diagram-crosshair:after {
+    content: "";
+    position: absolute;
+    background: #548d9e55;
+}
+
+.diagram-crosshair:before {
+    left: 50%;
+    top: -90px;
+    bottom: -90px;
+    width: 1px;
+}
+
+.diagram-crosshair:after {
+    top: 50%;
+    left: -90px;
+    right: -90px;
+    height: 1px;
+}
+
+.move-index {
+    position: absolute;
+    top: 13px;
+    left: 13px;
+    font: 6px/1.8 var(--pixel);
+    color: #8cb9c7;
+}
+
+.move-category {
+    position: absolute;
+    bottom: 13px;
+    left: 13px;
+    font: 5px/1.8 var(--pixel);
+    color: #e5c47e;
+    border: 1px solid #a2874d88;
+    padding: 6px 9px;
+    background: #061a2ad9;
+}
+
+.move-explanation {
+    padding: 25px;
+    align-self: center;
+}
+
+.move-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.move-title h3 {
+    font: 15px/1.8 var(--pixel);
+    color: #ffe098;
+    margin: 0;
+}
+
+.move-title kbd {
+    font-size: 7px;
+    min-width: 38px;
+    height: 36px;
+}
+
+.move-explanation > p,
+.camera-instruction p {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #b1c7d4;
+    margin-top: 14px;
+}
+
+.move-specs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.move-specs > div {
+    background: #0c2a40;
+    border: 1px solid #2b5067;
+    padding: 12px 9px;
+}
+
+.move-specs dt {
+    font: 4px/1.8 var(--pixel);
+    color: #82b2c6;
+}
+
+.move-specs dd {
+    font: 11px/1.8 var(--pixel);
+    color: #f5dea5;
+    margin: 10px 0 0;
+    white-space: nowrap;
+}
+
+.camera-instruction {
+    padding: 14px;
+    border-left: 3px solid #5eb8cb;
+    background: #0d253a;
+}
+
+.camera-instruction .eyebrow {
+    font-size: 5px;
+    color: #76c8d5;
+}
+
+.camera-instruction p {
+    font-size: 12px;
+    margin-top: 9px;
+}
+
+.move-note {
+    display: block;
+    color: #a99872;
+    font-size: 10px;
+    line-height: 1.8;
+    margin-top: 13px;
+}
+
+.history-empty {
+    display: flex;
+    align-items: center;
+    gap: 23px;
+    padding: 13px 6px;
+}
+
+.history-empty > span {
+    font-size: 50px;
+    color: #468296;
+}
+
+.history-empty h3 {
+    font: 8px/1.8 var(--pixel);
+    color: #b7dbdf;
+    margin: 0 0 9px;
+}
+
+.history-empty p {
+    font-size: 12px;
+    line-height: 1.8;
+    color: #8cabbf;
+    max-width: 650px;
+}
+
+.history-empty > a {
+    margin-left: auto;
+    font: 6px/1.8 var(--pixel);
+    color: #e7c875;
+    text-align: right;
+}
+
+.history-rows {
+    display: grid;
+    gap: 8px;
+}
+
+.history-rows article {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 15px;
+    background: #071629;
+    border: 1px solid #2d4d66;
+}
+
+.round-result {
+    font: 7px/1.8 var(--pixel);
+    min-width: 65px;
+    padding: 8px 10px;
+    text-align: center;
+    background: #233e4b;
+    color: #b4c4cd;
+    border: 1px solid #446174;
+}
+
+.round-result.win {
+    background: #183e36;
+    color: #9ee1a9;
+    border-color: #3f927a;
+}
+
+.round-result.loss {
+    background: #442d2c;
+    color: #e6a58b;
+    border-color: #8e5045;
+}
+
+.history-rows article > div {
+    margin-right: auto;
+}
+
+.history-rows article b {
+    display: block;
+    font: 7px/1.8 var(--pixel);
+    color: #dce6d6;
+}
+
+.history-rows article small {
+    display: block;
+    font-size: 10px;
+    color: #6f94ad;
+    margin-top: 5px;
+}
+
+.history-rows article > span:not(.round-result) {
+    font: 6px/1.8 var(--pixel);
+    color: #a6c4d2;
+}
+
+.history-rows article > small {
+    font: 6px var(--pixel);
+    color: #526e87;
+}
+
+.arcade-intel .intel-card {
+    position: relative;
+    border-top: 3px solid #488ba0;
+}
+
+.intel-card .eyebrow {
+    letter-spacing: 0.5px;
+}
+
+.quick-controls {
+    position: relative;
+    border-bottom: 5px solid #173f5a;
+}
+
+.cabinet-status {
+    border-bottom: 4px solid #24506b;
+}
+
+.cabinet-status > span:first-child {
+    color: #9ad4c9;
+}
+
+.fight-view .fight-ticket,
+.fight-view .detailed-panel,
+.fight-view .fight-telemetry {
+    display: none;
+}
+
+.arena-shell:fullscreen .fight-telemetry {
+    display: none;
+}
+
+@media (min-width: 1700px) {
+    .roster-card {
+        grid-template-columns: 140px 1fr;
+    }
+    .roster-art {
+        min-height: 185px;
+    }
+    .roster-art > .boxer-art {
+        width: 140px;
+        height: 195px;
+    }
+}
+
+@media (max-width: 1250px) {
+    .fight-ticket {
+        gap: 14px;
+        padding: 13px;
+    }
+    .fight-ticket dl {
+        gap: 15px;
+    }
+    .fight-ticket dd {
+        font-size: 6px;
+    }
+    .ticket-title b {
+        font-size: 6px;
+    }
+    .fight-ticket > a {
+        display: none;
+    }
+    .roster-card {
+        grid-template-columns: 90px 1fr;
+        gap: 10px;
+    }
+    .roster-art > .boxer-art {
+        width: 105px;
+        height: 150px;
+    }
+    .roster-copy h3 {
+        font-size: 9px;
+    }
+    .roster-copy p {
+        font-size: 10px;
+    }
+    .roster-copy dt,
+    .roster-copy dd {
+        font-size: 3px;
+    }
+    .library-layout {
+        grid-template-columns: 210px minmax(0, 1fr);
+        gap: 15px;
+    }
+    .move-display > .boxer-art {
+        width: 160px;
+        height: 245px;
+    }
+    .move-explanation {
+        padding: 18px;
+    }
+    .move-title h3 {
+        font-size: 12px;
+    }
+    .move-specs dd {
+        font-size: 9px;
+    }
+    .move-specs {
+        gap: 7px;
+    }
+    .detail-heading h2 {
+        font-size: 12px;
+    }
+    .cabinet-nav .manual-nav {
+        font-size: 6px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .ticket-title > div > span {
+        font-size: 4px;
+    }
+    .fight-ticket dl > div {
+        padding-left: 12px;
+    }
+    .fight-ticket dd {
+        font-size: 5px;
+    }
+    .ticket-punch {
+        width: 32px;
+        height: 32px;
+        font-size: 23px;
+    }
+    .fight-ticket dt {
+        font-size: 4px;
+    }
+    .roster-grid {
+        gap: 10px;
+    }
+    .roster-card {
+        grid-template-columns: 1fr;
+        padding: 9px 9px 0;
+        gap: 8px;
+    }
+    .roster-art {
+        min-height: 150px;
+    }
+    .roster-copy {
+        padding: 5px;
+    }
+    .roster-copy dt,
+    .roster-copy dd {
+        font-size: 4px;
+    }
+    .roster-selection {
+        margin: 0 -9px;
+        font-size: 4px;
+    }
+    .library-layout {
+        grid-template-columns: 180px minmax(0, 1fr);
+        gap: 12px;
+    }
+    .move-buttons > button {
+        padding: 8px;
+        gap: 7px;
+    }
+    .move-buttons > button > span {
+        font-size: 5px;
+    }
+    .move-detail {
+        grid-template-columns: 1fr 1.3fr;
+    }
+    .move-display {
+        min-height: 300px;
+    }
+    .move-display > .boxer-art {
+        width: 140px;
+        height: 210px;
+    }
+    .move-explanation {
+        padding: 15px;
+    }
+    .move-title h3 {
+        font-size: 10px;
+    }
+    .move-specs {
+        gap: 5px;
+    }
+    .move-specs > div {
+        padding: 10px 6px;
+    }
+    .move-specs dt {
+        font-size: 3px;
+    }
+    .move-specs dd {
+        font-size: 7px;
+    }
+    .move-explanation > p {
+        font-size: 12px;
+    }
+    .diagram-crosshair {
+        width: 140px;
+        height: 140px;
+    }
+    .telemetry-grid {
+        grid-template-columns: 1fr;
+    }
+    .telemetry-charge {
+        border-top: 1px solid #27495f;
+        padding-top: 12px;
+    }
+    .telemetry-numbers > div:last-child {
+        border: 0;
+    }
+    .panel-stamp {
+        font-size: 4px;
+        padding: 8px;
+    }
+    .detail-heading h2 {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 760px) {
+    .brand > div {
+        font-size: 39px;
+    }
+    .cabinet-nav .manual-nav {
+        font-size: 5px;
+    }
+    .fight-ticket {
+        flex-wrap: wrap;
+        gap: 13px;
+    }
+    .ticket-title {
+        width: 100%;
+    }
+    .ticket-title b {
+        font-size: 7px;
+    }
+    .fight-ticket dl {
+        justify-content: space-between;
+        width: 100%;
+    }
+    .fight-ticket dl > div:first-child {
+        border: 0;
+        padding-left: 0;
+    }
+    .fight-ticket dd {
+        font-size: 5px;
+    }
+    .fight-ticket dt {
+        font-size: 4px;
+    }
+    .detail-heading {
+        align-items: start;
+        gap: 10px;
+    }
+    .detail-heading h2 {
+        font-size: 10px;
+    }
+    .detail-heading .eyebrow {
+        font-size: 4px;
+    }
+    .panel-stamp {
+        font-size: 3px;
+        white-space: normal;
+        max-width: 130px;
+        text-align: center;
+    }
+    .detailed-panel {
+        padding: 17px;
+        margin-top: 20px;
+    }
+    .library-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .move-buttons {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .move-buttons > button {
+        flex-direction: column;
+        align-items: start;
+        gap: 6px;
+        min-height: 78px;
+    }
+    .move-buttons .move-arrow {
+        display: none;
+    }
+    .move-buttons > button > span {
+        font-size: 4px;
+    }
+    .move-buttons small {
+        font-size: 9px;
+    }
+    .library-filters {
+        max-width: 300px;
+    }
+    .library-filters button {
+        font-size: 6px;
+    }
+    .move-detail {
+        grid-template-columns: 1fr 1.3fr;
+    }
+    .move-display > .boxer-art {
+        width: 160px;
+        height: 245px;
+    }
+    .move-specs dd {
+        font-size: 8px;
+    }
+    .move-specs dt {
+        font-size: 4px;
+    }
+    .history-empty {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    .history-empty > div {
+        flex: 1;
+    }
+    .history-empty > a {
+        margin-left: 0;
+        width: 100%;
+        text-align: left;
+        padding-top: 8px;
+    }
+    .history-empty h3 {
+        font-size: 7px;
+    }
+    .telemetry-grid {
+        grid-template-columns: 1.2fr 1fr;
+    }
+    .telemetry-charge {
+        padding-top: 0;
+        border: 0;
+    }
+    .telemetry-numbers b {
+        font-size: 17px;
+    }
+    .ringside-feed {
+        gap: 10px;
+    }
+    .setup-checklist {
+        gap: 8px;
+    }
+    .setup-checklist li {
+        padding: 10px;
+    }
+    .setup-checklist li > b {
+        font-size: 5px;
+    }
+    .setup-checklist li > span {
+        font-size: 7px;
+    }
+}
+
+@media (max-width: 520px) {
+    .brand > div {
+        font-size: 30px;
+    }
+    .cabinet-nav > a,
+    .cabinet-nav > button {
+        padding: 7px 6px;
+    }
+    .cabinet-nav .manual-nav {
+        display: none;
+    }
+    .fight-ticket dl {
+        gap: 10px;
+    }
+    .fight-ticket dd {
+        font-size: 4px;
+    }
+    .ticket-title b {
+        font-size: 6px;
+    }
+    .telemetry-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+    .telemetry-charge {
+        border-top: 1px solid #27495f;
+        padding-top: 12px;
+    }
+    .telemetry-heading > small {
+        font-size: 3px;
+    }
+    .telemetry-heading > span {
+        font-size: 5px;
+    }
+    .telemetry-numbers b {
+        font-size: 19px;
+    }
+    .roster-grid {
+        grid-template-columns: 1fr;
+    }
+    .roster-card {
+        grid-template-columns: 105px 1fr;
+        gap: 14px;
+        padding: 10px 10px 0;
+    }
+    .roster-art {
+        min-height: 165px;
+    }
+    .roster-art > .boxer-art {
+        height: 170px;
+        width: 120px;
+    }
+    .roster-selection {
+        margin: 0 -10px;
+        font-size: 5px;
+    }
+    .roster-copy h3 {
+        font-size: 11px;
+    }
+    .roster-copy p {
+        font-size: 11px;
+    }
+    .detail-heading h2 {
+        font-size: 8px;
+    }
+    .detail-heading {
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+    }
+    .panel-stamp {
+        max-width: 85px;
+        font-size: 3px;
+        padding: 6px;
+    }
+    .move-buttons {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .move-detail {
+        grid-template-columns: 1fr;
+    }
+    .move-display {
+        min-height: 225px;
+        border-bottom: 1px solid #2d5368;
+    }
+    .move-display > .boxer-art {
+        width: 145px;
+        height: 220px;
+    }
+    .move-title h3 {
+        font-size: 13px;
+    }
+    .move-explanation {
+        padding: 20px;
+    }
+    .move-specs dt {
+        font-size: 5px;
+    }
+    .move-specs dd {
+        font-size: 10px;
+    }
+    .move-specs > div {
+        padding: 12px 8px;
+    }
+    .move-explanation > p {
+        font-size: 13px;
+    }
+    .history-rows article {
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 12px;
+    }
+    .history-rows article > div {
+        min-width: 50%;
+    }
+    .history-rows article > span:not(.round-result) {
+        font-size: 5px;
+    }
+    .history-rows article > small {
+        margin-left: auto;
+    }
+    .history-empty p {
+        font-size: 11px;
+    }
+    .history-empty > span {
+        font-size: 32px;
+    }
+    .history-empty h3 {
+        font-size: 6px;
+    }
+    .stage-caption:after {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .roster-card,
+    .move-buttons > button {
+        transition:
+            border-color 0.15s,
+            background 0.15s,
+            box-shadow 0.15s;
+    }
+    .roster-card:hover:not(:disabled) {
+        box-shadow:
+            inset 0 0 0 2px #3c7b96,
+            0 3px #020a15;
+    }
+    .detail-meter i {
+        transition: width 0.12s linear;
+    }
+}

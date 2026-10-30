@@ -1,0 +1,282 @@
+/* Photographic scenery and tactile cabinet materials. Bitmap type and fighters stay crisp. */
+:root {
+    --grain: url("/art/gym/material-grain.svg");
+    --painted-steel:
+        linear-gradient(115deg, #ffffff0d, transparent 35%, #00000035), var(--grain),
+        linear-gradient(#263d30, #13281c);
+    --leather:
+        radial-gradient(ellipse at 30% 0, #71614b55, transparent 65%), var(--grain),
+        linear-gradient(#252820, #141c16);
+    --brass-edge: #ae8745;
+}
+body {
+    background:
+        linear-gradient(#15170fe8, #15170fea),
+        url("/art/gym/field-house-panorama.png") center/cover fixed;
+    color: #efdbb0;
+}
+.app .pixel-backdrop {
+    opacity: 0.07;
+    image-rendering: auto;
+}
+.app .site-header {
+    background: var(--painted-steel);
+    border-block: 3px solid var(--brass-edge);
+    border-radius: 5px;
+    box-shadow:
+        0 7px 18px #0008,
+        inset 0 2px 1px #e9c98a66,
+        inset 0 -2px 4px #000b;
+}
+.app .brand > div {
+    text-shadow:
+        0 1px #fff0bf,
+        1px 2px #93703b,
+        3px 4px 2px #080e08,
+        0 0 20px #a07d3425;
+}
+.app .brand em {
+    text-shadow:
+        0 1px #ffe5a0,
+        1px 2px #93602b,
+        3px 4px 2px #080e08;
+}
+.app .arena-stage > canvas {
+    image-rendering: auto;
+}
+.app .arena-stage:after {
+    opacity: 0.16;
+}
+.app .arena-shell,
+.app .setup-panel,
+.app .detailed-panel {
+    border-image: none;
+    border: 2px solid #9c7b44;
+    border-radius: 7px;
+    background: var(--painted-steel);
+    box-shadow:
+        inset 0 1px #e4c38888,
+        inset 0 -2px 5px #0009,
+        0 5px 15px #0009,
+        0 0 0 1px #161a11;
+}
+.app .setup-panel {
+    background-image:
+        radial-gradient(
+            circle at 9px 9px,
+            #e4ca8b 0 1px,
+            #9c7438 2px 3px,
+            #10180e 4px,
+            transparent 5px
+        ),
+        radial-gradient(
+            circle at calc(100% - 9px) 9px,
+            #e4ca8b 0 1px,
+            #9c7438 2px 3px,
+            #10180e 4px,
+            transparent 5px
+        ),
+        radial-gradient(
+            circle at 9px calc(100% - 9px),
+            #e4ca8b 0 1px,
+            #9c7438 2px 3px,
+            #10180e 4px,
+            transparent 5px
+        ),
+        radial-gradient(
+            circle at calc(100% - 9px) calc(100% - 9px),
+            #e4ca8b 0 1px,
+            #9c7438 2px 3px,
+            #10180e 4px,
+            transparent 5px
+        ),
+        var(--painted-steel);
+    padding: 14px;
+}
+.app .stage-caption,
+.app .arena-top,
+.app .arena-bottom,
+.app .cabinet-label,
+.app .section-label {
+    background: var(--leather);
+    border-color: #92733d;
+    box-shadow:
+        inset 0 1px #d8bc7140,
+        0 1px 3px #0008;
+}
+.app .stage-caption {
+    border-radius: 4px 4px 0 0;
+}
+.app .cabinet-label {
+    padding-block: 13px;
+    color: #efd7a6;
+}
+.app .cabinet-label:before {
+    color: #d1a85f;
+    text-shadow: 0 1px 3px #000;
+}
+.app .cabinet-nav > a,
+.app .cabinet-nav > button,
+.app .secondary,
+.app .mode-select > button,
+.app .control-select > button,
+.app .segmented > button,
+.app .library-filters > button,
+.app .move-buttons > button {
+    border-image: none;
+    border: 1px solid #82724c;
+    border-radius: 4px;
+    background: var(--leather);
+    color: #e0cea8;
+    box-shadow:
+        inset 0 1px #dbd4a84d,
+        inset 0 -2px 4px #000b,
+        0 3px 4px #0008;
+}
+.app .cabinet-nav .active,
+.app .mode-select > button.selected,
+.app .control-select > button.selected,
+.app .segmented > button.selected {
+    border-color: #d4ad62;
+    background: linear-gradient(110deg, #f7df9b, #ba8b3f 52%, #e3c27e);
+    color: #241c0f;
+    box-shadow:
+        inset 0 1px #fff5ca,
+        inset 0 -2px 3px #755323,
+        0 3px 6px #0009;
+}
+.app .mode-select > button.selected strong {
+    background: linear-gradient(#e2bf72, #a57b37);
+    color: #211c10;
+    border-color: #e3c98c;
+}
+.app .mode-select > button strong {
+    background: var(--leather);
+    border-color: #8c7546;
+}
+.app .mode-illustration,
+.app .duel-illustration {
+    background:
+        linear-gradient(#14251b77, #101810a8),
+        url("/art/gym/field-house-panorama.png") center/cover;
+}
+.app .challenger-card {
+    border-image: none;
+    border: 1px solid #947444;
+    border-radius: 5px;
+    padding: 5px;
+    background: var(--leather);
+    box-shadow: inset 0 0 7px #000b;
+}
+.app .challenger-art {
+    border: 1px solid #aa8851;
+    border-radius: 3px;
+    background:
+        radial-gradient(ellipse at center, #78523455, #0e180fc9),
+        url("/art/gym/field-house-panorama.png") center/cover;
+    box-shadow: inset 0 0 24px #000c;
+}
+.app .challenger-name {
+    border: 2px solid #b68d49;
+    border-radius: 3px;
+    background: linear-gradient(120deg, #9a7337, #503a20 50%, #94703a);
+    box-shadow:
+        inset 0 1px #ffe3a588,
+        0 3px 7px #0009;
+    text-shadow: 1px 2px 2px #21170e;
+}
+.app .primary {
+    border-image: none;
+    border: 3px solid #c69c51;
+    border-radius: 6px;
+    background:
+        radial-gradient(circle at 8px 8px, #dbc590 0 1px, #755829 2px 3px, transparent 4px),
+        radial-gradient(
+            circle at calc(100% - 8px) 8px,
+            #dbc590 0 1px,
+            #755829 2px 3px,
+            transparent 4px
+        ),
+        linear-gradient(110deg, #ffffff18, transparent 40%), var(--grain),
+        linear-gradient(#1e64a6, #123d79 65%, #0d2e5d);
+    box-shadow:
+        inset 0 2px 1px #91b5d4,
+        inset 0 -3px 5px #061c3c,
+        0 0 0 2px #3e2d18,
+        0 5px 9px #000a;
+    color: #fff0c6;
+    text-shadow: 1px 3px 2px #04182f;
+}
+.app .primary:hover:not(:disabled) {
+    border-image: none;
+    background: linear-gradient(120deg, #4986bb, #205994 60%, #194574);
+    box-shadow:
+        inset 0 2px #c2dbeb,
+        0 0 0 2px #96723b,
+        0 5px 12px #000a;
+}
+.app .primary:active:not(:disabled) {
+    border-image: none;
+    background: #173a62;
+    box-shadow:
+        inset 0 3px 8px #061329,
+        0 1px 3px #0009;
+}
+.app .timer {
+    border-image: none;
+    border: 3px solid #bb944e;
+    border-radius: 6px;
+    background: var(--leather);
+    box-shadow:
+        inset 0 0 0 1px #e0be73,
+        0 4px 8px #000b;
+}
+.app .hud-portrait {
+    border-image: none;
+    border: 3px solid #af894c;
+    border-radius: 4px;
+    box-shadow:
+        inset 0 1px #ffe1a0,
+        0 3px 5px #000a;
+    image-rendering: pixelated;
+}
+.app .fighter-hud {
+    background: linear-gradient(#1b241eea, #101b15ee);
+    border-radius: 4px;
+    box-shadow: 0 3px 9px #0008;
+}
+.app .fighter-hud.opponent {
+    background: linear-gradient(#32271fee, #211d17ee);
+}
+.app .compact-controls kbd,
+.app .quick-controls kbd {
+    border: 1px solid #a89a76;
+    border-radius: 4px;
+    background: linear-gradient(125deg, #66675a, #343f32 55%, #222c23);
+    box-shadow:
+        inset 0 1px #d8d0ad,
+        inset 0 -3px 3px #11190f,
+        0 3px 4px #0009;
+    color: #f5e4b8;
+}
+.app .match-info {
+    background: var(--leather);
+    border-radius: 4px;
+}
+.app .setup-checklist li {
+    background: var(--leather);
+    border-radius: 3px;
+}
+.app .pixel-icon {
+    image-rendering: auto;
+    filter: drop-shadow(0 1px 2px #000a);
+}
+.app.fight-view .arena-shell {
+    border: 0;
+    border-radius: 0;
+}
+@media (max-width: 760px) {
+    .app .setup-panel {
+        padding: 12px;
+    }
+}

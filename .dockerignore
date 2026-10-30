@@ -1,0 +1,16 @@
+node_modules
+.git
+.env
+.env.*
+!.env.example
+.venv
+.venv-*
+.test-build
+**/__pycache__
+dist
+dist-server
+training
+artifacts
+.codex
+.agents
+.aws

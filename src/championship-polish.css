@@ -1,0 +1,400 @@
+/* Presentation only. Existing layout breakpoints, controls and meter values are authoritative. */
+:root {
+    --ui-font: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+    --champion-ivory: #f5ead0;
+    --champion-gold: #c9a464;
+    --champion-line: #b59b623b;
+    --painted-steel:
+        linear-gradient(125deg, #ffffff06, transparent 46%), var(--grain),
+        linear-gradient(145deg, #263c32, #14251f);
+    --leather:
+        linear-gradient(120deg, #ffffff04, transparent 50%), var(--grain),
+        linear-gradient(#202b26, #141e1b);
+}
+body {
+    background:
+        radial-gradient(ellipse at 45% 0, #8c704320, transparent 65%),
+        linear-gradient(#0c1716ed, #101814f5),
+        url("/art/gym/field-house-panorama.png") center/cover fixed;
+}
+.app .main-layout {
+    border-color: var(--champion-line);
+    background: linear-gradient(130deg, #d9c28e06, transparent 60%);
+}
+.app .site-header {
+    border-width: 1px;
+    box-shadow:
+        0 10px 35px #0005,
+        inset 0 1px #e6cf9225;
+}
+.app .arena-shell,
+.app .setup-panel,
+.app .detailed-panel {
+    border: 1px solid #b99a585c;
+    border-radius: 10px;
+    box-shadow:
+        0 18px 48px #0005,
+        inset 0 1px #e5c38720;
+}
+.app .arena-top,
+.app .arena-bottom,
+.app .stage-caption {
+    border-color: var(--champion-line);
+    color: #c9c8b0;
+}
+.app .arena-stage:after {
+    opacity: 0.065;
+}
+.app .cabinet-label,
+.app .section-label {
+    background: transparent;
+    box-shadow: none;
+    border-color: var(--champion-line);
+}
+.app .cabinet-nav > a,
+.app .cabinet-nav > button,
+.app .secondary,
+.app .mode-select > button,
+.app .control-select > button,
+.app .segmented > button,
+.app .library-filters > button,
+.app .move-buttons > button {
+    border-color: #9d9e794d;
+    border-radius: 6px;
+    box-shadow:
+        inset 0 1px #ffffff0a,
+        0 2px 4px #0003;
+}
+.app button,
+.app a {
+    -webkit-tap-highlight-color: #c9a46433;
+}
+.app button:focus-visible,
+.app a:focus-visible,
+.app summary:focus-visible,
+.app input:focus-visible,
+.modal button:focus-visible,
+.fight-menu button:focus-visible {
+    outline: 2px solid #ffe0a0;
+    outline-offset: 4px;
+}
+.app .cabinet-nav .active,
+.app .mode-select > button.selected,
+.app .control-select > button.selected,
+.app .segmented > button.selected {
+    background: linear-gradient(120deg, #eed8a2, #bf9b59);
+    border-color: #e2c17e;
+    color: #20251d;
+    box-shadow:
+        inset 0 1px #fff2c8,
+        0 3px 10px #0004;
+}
+.app .primary,
+.modal .primary,
+.fight-menu .primary {
+    border: 1px solid #f0d294;
+    border-radius: 7px;
+    background: linear-gradient(115deg, #e7d09a, #bb914c);
+    color: #18241e;
+    text-shadow: none;
+    box-shadow:
+        inset 0 1px #fff3cf,
+        0 4px 15px #0005;
+}
+.app .primary:hover:not(:disabled),
+.modal .primary:hover:not(:disabled),
+.fight-menu .primary:hover:not(:disabled) {
+    border-image: none;
+    background: linear-gradient(115deg, #f4e2b9, #d2ad6c);
+    color: #14211b;
+    box-shadow:
+        inset 0 1px #fff8df,
+        0 5px 20px #0006;
+}
+.app .challenger-card {
+    border: 1px solid var(--champion-line);
+    border-radius: 7px;
+    box-shadow: none;
+}
+.app .challenger-art {
+    border-color: #cbb07955;
+    border-radius: 5px;
+    background-image:
+        radial-gradient(ellipse at 50% 38%, #b8954b1f, #101e19d9),
+        url("/art/gym/field-house-panorama.png");
+}
+.app .challenger-name {
+    border: 1px solid #b89c634d;
+    background: linear-gradient(120deg, #344439, #1c2d25);
+    text-shadow: 0 2px 2px #0007;
+}
+.app .challenger-rank {
+    background: #14261de8;
+    color: #e3c58d;
+    border-left: 2px solid #d4b170;
+}
+.app .panel-sub,
+.app .difficulty-note,
+.app .start-note,
+.app .roster-copy p,
+.app .move-detail p,
+.app .history-empty p {
+    font-family: var(--ui-font);
+    font-size: 13px;
+    line-height: 1.65;
+    color: #c2c5b4;
+}
+/* Broadcast-style scorecards. Keep health green and reserve corner hues for identity. */
+.app .fighter-hud {
+    --corner: #d56559;
+    background: linear-gradient(110deg, #202b29f5, #14211ff2);
+    border-radius: 6px;
+    box-shadow: 0 4px 14px #0005;
+}
+.app .fighter-hud.opponent {
+    --corner: #65afe2;
+    background: linear-gradient(250deg, #202b29f5, #14211ff2);
+}
+.app .fighter-hud > div:first-child {
+    background: linear-gradient(100deg, #d565592b, transparent 85%);
+    border-top: 2px solid var(--corner);
+}
+.app .fighter-hud.opponent > div:first-child {
+    background: linear-gradient(260deg, #65afe22b, transparent 85%);
+}
+.app .fighter-hud b {
+    font-family: var(--ui-font);
+    font-weight: 800;
+    letter-spacing: 0.055em;
+    font-size: clamp(10px, 1vw, 15px);
+    color: var(--champion-ivory);
+}
+.app .fighter-hud > div > span:last-child {
+    color: #f5ead0;
+    font-family: var(--ui-font);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+.app .hud-portrait {
+    border: 2px solid #ad9562;
+    border-radius: 5px;
+    box-shadow: 0 3px 8px #0005;
+}
+.app .health-track {
+    border: 1px solid #95a68c66;
+    border-radius: 3px;
+    background: #091a16;
+    padding: 2px;
+    box-shadow: inset 0 2px 4px #0007;
+}
+.app .health-track > i,
+.app .opponent .health-track > i {
+    border-radius: 1px;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0 calc(10% - 1px),
+            #0b332d70 calc(10% - 1px) 10%
+        ),
+        linear-gradient(#b2dcb2, #72ba8c 45%, #498968);
+    box-shadow: inset 0 1px #e6f3ce88;
+}
+.app .low-health .health-track > i {
+    background: linear-gradient(#ffc295, #db785e 45%, #994b46);
+}
+.app .fighter-hud .guard-meter,
+.app .fighter-hud .stamina-meter {
+    color: #bdc7be;
+    font-family: var(--ui-font);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+.app .fighter-hud .guard-meter > i,
+.app .fighter-hud .stamina-meter > i {
+    border: 1px solid #829f9266;
+    border-radius: 2px;
+    background: #0b1916;
+    box-shadow: inset 0 1px 3px #0008;
+}
+.app .fighter-hud .guard-meter > i > b {
+    background: linear-gradient(#a1d6e1, #5e9fae);
+    box-shadow: inset 0 1px #ffffff45;
+}
+.app .fighter-hud .stamina-meter > i > b {
+    background: linear-gradient(#e9d296, #b89a57);
+    box-shadow: inset 0 1px #ffffff45;
+}
+.app .fighter-hud .stamina-meter.exhausted > i > b {
+    background: #df8c69;
+}
+.app .timer {
+    border: 1px solid #c5a56c;
+    border-radius: 6px;
+    background: linear-gradient(#28382c, #15251e);
+    box-shadow:
+        inset 0 1px #f3d79735,
+        0 4px 12px #0007;
+}
+.app .timer strong {
+    font-family: var(--ui-font);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #f2dfb2;
+    text-shadow: 0 2px 5px #0006;
+}
+.app .arena-preview-label {
+    background: #15251ee8;
+    border: 1px solid #c4a16966;
+    border-radius: 4px;
+    box-shadow: 0 3px 10px #0004;
+}
+.app .boxer-art {
+    filter: drop-shadow(0 4px 2px #0005);
+}
+.app .roster-card {
+    border-radius: 7px;
+    border: 1px solid var(--champion-line);
+    box-shadow: inset 0 1px #ffffff09;
+}
+.app .roster-card.selected {
+    border-color: #d5b575;
+    box-shadow:
+        inset 0 0 0 1px #d5b57535,
+        0 4px 18px #0004;
+}
+.app .roster-art {
+    background: radial-gradient(ellipse at 50% 60%, #9c8b4e33, #14251e);
+    border-bottom-color: var(--champion-line);
+}
+.app .move-detail,
+.app .match-info,
+.app .session-strip {
+    border: 1px solid var(--champion-line);
+    border-radius: 6px;
+}
+/* Native dialogs live outside the app in fullscreen too. */
+.modal,
+.fight-menu {
+    color: #eee3c8;
+    border: 1px solid #c7a667;
+    border-radius: 12px;
+    background:
+        radial-gradient(ellipse at 50% 0, #59614435, transparent 60%), var(--grain), #17271f;
+    box-shadow:
+        0 30px 100px #000b,
+        inset 0 1px #f1d08b35;
+}
+.modal-backdrop {
+    background: #060f0ddd;
+}
+.modal::backdrop,
+.fight-menu::backdrop {
+    background: #060f0ddd;
+    backdrop-filter: blur(5px);
+}
+.modal h2,
+.fight-menu h2 {
+    color: #f5e6c3;
+    text-shadow: 0 3px 10px #0007;
+}
+.modal p,
+.fight-menu p,
+.settings-options small {
+    font-family: var(--ui-font);
+    line-height: 1.6;
+    color: #c4ccbc;
+}
+.modal .secondary,
+.fight-menu .secondary {
+    border: 1px solid #bdab794d;
+    border-radius: 6px;
+    background: #23392d;
+    color: #ebdfc1;
+    box-shadow: inset 0 1px #ffffff0d;
+}
+.modal .result-stats > div {
+    border: 1px solid var(--champion-line);
+    border-radius: 6px;
+    background: #101f19;
+}
+.modal .settings-options > label {
+    border-color: var(--champion-line);
+}
+.modal input {
+    accent-color: #c9aa70;
+}
+.app .round-overlay strong,
+.app .knockdown-overlay strong {
+    text-shadow:
+        0 4px #32291d,
+        0 12px 28px #0009;
+}
+.app .knockdown-overlay {
+    border: 1px solid #cbb07466;
+    border-radius: 8px;
+    background: linear-gradient(140deg, #24352bf2, #121e1af5);
+}
+.app .recovery-track {
+    border-color: #a8915e;
+    border-radius: 3px;
+    box-shadow: inset 0 2px 5px #0008;
+}
+.app.fight-view .arena-shell {
+    border: 0;
+    border-radius: 0;
+}
+.app.fight-view .fighter-hud b {
+    font-size: clamp(8px, 1vw, 12px);
+}
+.app.fight-view .fighter-hud .guard-meter,
+.app.fight-view .fighter-hud .stamina-meter {
+    font-size: 7px;
+}
+@media (max-width: 600px) {
+    .app .fighter-hud b {
+        font-size: 8px;
+        letter-spacing: 0;
+    }
+    .app .panel-sub,
+    .app .difficulty-note,
+    .app .start-note {
+        font-size: 12px;
+    }
+    .app.fight-view .fighter-hud b {
+        font-size: 7px;
+    }
+    .app.fight-view .fighter-hud .guard-meter,
+    .app.fight-view .fighter-hud .stamina-meter {
+        font-size: 6px;
+    }
+}
+/* Name truncation must never cap the nested bar fills in immersive view. */
+.app.fight-view .fighter-hud .guard-meter > i > b,
+.app.fight-view .fighter-hud .stamina-meter > i > b {
+    max-width: none;
+}
+.app .ultimate-button {
+    border: 1px solid #bfa46c;
+    border-radius: 5px;
+    background: #162a23e8;
+    color: #f0ddb3;
+    box-shadow:
+        inset 0 1px #e6d09c25,
+        0 4px 12px #0005;
+}
+.app .ultimate-button > i {
+    background: linear-gradient(90deg, #88744199, #d6b46a99);
+}
+.app .ultimate-button.ready {
+    border-color: #ffe0a0;
+    color: #fff0c7;
+}
+.app .opponent-charge {
+    color: #bfcbbd;
+    background: #15251edb;
+    border-radius: 3px;
+}
+.app .fight-telemetry {
+    background: var(--leather);
+    border-color: var(--champion-line);
+}

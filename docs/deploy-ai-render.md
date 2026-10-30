@@ -51,3 +51,7 @@ After training a replacement compatible checkpoint, rerun `npm run ml:package`, 
 ## Validation performed here
 
 The packaged model loads and validates locally, its files match the source checkpoint, and the Linux CPython 3.11 CPU wheel for the pinned PyTorch version is available. Frontend/configuration and model-origin tests are covered by the normal regression suite. The complete image build was attempted but could not run because the Docker daemon was stopped. No successful Linux container execution, Render deployment, Vercel configuration change or cross-internet match is claimed.
+
+## If installation fails on typing-extensions or flit_core
+
+The first image version used Debian's older pip and resolved all torch dependencies through the PyTorch-only index. That produced an inconsistent typing-extensions metadata error, followed by a missing `flit_core` build dependency. The corrected `Dockerfile.ai` upgrades pip, downloads only the CPU torch wheel from PyTorch with `--no-deps --only-binary=:all:`, then installs torch's dependencies and the AI requirements from PyPI. `pip check` verifies the installed dependency graph before model validation. A Linux/Python 3.11 resolution check passes for the CPU wheel and AI requirements, without NVIDIA packages. Push the corrected Dockerfile and manually deploy the latest commit; game settings and the model checkpoint do not need changing for this error. Full container execution still needs validation on Docker or Render.

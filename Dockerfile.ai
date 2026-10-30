@@ -18,8 +18,12 @@ COPY package.json package-lock.json ./
 RUN npm ci --include=dev
 
 COPY training/requirements.txt ./training/requirements.txt
-RUN python -m pip install --no-cache-dir torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu \
-    && python -m pip install --no-cache-dir -r training/requirements.txt
+# Fetch only the CPU torch wheel from PyTorch. Resolve its dependencies on PyPI,
+# where Python build tools and typing-extensions metadata are available.
+RUN python -m pip install --no-cache-dir --upgrade pip==26.2.2 --index-url https://pypi.org/simple \
+    && python -m pip install --no-cache-dir --no-deps --only-binary=:all: torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu \
+    && python -m pip install --no-cache-dir torch==2.14.1 -r training/requirements.txt --index-url https://pypi.org/simple \
+    && python -m pip check
 
 COPY shared/ ./shared/
 COPY training/bridge.ts training/boxing_env.py training/common.py training/serve.py ./training/

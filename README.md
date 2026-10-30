@@ -186,3 +186,16 @@ Run `npm run verify` for the complete local release gate: style checks, unused-c
 | `src/motion/`, `public/pose-worker.js` | Gesture detection and local camera inference |
 | `server/index.ts`, `server/local-model.ts` | Online matches, production serving, and local AI startup |
 | `training/`, `tests/` | Model tooling and regression coverage |
+
+### Vercel frontend and trained CPU opponents
+
+For the prepared Docker service and exact dashboard steps, follow [Deploy the trained AI on Render](docs/deploy-ai-render.md). Use `Dockerfile.ai`; the original `Dockerfile` is the multiplayer/client image. `npm run ml:package` validates and prepares the small release checkpoint for review before committing.
+
+A Vite frontend deployment does not start `npm run ml:serve`, install the local `.venv`, or include the ignored trained weights. A public page must point at an actual hosted model service. Localhost development continues to use `http://127.0.0.1:8766` automatically; public pages no longer try to call the visitor's own computer.
+
+1. Prepare a backend with this repository, Node dependencies, the Python environment from `training/requirements.txt`, and both `training/models/boxer-120s-135hp.zip` and its matching `.json`. Keep the model compatibility check enabled. These weight files are not in Git and must be provisioned separately.
+2. Run the model service behind an HTTPS endpoint. Configure its bind address/port for your host and allow the exact frontend origin, for example `npm run ml:serve -- --host 0.0.0.0 --port 8766 --allowed-origin https://your-game.vercel.app`. `MODEL_HOST` and comma-separated `MODEL_ALLOWED_ORIGINS` are equivalent environment settings. Local-only defaults remain unchanged. No public service is created by adding these options to the source.
+3. In the Vercel frontend project's environment variables, set `VITE_MODEL_URL=https://your-model-service.example.com`. This is a public endpoint URL; do not put secrets in it. Rebuild/redeploy the frontend after setting it. Health and prediction requests use this same base URL with `/health` and `/predict` appended.
+4. Confirm the hosted `/health` endpoint reports the current policy version, then test an actual match. Only exact allowed frontend origins receive CORS access; add Preview deployment origins explicitly if you need them. The existing inference timeout/pacing remains unchanged, so cross-internet latency still needs verification.
+
+Online friend parties also require the existing Node/Socket.IO backend. For a separately hosted backend, set `VITE_SERVER_URL` on the frontend and `CLIENT_ORIGIN` on that server. The existing Dockerfile packages this Node backend and the client; it does not include Python or model weights. Setting a URL alone does not provision either backend.

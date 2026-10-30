@@ -18,6 +18,7 @@ import { RoundHistory, type RoundRecord } from "./components/RoundHistory";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Socket } from "socket.io-client";
 import { loadSocketClient } from "./network";
+import { modelServiceUrl } from "./model-service";
 import { isPartyCode, normalizePartyCode, partyCodeFromUrl, partyInviteUrl } from "./party";
 import {
     act,
@@ -66,6 +67,7 @@ const keymap: Record<string, Action> = {
     d: "dodgeRight",
     s: "duck"
 };
+const modelUrl = modelServiceUrl(window.location.href, import.meta.env.VITE_MODEL_URL);
 const controls = [
     [
         "R",
@@ -179,13 +181,17 @@ export default function App () {
 
     useEffect(() => {
         if (mode !== "ai") return;
+        if (!modelUrl) {
+            setModelReady(false);
+            return;
+        }
         let active = true;
         let controller: AbortController | null = null;
         const check = async () => {
             controller = new AbortController();
             const timeout = window.setTimeout(() => controller?.abort(), 1500);
             try {
-                const response = await fetch("http://127.0.0.1:8766/health", {
+                const response = await fetch(`${modelUrl}/health`, {
                     signal: controller.signal
                 });
                 const status = (await response.json()) as { ok?: boolean; version?: number };
@@ -517,7 +523,7 @@ export default function App () {
     // ------------------------------------------------------------
 
     const start = () => {
-        if (mode === "ai" && !modelReady) return;
+        if (mode === "ai" && (!modelReady || !modelUrl)) return;
 
         if (autoFullscreen) enterFullscreen();
 
@@ -541,7 +547,7 @@ export default function App () {
 
         setInputMode(matchRef.current, 0, input);
 
-        botRef.current = new LearnedBot(difficulty, Date.now() >>> 0);
+        botRef.current = new LearnedBot(difficulty, Date.now() >>> 0, modelUrl!);
 
         setModelStatus("connecting");
 
@@ -1117,9 +1123,13 @@ export default function App () {
                                         </p>
                                         {!modelReady && (
                                             <p className="model-help" role="status">
-                                                Connecting to trained opponent… If this persists,
-                                                run npm run ml:serve. Fight unlocks automatically
-                                                when ready.
+                                                {!modelUrl
+                                                    ? "Trained opponents are not configured for this site. The game host needs to connect the AI service."
+                                                    : ["localhost", "127.0.0.1", "[::1]"].includes(
+                                                            window.location.hostname
+                                                        )
+                                                      ? "Connecting to trained opponent… If this persists, run npm run ml:serve. Fight unlocks automatically when ready."
+                                                      : "The trained opponent service is unavailable. Retrying automatically…"}
                                             </p>
                                         )}
                                     </>

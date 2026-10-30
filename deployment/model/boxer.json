@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "actions": [
+    "wait",
+    "jab",
+    "cross",
+    "hook",
+    "block",
+    "release",
+    "dodgeLeft",
+    "dodgeRight",
+    "duck",
+    "advance",
+    "retreat",
+    "ultimate"
+  ],
+  "observation_size": 59,
+  "timesteps": 100352,
+  "engine_hash": "12b5d1ab4640d91d6ec9f92014f0a467cc283060eed4ada04084c53e40bf5cd8"
+}

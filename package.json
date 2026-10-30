@@ -12,6 +12,7 @@
         "ml:train": "node scripts/ml.mjs train",
         "ml:evaluate": "node scripts/ml.mjs evaluate",
         "ml:serve": "node scripts/ml.mjs serve",
+        "ml:package": "node scripts/package-model.mjs",
         "dev": "concurrently -k -n server,client \"tsx watch server/index.ts\" \"vite --host 0.0.0.0\"",
         "dev:client": "vite --host 0.0.0.0",
         "dev:server": "tsx watch server/index.ts",

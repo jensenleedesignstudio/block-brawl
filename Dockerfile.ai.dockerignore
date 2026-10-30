@@ -1,0 +1,16 @@
+# Include only the code and release checkpoint required by the AI service.
+**
+!package.json
+!package-lock.json
+!shared/
+!shared/*.ts
+!training/
+!training/requirements.txt
+!training/bridge.ts
+!training/boxing_env.py
+!training/common.py
+!training/serve.py
+!deployment/
+!deployment/model/
+!deployment/model/boxer.zip
+!deployment/model/boxer.json

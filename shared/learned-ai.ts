@@ -20,7 +20,7 @@ import {
 // LEARNED BOT
 // ------------------------------------------------------------
 
-/** Asynchronous local inference: rendering never waits on a model request. */
+/** Asynchronous inference: rendering never waits on a model request. */
 export class LearnedBot extends Bot {
     status: "connecting" | "ready" | "unavailable" = "connecting";
     private pending = false;
@@ -29,7 +29,11 @@ export class LearnedBot extends Bot {
     private queued: { match: Match; tick: number; readyAt: number; action: number } | null = null;
     private nextAttackAt = 0;
     private current: Match | null = null;
-    constructor (difficulty: Difficulty, seed: number) {
+    constructor (
+        difficulty: Difficulty,
+        seed: number,
+        private readonly modelUrl = "http://127.0.0.1:8766"
+    ) {
         super(difficulty, seed);
     }
     override update (m: Match, index = 1) {
@@ -101,7 +105,7 @@ export class LearnedBot extends Bot {
             if (m.tick < this.nextAttackAt || (this.difficulty === "easy" && id === 11))
                 mask[id] = false;
 
-        void fetch("http://127.0.0.1:8766/predict", {
+        void fetch(`${this.modelUrl}/predict`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             signal: controller.signal,

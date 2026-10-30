@@ -14,3 +14,6 @@ artifacts
 .codex
 .agents
 .aws
+deployment
+Dockerfile.ai
+Dockerfile.ai.dockerignore

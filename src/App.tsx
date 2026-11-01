@@ -1367,6 +1367,7 @@ export default function App () {
                             socket={socket.current}
                             index={playerIndex.current}
                             motionStream={motionStream}
+                            usesMotion={input === "motion"}
                             opponent={room.players[1 - playerIndex.current]?.name || "Opponent"}
                         />
                     )}

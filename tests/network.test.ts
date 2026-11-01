@@ -57,6 +57,42 @@ interface Room {
     match: Match | null;
 }
 
+test("camera signaling reaches only the other seated party member", async () => {
+    const arena = createArenaServer();
+    const clients: Socket[] = [];
+    await new Promise<void>((resolve) => arena.http.listen(0, "127.0.0.1", resolve));
+    try {
+        const address = arena.http.address();
+        assert.ok(address && typeof address !== "string");
+        for (let i = 0; i < 3; i++) {
+            const client = io(`http://127.0.0.1:${address.port}`, { transports: ["websocket"] });
+            clients.push(client);
+            await next(client, "connect");
+        }
+        const [host, guest, outsider] = clients;
+        const created = next<Joined>(host, "joined");
+        host.emit("createRoom", { name: "HOST" });
+        const { code } = await created;
+        const joined = next(guest, "joined");
+        guest.emit("joinRoom", { code });
+        await joined;
+        const unexpected: unknown[] = [];
+        host.on("cameraSignal", (data) => unexpected.push(data));
+        outsider.on("cameraSignal", (data) => unexpected.push(data));
+        const received = next(guest, "cameraSignal");
+        host.emit("cameraSignal", { type: "hello" });
+        assert.deepEqual(await received, { type: "hello" });
+        outsider.emit("cameraSignal", { type: "hello", code });
+        host.emit("cameraSignal", { type: "invalid" });
+        host.emit("cameraSignal", { type: "offer", description: "x".repeat(24001) });
+        await new Promise((resolve) => setTimeout(resolve, 60));
+        assert.deepEqual(unexpected, []);
+    } finally {
+        clients.forEach((client) => client.disconnect());
+        await arena.close();
+    }
+});
+
 test("party codes reject missing parties, normalize input, and free departed lobby seats", async () => {
     const arena = createArenaServer();
     const clients: Socket[] = [];

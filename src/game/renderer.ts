@@ -1153,8 +1153,8 @@ export function renderArena (
 
         c.textAlign = "center";
 
-        c.fillText("YOU · GET BACK UP", 340, 462);
-    } else if (m.phase !== "knockdown") {
+        if (m.phase === "knockdown") c.fillText("YOU · GET BACK UP", 340, 462);
+    } else if (m.phase !== "knockdown" && m.phase !== "finished") {
         if (self.knockdowns > 0 && self.hp === 60 && rise) c.translate(0, 145 * rise);
 
         firstPersonGloves(c, self, viewIndex, time, impactFor(viewIndex));

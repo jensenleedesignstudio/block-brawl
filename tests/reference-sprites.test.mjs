@@ -215,5 +215,17 @@ test("reference artwork loads asynchronously and both mirrored arm rigs render f
         match.fighters[view].action = "idle";
     }
 
+    match.phase = "finished";
+    for (const view of [0, 1]) {
+        match.fighters[view].hp = 135;
+        match.fighters[1 - view].hp = 0;
+        match.fighters[view].action = "block";
+        painted.length = 0;
+        renderArena(c, match, 3, false, view);
+        assert.ok(!painted.includes(blockImage), "finished matches do not overlay live guard gloves");
+        assert.ok(!painted.includes(images.find((image) => image.src === "/art/first-person-arm.png")),
+            "finished matches do not overlay live first-person arms");
+        assert.equal(depth, 0);
+    }
     delete globalThis.Image;
 });

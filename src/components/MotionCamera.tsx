@@ -124,6 +124,7 @@ export function MotionCamera ({
     onAction,
     onMove,
     onReady,
+    onStream,
     onTouchGloves,
     isRecovering,
     compact = false
@@ -131,6 +132,7 @@ export function MotionCamera ({
     onAction: (a: Action, held?: boolean) => void;
     onMove: (direction: Movement) => void;
     onReady: (ready: boolean) => void;
+    onStream?: (stream: MediaStream | null) => void;
     onTouchGloves?: () => void;
     isRecovering: () => boolean;
     compact?: boolean;
@@ -143,9 +145,9 @@ export function MotionCamera ({
         canvas = useRef<HTMLCanvasElement>(null),
         detector = useRef(new GestureDetector());
 
-    const callbacks = useRef({ onAction, onMove, onReady, onTouchGloves, isRecovering });
+    const callbacks = useRef({ onAction, onMove, onReady, onTouchGloves, isRecovering, onStream });
 
-    callbacks.current = { onAction, onMove, onReady, onTouchGloves, isRecovering };
+    callbacks.current = { onAction, onMove, onReady, onTouchGloves, isRecovering, onStream };
 
     const [status, setStatus] = useState("Requesting camera…"),
         [error, setError] = useState(""),
@@ -224,6 +226,7 @@ export function MotionCamera ({
             stream?.getTracks().forEach((t) => t.stop());
 
             worker?.terminate();
+            callbacks.current.onStream?.(null);
 
             if (interval) clearInterval(interval);
         };
@@ -265,6 +268,7 @@ export function MotionCamera ({
                 }
 
                 video.current!.srcObject = stream;
+                callbacks.current.onStream?.(stream);
 
                 await video.current!.play();
 
@@ -574,6 +578,7 @@ export function MotionCamera ({
             worker?.terminate();
 
             stream?.getTracks().forEach((t) => t.stop());
+            callbacks.current.onStream?.(null);
 
             callbacks.current.onAction("block", false);
 

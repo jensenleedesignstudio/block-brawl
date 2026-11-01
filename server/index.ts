@@ -159,6 +159,21 @@ export function createArenaServer () {
 
         const error = (message: string) => socket.emit("roomError", message);
 
+        // Relay connection metadata only, never video, to the other seated player.
+        socket.on("cameraSignal", (data: unknown) => {
+            const code = socket.data.code as string | undefined;
+            const room = code ? rooms.get(code) : undefined;
+            if (!room?.players.some((p) => p.socketId === socket.id)) return;
+            if (!data || typeof data !== "object") return;
+            const signal = data as { type?: string };
+            if (!["hello", "offer", "answer", "candidate"].includes(signal.type || "")) return;
+            if (JSON.stringify(data).length > 24000) return;
+            for (const player of room.players) {
+                if (player.socketId && player.socketId !== socket.id)
+                    io.to(player.socketId).emit("cameraSignal", data);
+            }
+        });
+
         socket.on("createRoom", (data: { name?: string } = {}) => {
             if (rooms.size >= 200) return error("Arena is busy. Try again shortly.");
 

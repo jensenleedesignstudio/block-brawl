@@ -916,3 +916,21 @@
     color: #f0e6cf;
     font: 600 14px/1.5 sans-serif;
 }
+.party-camera {
+    position: absolute;
+    top: calc(var(--shell-top) + 116px);
+    width: clamp(130px, 17vw, 240px);
+    z-index: 18;
+    border: 1px solid #8a9870;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #14251f;
+    color: #f0e6cf;
+}
+.party-camera-local { left: 16px; }
+.party-camera-remote { right: 16px; }
+.party-camera video { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.party-camera-local video { transform: scaleX(-1); }
+.party-camera span, .party-camera button { display: block; padding: 8px; font: 12px/1.4 sans-serif; }
+.party-camera button { width: 100%; }
+.app.game-shell:has(.party-cameras) .camera-overhang { top: calc(var(--shell-top) + 350px); }

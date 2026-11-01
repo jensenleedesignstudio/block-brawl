@@ -36,6 +36,7 @@ import { POLICY_VERSION } from "../shared/learning";
 import { LearnedBot } from "../shared/learned-ai";
 import { Arena } from "./components/Arena";
 import { MotionCamera } from "./components/MotionCamera";
+import { PartyCameras } from "./components/PartyCameras";
 import { BoxerArt, commandPose } from "./components/BoxerArt";
 import { unlockAudio, setMusicEnabled, disposeMusic } from "./game/audio";
 import "./fight-view.css";
@@ -141,6 +142,7 @@ export default function App () {
         setCornerOpen(!playing);
     }, [playing]);
 
+    const [motionStream, setMotionStream] = useState<MediaStream | null>(null);
     const [cameraReady, setCameraReady] = useState(false),
         [room, setRoom] = useState<Room | null>(null),
         [code, setCode] = useState(() => partyCodeFromUrl(window.location.href)),
@@ -1389,9 +1391,19 @@ export default function App () {
                             </>
                         )}
                     </aside>
+                    {mode === "online" && room && socket.current && room.players.length === 2 && (
+                        <PartyCameras
+                            key={`${room.code}:${connection}`}
+                            socket={socket.current}
+                            index={playerIndex.current}
+                            motionStream={motionStream}
+                            opponent={room.players[1 - playerIndex.current]?.name || "Opponent"}
+                        />
+                    )}
                     {input === "motion" && (
                         <div className="camera-overhang">
                             <MotionCamera
+                                onStream={setMotionStream}
                                 isRecovering={() =>
                                     matchRef.current.phase === "knockdown" &&
                                     matchRef.current.down === playerIndex.current

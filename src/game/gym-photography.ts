@@ -3,11 +3,26 @@
 // ============================================================
 
 import { cameraPoint, type ArenaCamera, type WorldPoint } from "./arena-world.js";
+import { loadArtwork } from "./artwork-loading.js";
 
 let photograph: HTMLImageElement | null = null;
 let timber: HTMLImageElement | null = null;
 let ready = false;
 let timberReady = false;
+let requested = false;
+
+export function prepareGymArtwork (): void {
+    if (requested || typeof Image === "undefined") return;
+    requested = true;
+    loadArtwork("/art/gym/field-house-panorama.png", (image) => {
+        photograph = image;
+        ready = true;
+    });
+    loadArtwork("/art/gym/oak-floor-texture.png", (image) => {
+        timber = image;
+        timberReady = true;
+    });
+}
 type Vertex = WorldPoint & { u: number; v: number };
 type CameraVertex = { side: number; depth: number; z: number; u: number; v: number };
 const RADIUS = 900,
@@ -141,18 +156,7 @@ function triangle (c: CanvasRenderingContext2D, image: HTMLImageElement, vertice
 
 /** Photographic materials on room geometry, viewed by the actual orbit camera. */
 export function drawGymPhotograph (c: CanvasRenderingContext2D, camera: ArenaCamera): boolean {
-    if (!photograph && typeof Image !== "undefined") {
-        photograph = new Image();
-        photograph.onload = () => {
-            ready = true;
-        };
-        photograph.src = "/art/gym/field-house-panorama.png";
-        timber = new Image();
-        timber.onload = () => {
-            timberReady = true;
-        };
-        timber.src = "/art/gym/oak-floor-texture.png";
-    }
+    prepareGymArtwork();
     if (!ready || !photograph || !timberReady || !timber) return false;
     c.save();
     c.imageSmoothingEnabled = true;

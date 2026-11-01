@@ -84,6 +84,16 @@ test("reference artwork loads asynchronously and both mirrored arm rigs render f
 
     assert.equal(draws, 0);
 
+    const { prepareGymArtwork } = await import("../.test-build/src/game/gym-photography.js");
+    const { renderArena } = await import("../.test-build/src/game/renderer.js");
+    const { createMatch } = await import("../.test-build/shared/combat.js");
+    prepareGymArtwork();
+    const loadingMatch = createMatch();
+    const snapshot = JSON.stringify(loadingMatch);
+    renderArena(c, loadingMatch, 0);
+    assert.equal(draws, 0, "pending artwork must not draw the procedural fighters or gym");
+    assert.equal(scales.length, 0, "pending artwork must not enter fallback fighter rendering");
+    assert.equal(JSON.stringify(loadingMatch), snapshot, "loading only affects presentation");
     images.forEach((image) => image.onload());
 
     for (const duck of [0, 21, 42]) assert.equal(drawReferenceBody(c, duck), true);
@@ -149,10 +159,6 @@ test("reference artwork loads asynchronously and both mirrored arm rigs render f
 
             assert.equal(depth, 0);
         }
-
-    const { renderArena } = await import("../.test-build/src/game/renderer.js");
-
-    const { createMatch } = await import("../.test-build/shared/combat.js");
 
     const match = createMatch();
 

@@ -21,6 +21,8 @@ import {
 import { Bot } from "../../shared/ai";
 import { ArenaPresentation } from "../game/presentation";
 import { renderArena } from "../game/renderer";
+import { artworkStatus, retryArtwork } from "../game/artwork-loading";
+import { prepareGymArtwork } from "../game/gym-photography";
 import { sound } from "../game/audio";
 import { FightTelemetry } from "./FightTelemetry";
 import { ActionGhost } from "./ActionGhost";
@@ -71,6 +73,10 @@ export function Arena ({
         container = useRef<HTMLDivElement>(null);
 
     const [hud, setHud] = useState(() => structuredClone(matchRef.current));
+    const [artwork, setArtwork] = useState(() => {
+        prepareGymArtwork();
+        return artworkStatus();
+    });
 
     const latest = useRef({ playing, online, viewIndex, muted, onFinish, paused });
 
@@ -170,6 +176,7 @@ export function Arena ({
                 );
 
             if (now - lastUI > 60) {
+                setArtwork(artworkStatus());
                 setHud(structuredClone(m));
 
                 lastUI = now;
@@ -233,6 +240,25 @@ export function Arena ({
                 </div>
             </div>
             <div className="arena-stage">
+                {artwork !== "ready" && (
+                    <div className="artwork-loading" role="status" aria-live="polite">
+                        <span>
+                            {artwork === "error"
+                                ? "Unable to load arena artwork"
+                                : "Loading arena artwork…"}
+                        </span>
+                        {artwork === "error" && (
+                            <button
+                                onClick={() => {
+                                    retryArtwork();
+                                    setArtwork(artworkStatus());
+                                }}
+                            >
+                                Retry artwork
+                            </button>
+                        )}
+                    </div>
+                )}
                 <canvas
                     ref={canvas}
                     width={2000}

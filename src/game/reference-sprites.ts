@@ -1,4 +1,5 @@
 import { shadeLeather } from "./sprite-material.js";
+import { loadArtwork } from "./artwork-loading.js";
 
 // ============================================================
 // ARTWORK LOADING AND ANIMATED SPRITE RIGS
@@ -94,17 +95,13 @@ function loadSprite (path: string, columns = 1, rows = 1): Sprite | undefined {
     // Simulation tests and server-side imports do not have a browser Image API.
     if (typeof Image === "undefined") return;
 
-    const sprite: Sprite = { image: new Image(), ready: false };
-
-    sprite.image.onload = () => {
-        sprite.lit = lightSprite(sprite.image, columns, rows);
-
-        sprite.red = lightSprite(sprite.image, columns, rows, true);
-
+    const sprite = { ready: false } as Sprite;
+    loadArtwork(path, (image) => {
+        sprite.image = image;
+        sprite.lit = lightSprite(image, columns, rows);
+        sprite.red = lightSprite(image, columns, rows, true);
         sprite.ready = true;
-    };
-
-    sprite.image.src = path;
+    });
 
     return sprite;
 }

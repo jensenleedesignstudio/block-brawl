@@ -902,3 +902,17 @@
         padding: 7px;
     }
 }
+/* Keep incomplete artwork covered instead of flashing the old graphics. */
+.artwork-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: #14251f;
+    color: #f0e6cf;
+    font: 600 14px/1.5 sans-serif;
+}

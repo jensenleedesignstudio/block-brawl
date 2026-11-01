@@ -7,6 +7,8 @@
 // ------------------------------------------------------------
 
 import { impactRecoil } from "./presentation.js";
+import { artworkStatus } from "./artwork-loading.js";
+import { prepareGymArtwork } from "./gym-photography.js";
 import { punchExtension, ultimatePose, ultimateHands } from "./punch-motion.js";
 import {
     drawBoot,
@@ -780,6 +782,13 @@ export function renderArena (
     c.imageSmoothingEnabled = false;
 
     c.clearRect(0, 0, W, H);
+
+    prepareGymArtwork();
+    if (artworkStatus() !== "ready") {
+        c.fillStyle = "#14251f";
+        c.fillRect(0, 0, W, H);
+        return;
+    }
 
     // Render fractional action ages between simulation ticks. Combat and hit
     // timing stay authoritative; hitstop deliberately freezes these poses.

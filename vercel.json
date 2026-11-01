@@ -1,0 +1,23 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "rewrites": [
+        {
+            "source": "/api/opponent/health",
+            "destination": "https://block-brawl.onrender.com/health"
+        },
+        {
+            "source": "/api/opponent/predict",
+            "destination": "https://block-brawl.onrender.com/predict"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/api/opponent/:path*",
+            "headers": [
+                { "key": "Cache-Control", "value": "no-store" },
+                { "key": "CDN-Cache-Control", "value": "no-store" },
+                { "key": "Vercel-CDN-Cache-Control", "value": "no-store" }
+            ]
+        }
+    ]
+}

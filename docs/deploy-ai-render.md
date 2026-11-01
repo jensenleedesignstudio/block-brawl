@@ -27,6 +27,29 @@ Render instructions: [Docker services](https://render.com/docs/docker), [web ser
 
 ## Connect Vercel
 
+### Same-origin AI requests
+
+`vercel.json` now forwards exactly `/api/opponent/health` and
+`/api/opponent/predict` to this project's Render AI service. Both endpoints disable
+browser/CDN caching. The browser talks only to its own game origin; Vercel forwards
+the request to Render using an [external rewrite](https://vercel.com/docs/routing/rewrites#rewrites-to-external-origins).
+This avoids the direct third-party Render requests that Chrome reported as
+`ERR_BLOCKED_BY_CLIENT`, even after browser blockers were paused.
+
+Keep the existing `VITE_MODEL_URL=https://block-brawl.onrender.com`: on
+`*.vercel.app`, the frontend automatically selects the same-origin proxy for this
+exact model URL. Other model services and local development keep their direct
+configured URLs. For a custom domain hosted by this Vercel project, use
+`VITE_MODEL_URL=/api/opponent` and rebuild instead. Keep the Render origin allowlist
+for the game origin; the proxy does not change the model or remove origin checks.
+
+Deploy these changes together. After deployment,
+`https://block-brawl-ecru.vercel.app/api/opponent/health` should return the model's
+JSON health response. Until the new Vercel deployment is live, that path does not
+exist. No successful live proxy deployment is claimed by local tests.
+
+### Initial setup
+
 1. Wait for Render to report the service as live and note its HTTPS URL, for example `https://block-brawl-ai.onrender.com`.
 2. Open its `/health` URL. Expect JSON with `ok: true`, `version: 1`, and the checkpoint's training steps.
 3. In the Vercel project's environment variables, set `VITE_MODEL_URL` to the base HTTPS URL, **without `/health` or `/predict`**.

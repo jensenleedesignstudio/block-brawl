@@ -19,6 +19,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Socket } from "socket.io-client";
 import { loadSocketClient } from "./network";
 import { modelServiceUrl } from "./model-service";
+import { CONNECTING_MODEL, monitorModelHealth, type ModelHealth } from "./model-health";
 import { isPartyCode, normalizePartyCode, partyCodeFromUrl, partyInviteUrl } from "./party";
 import {
     act,
@@ -32,7 +33,6 @@ import {
     type Movement
 } from "../shared/combat";
 import type { Bot } from "../shared/ai";
-import { POLICY_VERSION } from "../shared/learning";
 import { LearnedBot } from "../shared/learned-ai";
 import { Arena } from "./components/Arena";
 import { MotionCamera } from "./components/MotionCamera";
@@ -179,43 +179,13 @@ export default function App () {
     // ------------------------------------------------------------
 
     const [modelStatus, setModelStatus] = useState("connecting");
-    const [modelReady, setModelReady] = useState(false);
+    const [modelHealth, setModelHealth] = useState<ModelHealth>(CONNECTING_MODEL);
+    const modelReady = modelHealth.kind === "ready";
 
     useEffect(() => {
         if (mode !== "ai") return;
-        if (!modelUrl) {
-            setModelReady(false);
-            return;
-        }
-        let active = true;
-        let controller: AbortController | null = null;
-        const check = async () => {
-            controller = new AbortController();
-            const timeout = window.setTimeout(() => controller?.abort(), 1500);
-            try {
-                const response = await fetch(`${modelUrl}/health`, {
-                    signal: controller.signal
-                });
-                const status = (await response.json()) as { ok?: boolean; version?: number };
-                if (active)
-                    setModelReady(
-                        response.ok && status.ok === true && status.version === POLICY_VERSION
-                    );
-            } catch {
-                if (active) setModelReady(false);
-            } finally {
-                window.clearTimeout(timeout);
-            }
-        };
-        void check();
-        const timer = window.setInterval(() => {
-            void check();
-        }, 5000);
-        return () => {
-            active = false;
-            controller?.abort();
-            window.clearInterval(timer);
-        };
+        if (!modelUrl) return;
+        return monitorModelHealth(modelUrl, setModelHealth);
     }, [mode]);
 
     useEffect(() => {
@@ -1131,7 +1101,7 @@ export default function App () {
                                                             window.location.hostname
                                                         )
                                                       ? "Connecting to trained opponent… If this persists, run npm run ml:serve. Fight unlocks automatically when ready."
-                                                      : "The trained opponent service is unavailable. Retrying automatically…"}
+                                                      : modelHealth.message}
                                             </p>
                                         )}
                                     </>

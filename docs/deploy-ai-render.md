@@ -35,6 +35,21 @@ Render instructions: [Docker services](https://render.com/docs/docker), [web ser
 
 Online parties need the separate Node/Socket.IO backend and its `VITE_SERVER_URL` / `CLIENT_ORIGIN` settings; this AI container does not implement multiplayer.
 
+### Current project's browser-origin settings
+
+For `https://block-brawl-ecru.vercel.app`, set these **on Render**, then redeploy both services:
+
+| Render service | Environment variable | Value |
+| --- | --- | --- |
+| `block-brawl` (Python AI) | `MODEL_ALLOWED_ORIGINS` | `https://block-brawl-ecru.vercel.app` |
+| `block-brawl-multiplayer` (Node) | `CLIENT_ORIGIN` | `https://block-brawl-ecru.vercel.app` |
+
+The deployed Vercel bundle was verified to contain `VITE_MODEL_URL=https://block-brawl.onrender.com` and `VITE_SERVER_URL=https://block-brawl-multiplayer.onrender.com`. Both backend health endpoints respond successfully, but the exact frontend-origin probe returned AI HTTP 403 and a multiplayer handshake without `Access-Control-Allow-Origin`. Those are server-side allowlist failures, so changing Vercel's already-correct URLs will not resolve them. Origin variables placed only in Vercel do not configure the Render processes.
+
+The multiplayer client now loads lazily from the frontend's own assets rather than requiring `/socket.io/socket.io.js` to download from the backend within 12 seconds. Socket.IO still uses `VITE_SERVER_URL` and handles reconnection; this does not replace the required server-side origin setting. Commit/push the client update to rebuild Vercel. The production asset test includes lazy chunks as well as the main bundle.
+
+Follow-up live verification: multiplayer now returns the correct frontend CORS header. Two temporary clients connected over WebSocket, created/joined their own party, and reached countdown with 135 HP each; both clients then disconnected. AI still returns HTTP 403 for the frontend origin. Vercel still serves the older `index-BzuOG_Vi.js` bundle, so the client-loading fix has not reached production. Fix the AI service's `MODEL_ALLOWED_ORIGINS` and deploy the frontend patch; multiplayer's origin setting no longer needs correction. This server test does not verify browser controls or a completed remote match.
+
 ## Local container check and future model updates
 
 With Docker Desktop running:

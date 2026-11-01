@@ -12,7 +12,7 @@ import type { Socket } from "socket.io-client";
 // TYPES AND SHARED DATA STRUCTURES
 // ------------------------------------------------------------
 
-/** Load the client served by Socket.IO itself, keeping server/client versions aligned. */
+/** Client and server versions are locked together by package-lock.json. */
 type SocketFactory = (url?: string, options?: { autoConnect?: boolean }) => Socket;
 
 // ------------------------------------------------------------
@@ -34,42 +34,14 @@ export function loadSocketClient (): Promise<SocketFactory> {
         );
     }
 
-    if (client) return client;
-
-    client = new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-
-        const origin = (import.meta.env.VITE_SERVER_URL || "").replace(/\/$/, "");
-
-        script.src = `${origin}/socket.io/socket.io.js`;
-
-        script.async = true;
-
-        const timeout = window.setTimeout(() => fail(), 12000);
-
-        const fail = () => {
-            window.clearTimeout(timeout);
-
-            script.remove();
-
+    // Load from the frontend's assets so backend startup cannot time out a
+    // separate script download. Socket.IO handles reconnects to the server.
+    client ??= import("socket.io-client")
+        .then(({ io }) => io)
+        .catch(() => {
             client = undefined;
-
-            reject(new Error("Cannot load multiplayer. Start the Node server and try again."));
-        };
-
-        script.onerror = fail;
-
-        script.onload = () => {
-            window.clearTimeout(timeout);
-
-            const factory = (window as unknown as { io?: SocketFactory }).io;
-
-            if (factory) resolve(factory);
-            else fail();
-        };
-
-        document.head.append(script);
-    });
+            throw new Error("Cannot load multiplayer controls. Refresh the page and try again.");
+        });
 
     return client;
 }

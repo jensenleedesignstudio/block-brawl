@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { createArenaServer } from "../server/index.js";
 
 test(
@@ -22,9 +22,16 @@ test(
             assert.ok(!page.headers.get("cache-control")?.includes("immutable"));
             const html = await page.text();
             assert.match(html, /Block Brawl/);
-            const assets = [...html.matchAll(/(?:src|href)="(\/assets\/[^"]+)"/g)].map(
-                (match) => match[1]
-            );
+            const assets = [
+                ...new Set([
+                    ...[...html.matchAll(/(?:src|href)="(\/assets\/[^"]+)"/g)].map(
+                        (match) => match[1]
+                    ),
+                    ...readdirSync("dist/assets")
+                        .filter((file) => /\.(js|css)$/.test(file))
+                        .map((file) => `/assets/${file}`)
+                ])
+            ];
             assert.ok(assets.length >= 2);
             for (const asset of assets) {
                 const response = await fetch(base + asset, { method: "HEAD" });

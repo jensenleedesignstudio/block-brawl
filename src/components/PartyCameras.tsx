@@ -284,53 +284,67 @@ export function PartyCameras ({
         };
     }, [motionStream, usesMotion, enabled, activePeer, cameraRetry]);
 
+    const localStatus =
+        cameraError ||
+        (!enabled
+            ? "Camera off"
+            : pending
+              ? "Opening camera…"
+              : !activePeer
+                ? "Connecting…"
+                : usesMotion && !motionStream
+                  ? "Waiting for motion camera…"
+                  : "");
+    const remoteLive = status === "Opponent camera connected";
+
     return (
         <div className="party-cameras">
             <div
                 className={`party-camera party-camera-local party-camera-${index === 0 ? "left" : "right"}`}
             >
-                <video ref={local} autoPlay playsInline muted aria-label="Your shared camera" />
-                <span role="status">
-                    {cameraError ||
-                        (!enabled
-                            ? "Your camera is off"
-                            : pending
-                              ? "Opening your camera…"
-                              : !activePeer
-                                ? "Connecting camera service…"
-                                : usesMotion && !motionStream
-                                  ? "Waiting for your motion camera…"
-                                  : "Your camera · shared with your party")}
-                </span>
-                <button
-                    onClick={() => {
-                        if (cameraError) setCameraRetry((value) => value + 1);
-                        else setEnabled(!enabled);
-                    }}
-                >
-                    {cameraError
-                        ? "Retry camera"
-                        : pending && enabled
-                          ? "Opening camera… · Stop"
-                          : enabled
-                            ? "Stop sharing camera"
-                            : "Resume camera"}
-                </button>
+                <div className="party-camera-picture">
+                    <video ref={local} autoPlay playsInline muted aria-label="Your shared camera" />
+                    <span className="party-camera-status" role="status">
+                        {localStatus}
+                    </span>
+                </div>
+                <div className="party-camera-bar">
+                    <b className="party-camera-name">You</b>
+                    <button
+                        className={`party-camera-toggle${enabled && !cameraError ? " is-sharing" : ""}`}
+                        onClick={() => {
+                            if (cameraError) setCameraRetry((value) => value + 1);
+                            else setEnabled(!enabled);
+                        }}
+                    >
+                        {cameraError ? "Retry camera" : enabled ? "Stop camera" : "Resume camera"}
+                    </button>
+                </div>
             </div>
             <div
                 className={`party-camera party-camera-remote party-camera-${index === 0 ? "right" : "left"}`}
             >
-                <video
-                    ref={remote}
-                    onLoadedData={() => setStatus("Opponent camera connected")}
-                    autoPlay
-                    playsInline
-                    muted
-                    aria-label={`${opponent}'s camera`}
-                />
-                <span>
-                    {opponent} · {status}
-                </span>
+                <div className="party-camera-picture">
+                    <video
+                        ref={remote}
+                        onLoadedData={() => setStatus("Opponent camera connected")}
+                        autoPlay
+                        playsInline
+                        muted
+                        aria-label={`${opponent}'s camera`}
+                    />
+                    <span className="party-camera-status" role="status">
+                        {remoteLive ? "" : status}
+                    </span>
+                </div>
+                <div className="party-camera-bar">
+                    <b className="party-camera-name" title={opponent}>
+                        {opponent}
+                    </b>
+                    <span className="party-camera-live" role="status">
+                        {remoteLive ? "Live" : ""}
+                    </span>
+                </div>
             </div>
         </div>
     );

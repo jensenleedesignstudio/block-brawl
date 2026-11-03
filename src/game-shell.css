@@ -565,6 +565,13 @@
 }
 
 /* A small afterimage of the accepted move, with no pointer or gameplay effects. */
+.action-ghost-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 7;
+    overflow: hidden;
+    pointer-events: none;
+}
 .action-ghost {
     position: absolute;
     left: 28px;
@@ -658,7 +665,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
     .action-ghost {
-        animation-name: move-ghost-opacity;
+        animation: move-ghost-opacity 1.25s ease-out both !important;
     }
     .app.game-shell .action-ghost .ghost-trail {
         display: none;
@@ -916,32 +923,142 @@
     color: #f0e6cf;
     font: 600 14px/1.5 sans-serif;
 }
+/* Shared dimensions keep both feeds and the surrounding controls in separate lanes. */
+.app.game-shell {
+    --party-camera-width: min(340px, 28vw);
+    --party-camera-height: min(255px, 21vw, 28dvh);
+    --party-camera-top: calc(var(--shell-top) + 140px);
+    --party-camera-bottom: calc(var(--party-camera-top) + var(--party-camera-height) + 46px);
+}
 .party-camera {
     position: absolute;
-    top: calc(var(--shell-top) + 116px);
-    width: min(240px, 20vw, calc((100vw - 48px) / 2));
-    z-index: 18;
-    max-height: calc(100dvh - var(--shell-top) - 132px);
-    border: 1px solid #8a9870;
-    border-radius: 8px;
-    overflow: auto;
+    top: var(--party-camera-top);
+    width: var(--party-camera-width);
+    z-index: 11;
+    border: 1px solid #c4a66c88;
+    border-radius: 4px;
+    overflow: hidden;
     background: #14251f;
     color: #f0e6cf;
+    box-shadow: 0 6px 20px #0005;
 }
-.party-camera-left { left: 16px; }
-.party-camera-right { right: 16px; }
+.party-camera-left {
+    left: 16px;
+    border-top: 2px solid #d97b6a;
+}
+.party-camera-right {
+    right: 16px;
+    border-top: 2px solid #78b5ca;
+}
+.party-camera-picture {
+    position: relative;
+    height: var(--party-camera-height);
+    background: #101d18;
+}
 .party-camera video {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    height: 100%;
     object-fit: contain;
     image-rendering: auto;
-    background: #101d18;
 }
-.party-camera-local video { transform: scaleX(-1); }
-.party-camera span, .party-camera button { display: block; padding: 8px; font: 12px/1.4 sans-serif; }
-.party-camera button { width: 100%; }
-.app.game-shell:has(.party-cameras) .camera-overhang { top: calc(var(--shell-top) + 350px); }
+.party-camera-local video {
+    transform: scaleX(-1);
+}
+.party-camera-status {
+    position: absolute;
+    inset: auto 8px 8px;
+    padding: 6px 8px;
+    border-radius: 3px;
+    background: #101d18ed;
+    color: #f0e6cf;
+    font: 12px/1.4 var(--ui-font);
+    overflow-wrap: anywhere;
+    max-height: calc(100% - 16px);
+    overflow-y: auto;
+}
+.party-camera-status:empty {
+    display: none;
+}
+.party-camera-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    height: 43px;
+    padding: 4px 8px;
+    border-top: 1px solid #c4a66c33;
+    background: linear-gradient(110deg, #253c32, #14241f);
+}
+.party-camera-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font: 8px/1.5 var(--pixel);
+    text-transform: uppercase;
+}
+.party-camera-live {
+    color: #b4dfbe;
+    font: 11px var(--ui-font);
+}
+.party-camera-toggle {
+    flex-shrink: 0;
+    min-height: 32px;
+    padding: 6px 8px;
+    border: 1px solid #b9cb9a;
+    border-radius: 0;
+    background: #324c39;
+    color: #fff1d9;
+    box-shadow:
+        inset 0 2px #ffffff20,
+        0 2px #0c1713;
+    font: 7px/1.6 var(--pixel);
+    cursor: pointer;
+}
+.party-camera-toggle.is-sharing {
+    border-color: #eaa395;
+    background: #923c36;
+    box-shadow:
+        inset 0 2px #ffffff20,
+        0 2px #461f20;
+}
+.party-camera-toggle:hover {
+    filter: brightness(1.15);
+}
+.party-camera-toggle:active {
+    translate: 0 1px;
+    box-shadow: inset 0 1px #0003;
+}
+.party-camera-toggle:active:not(:disabled) {
+    transform: none;
+}
+.party-camera-toggle:focus-visible {
+    outline: 2px solid #ffe4a5;
+    outline-offset: 3px;
+}
+.app.game-shell:has(.party-cameras) .setup-panel {
+    top: calc(var(--party-camera-bottom) + 12px);
+    max-height: calc(100dvh - var(--party-camera-bottom) - 28px);
+}
+.app.game-shell:has(.party-cameras) .ringside-rail {
+    top: calc(var(--party-camera-bottom) + 12px);
+    overflow-y: auto;
+    justify-content: safe flex-end;
+    scrollbar-width: thin;
+}
+.app.game-shell:has(.party-cameras) .camera-overhang {
+    top: calc(var(--party-camera-bottom) + 12px);
+    width: var(--party-camera-width);
+    max-height: 96px;
+}
+.app.game-shell:has(.party-motion-tools) .ringside-rail {
+    top: calc(var(--party-camera-bottom) + 120px);
+}
+.app.game-shell:has(.party-cameras) .combat-feedback {
+    left: 50%;
+    top: max(38%, calc(var(--party-camera-bottom) + 16px));
+}
 /* Keep motion tracking mounted, but use the party panel as the one live preview.
    The tracking preview remains available by explicitly opening Camera Tools. */
 .party-motion-tools .camera-feed {
@@ -952,6 +1069,52 @@
     display: block;
 }
 @media (max-width: 760px) {
-    .party-camera { width: min(180px, calc((100vw - 48px) / 2)); }
-    .party-camera span, .party-camera button { padding: 6px; font-size: 11px; }
+    .app.game-shell {
+        --party-camera-width: calc((100vw - 36px) / 2);
+        --party-camera-height: min(calc((100vw - 36px) * 0.375), 28dvh);
+    }
+    .party-camera-left {
+        left: 12px;
+    }
+    .party-camera-right {
+        right: 12px;
+    }
+    .party-camera-bar {
+        gap: 5px;
+        padding-inline: 6px;
+    }
+    .party-camera-name,
+    .party-camera-toggle {
+        font-size: 6px;
+    }
+}
+/* Short landscape screens use the space beside the scorecards for the feeds. */
+@media (max-height: 600px) and (min-width: 600px) {
+    .app.game-shell:has(.party-cameras) {
+        --shell-top: 72px;
+        --party-camera-width: min(240px, 24vw);
+        --party-camera-height: min(180px, 18vw, 24dvh);
+        --party-camera-top: calc(var(--shell-top) + 12px);
+    }
+    .app.game-shell:has(.party-cameras) > .site-header {
+        height: 52px;
+        min-height: 52px;
+        flex-wrap: nowrap;
+    }
+    .app.game-shell:has(.party-cameras) .cabinet-nav {
+        width: auto;
+        margin-left: auto;
+    }
+    .app.game-shell:has(.party-cameras) .fight-hud {
+        width: calc(100vw - var(--party-camera-width) * 2 - 64px);
+        grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
+        gap: 8px;
+    }
+    .app.game-shell:has(.party-cameras) .corner-toggle {
+        top: calc(var(--party-camera-bottom) + 12px);
+    }
+    .app.game-shell:has(.party-cameras) .setup-panel {
+        top: calc(var(--party-camera-bottom) + 52px);
+        max-height: calc(100dvh - var(--party-camera-bottom) - 68px);
+    }
 }

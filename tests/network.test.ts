@@ -82,11 +82,37 @@ test("camera signaling reaches only the other seated party member", async () => 
         const received = next(guest, "cameraSignal");
         host.emit("cameraSignal", { type: "hello" });
         assert.deepEqual(await received, { type: "hello" });
+        const validOffer = {
+            type: "offer",
+            description: { type: "offer", sdp: "v=0\r\n" + "a".repeat(9000) }
+        };
+        const forwardedOffer = next(guest, "cameraSignal");
+        host.emit("cameraSignal", validOffer);
+        assert.deepEqual(
+            await forwardedOffer,
+            validOffer,
+            "SDP beyond the old 8 KB transport cap must not disconnect the player"
+        );
+        const invalidSignals: unknown[] = [];
+        const recordInvalid = (data: unknown) => invalidSignals.push(data);
+        guest.on("cameraSignal", recordInvalid);
         outsider.emit("cameraSignal", { type: "hello", code });
         host.emit("cameraSignal", { type: "invalid" });
         host.emit("cameraSignal", { type: "offer", description: "x".repeat(24001) });
+        host.emit("cameraSignal", { type: "offer", description: { type: "answer", sdp: "v=0" } });
         await new Promise((resolve) => setTimeout(resolve, 60));
         assert.deepEqual(unexpected, []);
+        assert.deepEqual(invalidSignals, []);
+        guest.off("cameraSignal", recordInvalid);
+
+        const readyRoom = next<Room>(host, "room", (room) => room.players[0].ready);
+        for (let i = 0; i < 50; i++) host.emit("cameraSignal", { type: "hello" });
+        host.emit("ready");
+        assert.equal(
+            (await readyRoom).players[0].ready,
+            true,
+            "ICE traffic cannot exhaust combat/control event allowance"
+        );
     } finally {
         clients.forEach((client) => client.disconnect());
         await arena.close();

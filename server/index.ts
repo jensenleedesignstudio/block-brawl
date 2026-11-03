@@ -12,6 +12,7 @@ import { randomBytes } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { Server, type Socket } from "socket.io";
 import { startLocalModel } from "./local-model.js";
+import { isCameraSignal } from "../shared/camera.js";
 import {
     ACTIONS,
     act,
@@ -66,7 +67,8 @@ export function createArenaServer () {
 
     const io = new Server(http, {
         cors: { origin: process.env.CLIENT_ORIGIN?.split(",") ?? false },
-        maxHttpBufferSize: 8192
+        // A single-video SDP can exceed 8 KB. Keep a bounded 32 KB envelope.
+        maxHttpBufferSize: 32768
     });
 
     const rooms = new Map<string, Room>();
@@ -143,13 +145,21 @@ export function createArenaServer () {
 
     io.on("connection", (socket) => {
         let windowStart = Date.now(),
-            events = 0;
+            events = 0,
+            cameraEvents = 0;
 
-        socket.use((_packet, next) => {
+        socket.use((packet, next) => {
             if (Date.now() - windowStart > 1000) {
                 windowStart = Date.now();
 
                 events = 0;
+                cameraEvents = 0;
+            }
+
+            // ICE gathering must not consume the existing combat input budget.
+            if (packet[0] === "cameraSignal") {
+                if (++cameraEvents <= 60) next();
+                return;
             }
 
             if (++events > 45) return;
@@ -164,9 +174,7 @@ export function createArenaServer () {
             const code = socket.data.code as string | undefined;
             const room = code ? rooms.get(code) : undefined;
             if (!room?.players.some((p) => p.socketId === socket.id)) return;
-            if (!data || typeof data !== "object") return;
-            const signal = data as { type?: string };
-            if (!["hello", "offer", "answer", "candidate"].includes(signal.type || "")) return;
+            if (!isCameraSignal(data)) return;
             if (JSON.stringify(data).length > 24000) return;
             for (const player of room.players) {
                 if (player.socketId && player.socketId !== socket.id)

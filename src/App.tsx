@@ -1252,6 +1252,10 @@ export default function App () {
                                                     Create a private party or enter your friend's
                                                     six-character code.
                                                 </p>
+                                                <p className="party-hint">
+                                                    Cameras share automatically when both players join.
+                                                    No microphone audio is shared.
+                                                </p>
                                                 <input
                                                     aria-label="Fighter name"
                                                     placeholder="Your fighter name"
@@ -1372,7 +1376,9 @@ export default function App () {
                         />
                     )}
                     {input === "motion" && (
-                        <div className="camera-overhang">
+                        <div
+                            className={`camera-overhang ${mode === "online" && room?.players.length === 2 ? "party-motion-tools" : ""}`}
+                        >
                             <MotionCamera
                                 onStream={setMotionStream}
                                 isRecovering={() =>

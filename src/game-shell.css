@@ -921,9 +921,10 @@
     top: calc(var(--shell-top) + 116px);
     width: min(240px, 20vw, calc((100vw - 48px) / 2));
     z-index: 18;
+    max-height: calc(100dvh - var(--shell-top) - 132px);
     border: 1px solid #8a9870;
     border-radius: 8px;
-    overflow: hidden;
+    overflow: auto;
     background: #14251f;
     color: #f0e6cf;
 }
@@ -941,6 +942,15 @@
 .party-camera span, .party-camera button { display: block; padding: 8px; font: 12px/1.4 sans-serif; }
 .party-camera button { width: 100%; }
 .app.game-shell:has(.party-cameras) .camera-overhang { top: calc(var(--shell-top) + 350px); }
+/* Keep motion tracking mounted, but use the party panel as the one live preview.
+   The tracking preview remains available by explicitly opening Camera Tools. */
+.party-motion-tools .camera-feed {
+    display: none;
+}
+.party-motion-tools:has(.camera-options[open]) .camera-feed,
+.party-motion-tools .camera-feed:has(.camera-error) {
+    display: block;
+}
 @media (max-width: 760px) {
     .party-camera { width: min(180px, calc((100vw - 48px) / 2)); }
     .party-camera span, .party-camera button { padding: 6px; font-size: 11px; }

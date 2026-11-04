@@ -215,6 +215,7 @@ button:disabled {
     text-align: center;
     color: #ffe29a;
     font: 24px/1.6 var(--pixel);
+    text-transform: none;
     text-shadow: 3px 3px #041023;
     animation: hit-callout 420ms ease-out both;
 }
@@ -227,6 +228,7 @@ button:disabled {
 .combat-feedback small {
     display: block;
     font: 6px/1.8 var(--pixel);
+    text-transform: none;
     white-space: nowrap;
 }
 
@@ -712,12 +714,14 @@ button:disabled {
 .ultimate-title span {
     display: block;
     font: 6px/1.8 var(--pixel);
+    text-transform: none;
     letter-spacing: 2px;
 }
 
 .ultimate-title b {
     display: block;
     font: clamp(12px, 2vw, 26px) / 1.8 var(--pixel);
+    text-transform: none;
     font-style: italic;
 }
 
@@ -746,12 +750,14 @@ button:disabled {
 
 .knockdown-banner small {
     font: 7px/2 var(--pixel);
+    text-transform: none;
     color: #bce9ed;
     letter-spacing: 2px;
 }
 
 .knockdown-banner b {
     font: clamp(14px, 3.2vw, 40px) / 1.8 var(--pixel);
+    text-transform: none;
     color: #ffce69;
     text-shadow: 4px 4px #722d2e;
     animation: down-stamp 1.15s var(--motion-ease) both;

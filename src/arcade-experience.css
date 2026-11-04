@@ -121,6 +121,7 @@ main {
 
 .arcade-welcome h1 {
     font: clamp(13px, 1.5vw, 22px) / 1.8 var(--pixel);
+    text-transform: none;
     margin: 12px 0 0;
     letter-spacing: -0.5px;
     color: #fff1cc;
@@ -135,6 +136,7 @@ main {
     padding-bottom: 5px;
     color: #a2bccc;
     font: 5px/1.8 var(--pixel);
+    text-transform: none;
     letter-spacing: 1px;
     white-space: nowrap;
 }
@@ -479,6 +481,7 @@ main {
     list-style: none;
     color: #c3d9df;
     font: 6px/1.8 var(--pixel);
+    text-transform: none;
     transition: background 200ms;
 }
 

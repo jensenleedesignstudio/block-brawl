@@ -7,7 +7,7 @@ export type ModelHealth = {
 
 export const CONNECTING_MODEL: ModelHealth = {
     kind: "connecting",
-    message: "Connecting to the trained opponent… The server may need time to wake up."
+    message: "waking up your opponent… this may take a moment."
 };
 
 /** A startup probe needs a longer budget than an in-fight prediction. */
@@ -30,23 +30,31 @@ export async function checkModelHealth (
         if (!response.ok) {
             return {
                 kind: "http",
-                message: response.status === 403
-                    ? "The opponent service is not allowing this website to connect. Retrying…"
-                    : `The opponent service returned HTTP ${response.status}. Retrying…`
+                message:
+                    response.status === 403
+                        ? "the opponent service is blocking this connection. retrying…"
+                        : `The opponent service returned HTTP ${response.status}. Retrying…`
             };
         }
-        const status = await response.json() as { ok?: boolean; version?: number };
+        const status = (await response.json()) as { ok?: boolean; version?: number };
         if (status?.ok !== true || status.version !== POLICY_VERSION) {
-            return { kind: "incompatible", message: "The opponent service needs a compatible model update. Retrying…" };
+            return { kind: "incompatible", message: "your opponent needs an update. retrying…" };
         }
         return { kind: "ready", message: "" };
     } catch (error) {
         if (error instanceof SyntaxError) {
-            return { kind: "incompatible", message: "The opponent service returned an invalid health response. Retrying…" };
+            return {
+                kind: "incompatible",
+                message: "your opponent sent an invalid response. retrying…"
+            };
         }
         return controller.signal.aborted
-            ? { kind: "timeout", message: "The trained opponent is taking longer to start. Retrying…" }
-            : { kind: "network", message: "Your browser could not reach the trained opponent. Check your connection or browser blocking settings. Retrying…" };
+            ? { kind: "timeout", message: "your opponent is still waking up. retrying…" }
+            : {
+                  kind: "network",
+                  message:
+                      "can’t reach your opponent. check your connection or browser blocking settings. retrying…"
+              };
     } finally {
         clearTimeout(timeout);
         signal.removeEventListener("abort", cancel);
@@ -65,10 +73,18 @@ export function monitorModelHealth (
     update(CONNECTING_MODEL);
     const check = async () => {
         if (!active) return;
-        const result = await checkModelHealth(url, controller.signal, options.timeoutMs, options.fetcher);
+        const result = await checkModelHealth(
+            url,
+            controller.signal,
+            options.timeoutMs,
+            options.fetcher
+        );
         if (!active) return;
         update(result);
-        if (active) timer = setTimeout(() => { void check(); }, options.retryMs ?? 5000);
+        if (active)
+            timer = setTimeout(() => {
+                void check();
+            }, options.retryMs ?? 5000);
     };
     void check();
     return () => {

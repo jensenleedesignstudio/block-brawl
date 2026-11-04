@@ -37,3 +37,13 @@ test("browser shortcuts, text composition and focused UI cannot trigger combat",
         false
     );
 });
+
+test("closing a menu keeps letter controls available without turning button activation into a block", () => {
+    const button = { closest: (selector: string) => (selector.includes("button") ? {} : null) };
+    const key = (value: string) => ({ key: value, target: button }) as unknown as KeyboardEvent;
+    assert.equal(isGameKey(key("j")), true);
+    assert.equal(isGameKey(key("k")), true);
+    assert.equal(isGameKey(key("Escape")), true);
+    assert.equal(isGameKey(key(" ")), false);
+    assert.equal(isGameKey(key("Enter")), false);
+});

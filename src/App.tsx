@@ -74,14 +74,14 @@ const controls = [
     [
         "R",
         "Ultimate",
-        "Fill the meter, then rapidly raise ONE hand above your head whether or not the elbow is visible. Keep the other hand lower; lower both hands to reset. R or UNLEASH also works. Rising Breaker lands an 18-damage uppercut and three 2-damage combo hits."
+        "fill the meter, then quickly raise one hand overhead. keep the other low; lower both to reset. r or unleash also works. deals 18 damage, then three 2-damage hits."
     ],
     ["J", "Jab", "Straighten your left arm through shoulder, elbow, and hand; return to guard."],
     ["K", "Cross", "Straighten your right arm through shoulder, elbow, and hand; return to guard."],
     [
         "L",
         "Right hook",
-        "Quickly sweep your right fist horizontally inward across your chest with a bent elbow, then return it to guard. Keyboard: L."
+        "sweep your right fist inward with a bent elbow, then return to guard. keyboard: l."
     ],
     [
         "SPACE",
@@ -205,7 +205,15 @@ export default function App () {
     // DIALOG FOCUS AND START GESTURE
     // ------------------------------------------------------------
 
-    const closeHelp = useCallback(() => setHelp(false), []);
+    const pauseBeforeOverlay = useRef(false);
+    const closeHelp = useCallback(() => {
+        setHelp(false);
+        setPaused(pauseBeforeOverlay.current);
+    }, []);
+    const closeSettings = useCallback(() => {
+        setSettings(false);
+        setPaused(pauseBeforeOverlay.current);
+    }, []);
 
     useModalFocus(help, closeHelp);
 
@@ -446,9 +454,7 @@ export default function App () {
                 s.on("connect_error", () => {
                     setConnection("reconnecting");
 
-                    setError(
-                        "Cannot reach the arena server. Make sure the server is running. Retrying…"
-                    );
+                    setError("can’t reach the arena. reconnecting…");
                 });
 
                 s.on("joined", (data: { code: string; token: string; index: number }) => {
@@ -566,6 +572,9 @@ export default function App () {
         resultShown.current = true;
 
         setFinished(true);
+        setHelp(false);
+        setSettings(false);
+        setFightMenu(false);
 
         const match = matchRef.current,
             index = playerIndex.current;
@@ -802,6 +811,7 @@ export default function App () {
 
                             if (playing && mode === "ai") setPaused(true);
 
+                            pauseBeforeOverlay.current = paused;
                             setHelp(true);
                         }}
                     >
@@ -815,6 +825,7 @@ export default function App () {
 
                             if (playing && mode === "ai") setPaused(true);
 
+                            pauseBeforeOverlay.current = paused;
                             setSettings(true);
                         }}
                     >
@@ -1118,19 +1129,19 @@ export default function App () {
                                         <p className="difficulty-note">
                                             <i />
                                             {difficulty === "easy"
-                                                ? "Trained policy with relaxed reactions and longer pauses between attacks."
+                                                ? "a trained opponent with room to breathe."
                                                 : difficulty === "medium"
-                                                  ? "Trained policy with measured reactions and balanced attack pacing."
-                                                  : "Trained policy at its fastest response speed. No scripted tactics."}
+                                                  ? "a trained opponent with a balanced pace."
+                                                  : "a trained opponent at full pace. stay sharp."}
                                         </p>
                                         {!modelReady && (
                                             <p className="model-help" role="status">
                                                 {!modelUrl
-                                                    ? "Trained opponents are not configured for this site. The game host needs to connect the AI service."
+                                                    ? "the host hasn’t connected trained opponents yet."
                                                     : ["localhost", "127.0.0.1", "[::1]"].includes(
                                                             window.location.hostname
                                                         )
-                                                      ? "Connecting to trained opponent… If this persists, run npm run ml:serve. Fight unlocks automatically when ready."
+                                                      ? "waking up your opponent… if this persists, run npm run ml:serve."
                                                       : modelHealth.message}
                                             </p>
                                         )}
@@ -1500,11 +1511,11 @@ export default function App () {
                     onFullscreenChange={setAutoFullscreen}
                     scanlines={scanlines}
                     onScanlinesChange={setScanlines}
-                    onClose={() => setSettings(false)}
+                    onClose={closeSettings}
                 />
             )}
             {help && (
-                <div className="modal-backdrop" onClick={() => setHelp(false)}>
+                <div className="modal-backdrop" onClick={closeHelp}>
                     <section
                         className="modal"
                         role="dialog"
@@ -1515,18 +1526,16 @@ export default function App () {
                         <button
                             className="close-modal"
                             aria-label="Close guide"
-                            onClick={() => setHelp(false)}
+                            onClick={closeHelp}
                         >
                             <PixelIcon name="close" />
                         </button>
                         <span className="eyebrow">BLOCK BRAWL / FIELD GUIDE</span>
                         <h2 id="guide-title">LEARN YOUR MOVES.</h2>
                         <p>
-                            Face the camera rather than standing sideways. A slight boxing stance is
-                            fine, but keep both shoulders, elbows, wrists, and hips visible. Hold a
-                            relaxed guard during calibration. Lean your body toward the lens to move
-                            forward or away to retreat. Punch toward the lens and snap back to
-                            guard.
+                            face the camera with your shoulders, elbows, hands, and hips in view.
+                            hold a relaxed guard to calibrate. lean toward the camera to advance, or
+                            away to retreat. punch toward the lens, then return to guard.
                         </p>
                         <div className="guide-controls">
                             {controls.map(([key, label, description]) => (
@@ -1541,33 +1550,29 @@ export default function App () {
                             ))}
                         </div>
                         <p>
-                            <b>Knocked down?</b> At zero health you have 10 seconds to alternate J
-                            and K: 20 inputs on your first knockdown, 60 on your second, 100 on your
-                            third, and 200 from your fourth knockdown onward. With the camera on,
-                            move either hand up and down. Each clear vertical stroke counts once; a
-                            slower lift also counts when you pause briefly at the top. Recover to 60
-                            HP, or lose by knockout when the count ends.
+                            <b>knocked down?</b> you have 10 seconds to alternate j and k, or move
+                            either hand up and down. each clear stroke counts once; a slower lift
+                            counts with a brief pause at the top. you need 20, 60, 100, then 200
+                            inputs from your fourth knockdown onward. get up with 60 hp, or lose
+                            when the count ends.
                         </p>
                         <p>
-                            <b>Stamina (keyboard only).</b> Motion controls have no stamina cost or
-                            limit. With keyboard controls, you start with 250. Jabs cost 10, crosses
-                            15, hooks 20, and an ultimate costs 30. Rest to regenerate slowly, or
-                            block for faster recovery. Twenty-five uninterrupted jabs empty the bar.
-                            You need enough stamina to start each punch.
+                            <b>stamina.</b> keyboard starts with 250. jab: 10, cross: 15, hook: 20,
+                            ultimate: 30. you need enough to throw each punch. rest to recharge;
+                            block to recover faster. motion controls use no stamina.
                         </p>
                         <p>
-                            <b>Fight smart.</b> Holding block reduces damage by 80% but drains the
-                            guard bar. Raise it within a split second of impact for a perfect block
-                            that deals no damage and dazes the attacker. An empty bar breaks guard
-                            until it recovers. Slips avoid straight punches, but hooks catch them.
-                            Duck under crosses and hooks; jabs catch ducks.
+                            <b>fight smart.</b> block absorbs 80% of damage but drains guard. raise
+                            it just before impact to parry: no damage, and your rival is dazed.
+                            empty guard needs time to recover. slip straight punches; duck crosses
+                            and hooks. hooks catch slips, and jabs catch ducks.
                         </p>
                         <p>
-                            The round lasts {ROUND_SECONDS} seconds. Win by knockout or remaining
-                            health. Your fighters approach and circle automatically, always facing
-                            each other. Online matches pause for up to 20 seconds on disconnection.
+                            rounds last {ROUND_SECONDS} seconds. win by knockout or remaining
+                            health. fighters approach and circle automatically. online matches pause
+                            for up to 20 seconds if a player disconnects.
                         </p>
-                        <button className="primary full" onClick={() => setHelp(false)}>
+                        <button className="primary full" onClick={closeHelp}>
                             READY TO FIGHT <PixelIcon name="target" size={17} />
                         </button>
                     </section>
@@ -1593,10 +1598,10 @@ export default function App () {
                         </h2>
                         <p>
                             {outcome === "VICTORY"
-                                ? "You own this block. Ready for the next challenger?"
+                                ? "your round. ready for another?"
                                 : outcome === "DRAW"
-                                  ? "Nothing between you. Settle it in the next round."
-                                  : "Every round makes you sharper. Get back in there."}
+                                  ? "evenly matched. one more round?"
+                                  : "take a breath. come back stronger."}
                         </p>
                         <div className="result-stats">
                             <div>

@@ -49,19 +49,19 @@ export function ArcadeSettings ({
             </button>
             <span className="eyebrow">CABINET CONFIGURATION</span>
             <h2 id="settings-title">YOUR SETUP.</h2>
-            <p>Set your corner up before the bell.</p>
+            <p>make yourself at home.</p>
             <div className="settings-options">
                 <label>
                     <span>
                         <b>Music & sound</b>
-                        <small>Mellow pixel music, punches, blocks, and the bell</small>
+                        <small>music, punches, and the bell</small>
                     </span>
                     <input type="checkbox" checked={!muted} onChange={onMute} />
                 </label>
                 <label>
                     <span>
                         <b>Automatic fullscreen</b>
-                        <small>Enter fight view when starting a match</small>
+                        <small>go fullscreen when the match starts</small>
                     </span>
                     <input
                         type="checkbox"
@@ -72,7 +72,7 @@ export function ArcadeSettings ({
                 <label>
                     <span>
                         <b>CRT scanlines</b>
-                        <small>A classic arcade screen finish</small>
+                        <small>a little arcade texture</small>
                     </span>
                     <input
                         type="checkbox"

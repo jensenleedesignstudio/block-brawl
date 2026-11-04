@@ -28,7 +28,7 @@ export function PartyCameras ({
     const [cameraError, setCameraError] = useState("");
     const [cameraRetry, setCameraRetry] = useState(0);
     const [configurationRetry, setConfigurationRetry] = useState(0);
-    const [status, setStatus] = useState("Waiting for opponent camera");
+    const [status, setStatus] = useState("waiting for their camera…");
 
     useEffect(() => {
         let disposed = false;
@@ -37,7 +37,7 @@ export function PartyCameras ({
         const abort = new AbortController();
         const initialize = async () => {
             if (typeof RTCPeerConnection === "undefined") {
-                setStatus("Camera sharing is unavailable in this browser");
+                setStatus("camera sharing isn’t supported in this browser.");
                 return;
             }
             let connection: RTCPeerConnection;
@@ -57,7 +57,7 @@ export function PartyCameras ({
                     setStatus(
                         import.meta.env.VITE_RTC_ICE_SERVERS_URL
                             ? "Camera service unavailable. Retrying…"
-                            : "Camera service is not configured correctly. The match can continue."
+                            : "camera service unavailable. you can still play."
                     );
                     if (import.meta.env.VITE_RTC_ICE_SERVERS_URL)
                         retryConfiguration = setTimeout(
@@ -115,12 +115,12 @@ export function PartyCameras ({
             connection.onconnectionstatechange = () => {
                 if (closed) return;
                 if (["failed", "disconnected"].includes(connection.connectionState))
-                    setStatus("Reconnecting opponent camera automatically…");
+                    setStatus("reconnecting their camera…");
                 else if (connection.connectionState === "connected")
                     setStatus(
                         remote.current && remote.current.readyState >= 2
                             ? "Opponent camera connected"
-                            : "Connected; waiting for opponent video…"
+                            : "waiting for their video…"
                     );
                 scheduleRetry();
             };
@@ -181,8 +181,7 @@ export function PartyCameras ({
                         }
                     })
                     .catch(() => {
-                        if (!closed)
-                            setStatus("Camera connection unavailable. The match can continue.");
+                        if (!closed) setStatus("camera disconnected. you can still play.");
                     });
             };
             socket.on("cameraSignal", receive);
@@ -213,7 +212,7 @@ export function PartyCameras ({
         };
         void initialize().catch(() => {
             stop();
-            if (!disposed) setStatus("Camera connection unavailable. The match can continue.");
+            if (!disposed) setStatus("camera disconnected. you can still play.");
         });
         return () => {
             disposed = true;
@@ -263,9 +262,7 @@ export function PartyCameras ({
                 if (!disposed) {
                     captured?.getTracks().forEach((track) => track.stop());
                     outgoing.current = null;
-                    setCameraError(
-                        "Camera unavailable. Check browser permission or device access, then retry."
-                    );
+                    setCameraError("camera unavailable. check camera permissions, then retry.");
                 }
             } finally {
                 if (!disposed) setPending(false);

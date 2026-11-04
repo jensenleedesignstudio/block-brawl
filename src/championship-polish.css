@@ -140,6 +140,7 @@ body {
 .app .move-detail p,
 .app .history-empty p {
     font-family: var(--ui-font);
+    text-transform: lowercase;
     font-size: 13px;
     line-height: 1.65;
     color: #c2c5b4;
@@ -164,6 +165,7 @@ body {
 }
 .app .fighter-hud b {
     font-family: var(--ui-font);
+    text-transform: lowercase;
     font-weight: 800;
     letter-spacing: 0.055em;
     font-size: clamp(10px, 1vw, 15px);
@@ -172,6 +174,7 @@ body {
 .app .fighter-hud > div > span:last-child {
     color: #f5ead0;
     font-family: var(--ui-font);
+    text-transform: lowercase;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
 }
@@ -206,6 +209,7 @@ body {
 .app .fighter-hud .stamina-meter {
     color: #bdc7be;
     font-family: var(--ui-font);
+    text-transform: lowercase;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
 }
@@ -237,6 +241,7 @@ body {
 }
 .app .timer strong {
     font-family: var(--ui-font);
+    text-transform: lowercase;
     font-weight: 800;
     letter-spacing: -0.04em;
     color: #f2dfb2;
@@ -301,6 +306,7 @@ body {
 .fight-menu p,
 .settings-options small {
     font-family: var(--ui-font);
+    text-transform: lowercase;
     line-height: 1.6;
     color: #c4ccbc;
 }

@@ -51,10 +51,7 @@ export function RoundHistory ({ rounds }: { rounds: RoundRecord[] }) {
                     <span aria-hidden="true">◇</span>
                     <div>
                         <h3>YOUR FIRST BELL IS WAITING.</h3>
-                        <p>
-                            Completed fights appear here with your result, hits, and damage. Step
-                            into the arena to start your record.
-                        </p>
+                        <p>finish a fight to see your result, hits, and damage here.</p>
                     </div>
                     <a href="#arcade">BACK TO THE ARENA ↗</a>
                 </div>

@@ -314,15 +314,13 @@ export function MotionCamera ({
                 watchdog = setTimeout(
                     () =>
                         fail(
-                            "The pose model took too long to load. Check your connection and retry, or switch to keyboard."
+                            "tracking took too long to load. check your connection and retry, or use keyboard."
                         ),
                     45000
                 );
 
                 worker.onerror = () =>
-                    fail(
-                        "This browser could not start pose tracking. Try a current Chrome or Edge browser, or use keyboard."
-                    );
+                    fail("tracking couldn’t start. try chrome or edge, or use keyboard.");
 
                 worker.onmessage = (event) => {
                     if (disposed) return;
@@ -605,15 +603,11 @@ export function MotionCamera ({
                 const name = e instanceof Error ? e.name : "";
 
                 if (name === "NotAllowedError")
-                    fail(
-                        "Camera permission was denied. Allow camera access in your browser’s site settings, then retry or choose Keyboard."
-                    );
+                    fail("allow camera access in your browser, then retry. keyboard works too.");
                 else if (name === "NotFoundError")
-                    fail("No camera was found. Connect a webcam, then retry or choose Keyboard.");
+                    fail("no camera found. connect one or use keyboard.");
                 else if (name === "NotReadableError")
-                    fail(
-                        "The camera is busy or unavailable. Close other apps using it, then retry or choose Keyboard."
-                    );
+                    fail("camera busy. close other apps using it, then retry.");
                 else
                     fail(
                         e instanceof Error
@@ -690,15 +684,15 @@ export function MotionCamera ({
                     </span>
                 </div>
                 <p className="micro ultimate-gesture-tip">
-                    ULTIMATE: At full charge, rapidly raise just one hand above your head whether or
-                    not the elbow is visible. Keep the other hand lower, then lower both to reset.
+                    ultimate: at full charge, quickly raise one hand overhead. keep the other low,
+                    then lower both to reset.
                 </p>
                 <p className="hand-tracking-status">{hands}</p>
                 <p className="micro" aria-live="polite">
                     {recoveryActive
-                        ? "Recovery: move the yellow hand trackers vertically. Either hand counts."
+                        ? "move either hand up and down to get up."
                         : detection?.message ||
-                          "Face the camera with your head, hands, and hips visible. Calibration starts automatically."}
+                          "face the camera with your head, hands, and hips in view. calibration is automatic."}
                 </p>
                 {onTouchGloves && detection?.calibrated && (
                     <div className="glove-start-status">

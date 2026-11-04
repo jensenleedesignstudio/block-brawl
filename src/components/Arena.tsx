@@ -290,8 +290,8 @@ export function Arena ({
                     <div className="artwork-loading" role="status" aria-live="polite">
                         <span>
                             {artwork === "error"
-                                ? "Unable to load arena artwork"
-                                : "Loading arena artwork…"}
+                                ? "couldn’t load the arena. check your connection and retry."
+                                : "getting the ring ready…"}
                         </span>
                         {artwork === "error" && (
                             <button
@@ -623,8 +623,8 @@ export function Arena ({
                         <strong>TIME OUT</strong>
                         <span>
                             {online
-                                ? "Reconnecting fighter… match paused for up to 20 seconds."
-                                : "Match paused. Click the round timer to resume."}
+                                ? "reconnecting your opponent… paused for up to 20 seconds."
+                                : "match paused. tap the timer to resume."}
                         </span>
                     </div>
                 )}

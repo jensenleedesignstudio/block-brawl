@@ -77,7 +77,7 @@ export function FightTelemetry ({
                     <p>
                         {self.charge >= 100
                             ? "FULL CHARGE / PRESS R TO UNLEASH"
-                            : "Land punches or take damage to build charge."}
+                            : "land or take hits to build charge."}
                     </p>
                     <small>
                         {playing
@@ -98,7 +98,7 @@ export function FightTelemetry ({
                         </span>
                     ))
                 ) : (
-                    <p>Stay loose. Keep your guard up. Find your rhythm.</p>
+                    <p>stay loose. find your rhythm.</p>
                 )}
             </div>
         </details>

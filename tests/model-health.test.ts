@@ -36,7 +36,7 @@ test("health failures distinguish server errors, network blocks, and timeouts", 
     const signal = new AbortController().signal;
     const denied = await checkModelHealth("https://models.example", signal, 100, async () => new Response(null, { status: 403 }));
     assert.equal(denied.kind, "http");
-    assert.match(denied.message, /not allowing this website/);
+    assert.match(denied.message, /blocking this connection/);
     const network = await checkModelHealth("https://models.example", signal, 100, async () => { throw new TypeError("Failed to fetch"); });
     assert.equal(network.kind, "network");
     const timeout = await checkModelHealth("https://models.example", signal, 5, (_url, options) => new Promise((_resolve, reject) => {

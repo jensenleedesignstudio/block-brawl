@@ -291,6 +291,7 @@
 
 .fight-menu h2 {
     font: 20px/1.6 var(--pixel);
+    text-transform: none;
     margin: 12px 0;
 }
 

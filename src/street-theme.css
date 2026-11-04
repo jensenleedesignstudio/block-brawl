@@ -556,6 +556,7 @@ footer {
     gap: 6px;
     margin-top: 5px;
     font: 5px/1.5 var(--pixel);
+    text-transform: none;
     color: #e0ce9c;
 }
 
@@ -576,6 +577,7 @@ footer {
 
 .fighter-hud .stamina-meter > span:last-child {
     font: 5px/1.5 var(--pixel);
+    text-transform: none;
     margin-left: 0;
     min-width: 26px;
 }
@@ -594,6 +596,7 @@ footer {
 
 .stamina-warning {
     font: 7px/1.6 var(--pixel);
+    text-transform: none;
     color: #f0d6aa;
     background: #493d2fee;
     border: 1px solid #b29a73;

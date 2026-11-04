@@ -42,8 +42,7 @@ const moves: {
         category: "Attack",
         pose: "jab",
         attack: "cross",
-        description:
-            "More power, more commitment. Mix it behind a jab when your rival leaves an opening.",
+        description: "follow a jab with a cross when you spot an opening.",
         camera: "Straighten your right arm, then return to guard."
     },
     {
@@ -53,7 +52,7 @@ const moves: {
         category: "Attack",
         pose: "hook",
         attack: "hook",
-        description: "The heaviest normal punch. Catches slips, but a duck can avoid it.",
+        description: "your heaviest normal punch. catches slips; ducks avoid it.",
         camera: "Quickly sweep your right fist inward across your chest with a bent elbow, then return to guard."
     },
     {
@@ -63,8 +62,7 @@ const moves: {
         category: "Attack",
         pose: "uppercut",
         attack: "ultimate",
-        description:
-            "An uppercut followed by three quick punches. Fill your charge meter before unleashing it.",
+        description: "fill your charge meter for an uppercut and three quick hits.",
         camera: "Rapidly raise one hand above your head; keep the other lower."
     },
     {

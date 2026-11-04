@@ -59,8 +59,8 @@ export function FightMenu ({
                 <h2 id="fight-menu-title">{online ? "FIGHT MENU" : "TIME OUT"}</h2>
                 <p>
                     {online
-                        ? "The online match continues while this menu is open."
-                        : "Take a breath. Your match is paused."}
+                        ? "the match keeps going while this menu is open."
+                        : "take a breath. your match is paused."}
                 </p>
                 <button ref={resume} className="primary full" onClick={onResume}>
                     RESUME
@@ -76,7 +76,7 @@ export function FightMenu ({
                 <button className="secondary full leave-match" onClick={onLeaveMatch}>
                     EXIT MATCH
                 </button>
-                <small>Click the round timer to open this menu.</small>
+                <small>tap the timer to open this menu.</small>
             </section>
         </dialog>
     );

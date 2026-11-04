@@ -259,6 +259,7 @@ main {
 
 .fighter-hud b {
     font: 9px/1.6 var(--pixel);
+    text-transform: none;
     color: #fff6d7;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -272,6 +273,7 @@ main {
 
 .fighter-hud > div > span:last-child {
     font: 13px/1.5 var(--pixel);
+    text-transform: none;
     color: #fff5db;
     margin-left: auto;
     white-space: nowrap;
@@ -279,6 +281,7 @@ main {
 
 .fighter-hud > div > span:last-child small {
     font: 7px var(--pixel);
+    text-transform: none;
     color: #a7e7df;
 }
 
@@ -307,6 +310,7 @@ main {
 .fighter-hud .stamina-meter {
     margin-top: 6px;
     font: 5px/1.6 var(--pixel);
+    text-transform: none;
     gap: 7px;
     color: #d5f1e9;
 }
@@ -355,6 +359,7 @@ main {
 .timer strong {
     display: block;
     font: 24px/1.7 var(--pixel);
+    text-transform: none;
     letter-spacing: -2px;
     color: #ffdc62;
     text-shadow: 3px 3px #705125;
@@ -363,11 +368,13 @@ main {
 
 .timer small {
     font: 6px/1.8 var(--pixel);
+    text-transform: none;
     color: #ffe286;
 }
 
 .timer > span {
     font: 5px/1.8 var(--pixel);
+    text-transform: none;
     color: #74adb7;
     letter-spacing: 1px;
     margin-top: 5px;
@@ -384,6 +391,7 @@ main {
 
 .cabinet-label {
     font: 11px/1.7 var(--pixel);
+    text-transform: none;
     padding: 10px 5px;
     border-bottom: 3px solid #185f80;
     background: linear-gradient(#0c3550, #05182f);
@@ -457,6 +465,7 @@ main {
     padding: 9px 4px;
     color: #ffdf68;
     font: 7px/1.7 var(--pixel);
+    text-transform: none;
     border-top: 2px solid #113f5c;
     border-bottom: 2px solid #113f5c;
     background: #061a30;
@@ -489,6 +498,7 @@ main {
     color: #fff5d7;
     padding: 12px 9px;
     font: 14px/1.6 var(--pixel);
+    text-transform: none;
     text-shadow: 3px 3px #063777;
     letter-spacing: -0.5px;
     box-shadow:
@@ -537,6 +547,7 @@ main {
     background-color: #0a3151;
     color: var(--pixel-mint);
     font-family: var(--pixel);
+    text-transform: none;
     font-size: 7px;
 }
 
@@ -567,6 +578,7 @@ main {
 
 .mode-select > button strong {
     font: 10px/1.6 var(--pixel);
+    text-transform: none;
     padding: 8px 3px;
     color: #d7eee8;
     background: #05223d;
@@ -632,6 +644,7 @@ main {
     padding: 9px 6px;
     color: #a1ecdf;
     font: 7px var(--pixel);
+    text-transform: none;
     box-shadow: 3px 3px #020b20;
 }
 
@@ -664,6 +677,7 @@ main {
     background: #04182e;
     color: var(--pixel-mint);
     font: 8px/1.7 var(--pixel);
+    text-transform: none;
     padding: 8px 3px;
 }
 
@@ -741,6 +755,7 @@ kbd {
     padding: 4px 8px;
     color: #fff4d7;
     font: 12px/1.4 var(--pixel);
+    text-transform: none;
     text-shadow: 2px 2px #18334e;
     box-shadow:
         0 0 0 2px #020b20,
@@ -900,6 +915,7 @@ kbd {
 
 .intel-card h2 {
     font-family: var(--pixel);
+    text-transform: none;
     color: #fff1c5;
 }
 

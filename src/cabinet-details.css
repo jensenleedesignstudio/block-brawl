@@ -81,6 +81,7 @@
 .ticket-title > div > span {
     display: block;
     font: 5px/1.8 var(--pixel);
+    text-transform: none;
     letter-spacing: 1px;
     color: #8acbd4;
     margin-bottom: 7px;
@@ -88,6 +89,7 @@
 
 .ticket-title b {
     font: 8px/1.7 var(--pixel);
+    text-transform: none;
     color: #fff0c3;
 }
 
@@ -104,18 +106,21 @@
 
 .fight-ticket dt {
     font: 5px/1.8 var(--pixel);
+    text-transform: none;
     color: #749bb4;
     margin-bottom: 7px;
 }
 
 .fight-ticket dd {
     font: 7px/1.8 var(--pixel);
+    text-transform: none;
     color: #cae7e4;
     margin: 0;
 }
 
 .fight-ticket > a {
     font: 6px/1.8 var(--pixel);
+    text-transform: none;
     color: #ffdb6d;
     text-align: right;
 }
@@ -224,6 +229,7 @@
 
 .setup-checklist li > span {
     font: 6px var(--pixel);
+    text-transform: none;
     color: #6b859d;
 }
 
@@ -231,11 +237,13 @@
     grid-column: 1/-1;
     grid-row: 2;
     font: 4px/1.8 var(--pixel);
+    text-transform: none;
     overflow-wrap: anywhere;
 }
 
 .setup-checklist li > i {
     font: 10px monospace;
+    text-transform: lowercase;
     font-style: normal;
 }
 
@@ -304,11 +312,13 @@
     align-items: center;
     gap: 8px;
     font: 6px/1.7 var(--pixel);
+    text-transform: none;
     color: #ffdf82;
 }
 
 .telemetry-heading > small {
     font: 4px/1.8 var(--pixel);
+    text-transform: none;
     color: #7ba4bc;
 }
 
@@ -333,12 +343,14 @@
 .telemetry-numbers small {
     display: block;
     font: 4px/1.8 var(--pixel);
+    text-transform: none;
     color: #82a8bb;
 }
 
 .telemetry-numbers b {
     display: block;
     font: 20px/1.8 var(--pixel);
+    text-transform: none;
     color: #e6f3e3;
     font-variant-numeric: tabular-nums;
 }
@@ -352,6 +364,7 @@
     justify-content: space-between;
     gap: 5px;
     font: 5px/1.8 var(--pixel);
+    text-transform: none;
     color: #cbe6e6;
 }
 
@@ -384,6 +397,7 @@
 
 .telemetry-charge > small {
     font: 4px/1.8 var(--pixel);
+    text-transform: none;
     color: #688fa7;
     display: block;
     margin-top: 8px;
@@ -400,6 +414,7 @@
 
 .ringside-feed > span:first-child {
     font: 5px/1.8 var(--pixel);
+    text-transform: none;
     color: #ffdb74;
     letter-spacing: 0.7px;
 }
@@ -412,6 +427,7 @@
 
 .feed-event {
     font: 4px/1.8 var(--pixel);
+    text-transform: none;
     color: #aac7d3;
     display: flex;
     align-items: center;
@@ -477,6 +493,7 @@
 
 .detail-heading h2 {
     font: 14px/1.8 var(--pixel);
+    text-transform: none;
     margin-top: 10px;
     color: #f6e8b9;
 }
@@ -489,6 +506,7 @@
 
 .panel-stamp {
     font: 5px/1.8 var(--pixel);
+    text-transform: none;
     color: #88a9bb;
     padding: 9px 12px;
     border: 1px solid #345b72;
@@ -560,6 +578,7 @@
     top: 6px;
     left: 6px;
     font: 20px var(--pixel);
+    text-transform: none;
     color: #53869b44;
     z-index: 1;
 }
@@ -569,6 +588,7 @@
     bottom: 7px;
     left: 7px;
     font: 5px/1.8 var(--pixel);
+    text-transform: none;
     color: #f4d887;
     background: #061626d9;
     padding: 5px;
@@ -581,11 +601,13 @@
 
 .roster-copy > small {
     font: 4px/1.8 var(--pixel);
+    text-transform: none;
     color: #86b6c8;
 }
 
 .roster-copy h3 {
     font: 12px/1.8 var(--pixel);
+    text-transform: none;
     margin: 8px 0;
     color: #fce5a4;
 }
@@ -613,11 +635,13 @@
 
 .roster-copy dt {
     font: 4px/1.8 var(--pixel);
+    text-transform: none;
     color: #7797ad;
 }
 
 .roster-copy dd {
     font: 4px/1.8 var(--pixel);
+    text-transform: none;
     color: #b2d7da;
     margin: 0;
 }
@@ -640,6 +664,7 @@
     background: #0c263b;
     border-top: 1px solid #355971;
     font: 5px/1.7 var(--pixel);
+    text-transform: none;
     color: #82afc5;
 }
 
@@ -674,6 +699,7 @@
 .library-filters button {
     flex: 1;
     font: 5px/1.8 var(--pixel);
+    text-transform: none;
     padding: 9px 3px;
     color: #98bacd;
 }
@@ -719,6 +745,7 @@
 
 .move-buttons > button > span {
     font: 6px/1.8 var(--pixel);
+    text-transform: none;
     color: #cee6e6;
 }
 
@@ -727,6 +754,7 @@
     font:
         10px/1.6 "Space Grotesk",
         sans-serif;
+    text-transform: lowercase;
     color: #6e99b2;
     margin-top: 3px;
 }
@@ -805,6 +833,7 @@
     top: 13px;
     left: 13px;
     font: 6px/1.8 var(--pixel);
+    text-transform: none;
     color: #8cb9c7;
 }
 
@@ -813,6 +842,7 @@
     bottom: 13px;
     left: 13px;
     font: 5px/1.8 var(--pixel);
+    text-transform: none;
     color: #e5c47e;
     border: 1px solid #a2874d88;
     padding: 6px 9px;
@@ -833,6 +863,7 @@
 
 .move-title h3 {
     font: 15px/1.8 var(--pixel);
+    text-transform: none;
     color: #ffe098;
     margin: 0;
 }
@@ -866,11 +897,13 @@
 
 .move-specs dt {
     font: 4px/1.8 var(--pixel);
+    text-transform: none;
     color: #82b2c6;
 }
 
 .move-specs dd {
     font: 11px/1.8 var(--pixel);
+    text-transform: none;
     color: #f5dea5;
     margin: 10px 0 0;
     white-space: nowrap;
@@ -914,6 +947,7 @@
 
 .history-empty h3 {
     font: 8px/1.8 var(--pixel);
+    text-transform: none;
     color: #b7dbdf;
     margin: 0 0 9px;
 }
@@ -928,6 +962,7 @@
 .history-empty > a {
     margin-left: auto;
     font: 6px/1.8 var(--pixel);
+    text-transform: none;
     color: #e7c875;
     text-align: right;
 }
@@ -948,6 +983,7 @@
 
 .round-result {
     font: 7px/1.8 var(--pixel);
+    text-transform: none;
     min-width: 65px;
     padding: 8px 10px;
     text-align: center;
@@ -975,6 +1011,7 @@
 .history-rows article b {
     display: block;
     font: 7px/1.8 var(--pixel);
+    text-transform: none;
     color: #dce6d6;
 }
 
@@ -987,11 +1024,13 @@
 
 .history-rows article > span:not(.round-result) {
     font: 6px/1.8 var(--pixel);
+    text-transform: none;
     color: #a6c4d2;
 }
 
 .history-rows article > small {
     font: 6px var(--pixel);
+    text-transform: none;
     color: #526e87;
 }
 

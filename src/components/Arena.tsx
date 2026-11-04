@@ -20,6 +20,7 @@ import {
 } from "../../shared/combat";
 import { Bot } from "../../shared/ai";
 import { ArenaPresentation } from "../game/presentation";
+import { RenderBudget } from "../game/render-budget";
 import { renderArena } from "../game/renderer";
 import { artworkStatus, retryArtwork } from "../game/artwork-loading";
 import { prepareGymArtwork } from "../game/gym-photography";
@@ -99,6 +100,28 @@ export function Arena ({
             animationTime = 0;
 
         const presentation = new ArenaPresentation();
+        const budget = new RenderBudget();
+        const surface = canvas.current;
+        const context = surface?.getContext("2d");
+        let targetWidth = 2000;
+        let lastPaint = performance.now();
+        let lastHudTick = -1;
+        let lastHudEvent = -1;
+        let lastHudPhase = "";
+        let lastHudInput = "";
+        const resize = () => {
+            if (!surface) return;
+            targetWidth = Math.min(
+                2000,
+                Math.max(
+                    640,
+                    Math.round(surface.clientWidth * Math.min(window.devicePixelRatio || 1, 2))
+                )
+            );
+        };
+        const observer = new ResizeObserver(resize);
+        if (surface) observer.observe(surface);
+        resize();
 
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -160,13 +183,21 @@ export function Arena ({
             if ((!opts.playing || !opts.paused) && !reducedMotion.matches)
                 animationTime += elapsed / 1000;
 
-            const visibleMatch = presentation.frame(m, opts.paused ? 0 : elapsed);
-
-            const c = canvas.current?.getContext("2d");
-
-            if (c)
+            if (!document.hidden && budget.shouldPaint(now) && context && surface) {
+                const paintStart = performance.now();
+                const width = Math.max(
+                    Math.min(targetWidth, 1000),
+                    Math.round(targetWidth * budget.scale)
+                );
+                if (surface.width !== width) {
+                    surface.width = width;
+                    surface.height = Math.round(width * 0.58);
+                }
+                const paintElapsed = now - lastPaint;
+                const visibleMatch = presentation.frame(m, opts.paused ? 0 : paintElapsed);
+                lastPaint = now;
                 renderArena(
-                    c,
+                    context,
                     visibleMatch,
                     animationTime,
                     !opts.playing,
@@ -174,10 +205,24 @@ export function Arena ({
                     frameFraction,
                     reducedMotion.matches
                 );
+                budget.record(performance.now() - paintStart, now, paintElapsed);
+            }
 
-            if (now - lastUI > 60) {
+            if (now - lastUI > 100 || m.eventId !== lastHudEvent || m.phase !== lastHudPhase) {
                 setArtwork(artworkStatus());
-                setHud(structuredClone(m));
+                const hudInput = `${m.fighters[0].inputMode}:${m.fighters[1].inputMode}`;
+                if (
+                    m.tick !== lastHudTick ||
+                    m.eventId !== lastHudEvent ||
+                    m.phase !== lastHudPhase ||
+                    hudInput !== lastHudInput
+                ) {
+                    setHud(structuredClone(m));
+                    lastHudTick = m.tick;
+                    lastHudEvent = m.eventId;
+                    lastHudPhase = m.phase;
+                    lastHudInput = hudInput;
+                }
 
                 lastUI = now;
             }
@@ -193,6 +238,7 @@ export function Arena ({
 
         return () => {
             cancelAnimationFrame(raf);
+            observer.disconnect();
         };
     }, [matchRef, botRef]);
 

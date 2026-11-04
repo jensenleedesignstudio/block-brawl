@@ -7,6 +7,7 @@
 // ------------------------------------------------------------
 
 import { useEffect, useRef, useState } from "react";
+import { isFreshPose } from "../game/input";
 import { Camera, RefreshCw, ScanLine } from "lucide-react";
 import {
     GestureDetector,
@@ -195,6 +196,38 @@ export function MotionCamera ({
             lastMovementSentAt = -Infinity;
 
         let stableBodyWidth = 0.2;
+        let lastUI = -Infinity;
+        let lastVideoTime = -1;
+        let focused = document.hasFocus();
+        let validAfter = 0;
+
+        const releaseTracking = () => {
+            detector.current.update([], performance.now());
+            gloves.reset();
+            recovery.reset();
+            block = false;
+            movement = 0;
+            lastSentMovement = 0;
+            lastMovementSentAt = -Infinity;
+            callbacks.current.onAction("block", false);
+            callbacks.current.onMove(0);
+            callbacks.current.onReady(false);
+        };
+        const blur = () => {
+            focused = false;
+            validAfter = performance.now();
+            releaseTracking();
+        };
+        const focus = () => {
+            focused = true;
+        };
+        const visibility = () => {
+            if (document.hidden) blur();
+            else focused = document.hasFocus();
+        };
+        window.addEventListener("blur", blur);
+        window.addEventListener("focus", focus);
+        document.addEventListener("visibilitychange", visibility);
 
         setError("");
 
@@ -316,6 +349,18 @@ export function MotionCamera ({
 
                     busy = false;
 
+                    // Discard results captured before a stall or focus change, rather
+                    // than turning an old camera pose into a late punch.
+                    if (
+                        !focused ||
+                        document.hidden ||
+                        !isFreshPose(event.data.timestamp, performance.now(), validAfter)
+                    ) {
+                        releaseTracking();
+                        setStatus("Tracking interrupted");
+                        return;
+                    }
+
                     lastPose = performance.now();
 
                     setStatus("Camera live");
@@ -326,31 +371,36 @@ export function MotionCamera ({
 
                     const d = detector.current.update(points, event.data.timestamp, world);
 
-                    setDetection(d);
+                    const updateUI = lastPose - lastUI >= 100;
+                    if (updateUI) {
+                        lastUI = lastPose;
+                        setDetection(d);
+                    }
 
                     callbacks.current.onReady(d.calibrated && d.confidence >= 0.5);
 
-                    setHands(
-                        [0, 1]
-                            .map((side) => {
-                                const s = 11 + side,
-                                    e = 13 + side,
-                                    w = 15 + side;
+                    if (updateUI)
+                        setHands(
+                            [0, 1]
+                                .map((side) => {
+                                    const s = 11 + side,
+                                        e = 13 + side,
+                                        w = 15 + side;
 
-                                const visible = [s, e, w].every(
-                                    (i) => (points[i]?.visibility ?? 0) >= 0.35
-                                );
+                                    const visible = [s, e, w].every(
+                                        (i) => (points[i]?.visibility ?? 0) >= 0.35
+                                    );
 
-                                const geometry = [s, e, w].every(
-                                    (i) => world[i] && (world[i].visibility ?? 1) >= 0.35
-                                )
-                                    ? world
-                                    : points;
+                                    const geometry = [s, e, w].every(
+                                        (i) => world[i] && (world[i].visibility ?? 1) >= 0.35
+                                    )
+                                        ? world
+                                        : points;
 
-                                return `${side === 0 ? "Left" : "Right"} hand: ${visible ? `${Math.round(elbowAngle(geometry[s], geometry[e], geometry[w]))}° elbow` : "out of view"}`;
-                            })
-                            .join(" · ")
-                    );
+                                    return `${side === 0 ? "Left" : "Right"} hand: ${visible ? `${Math.round(elbowAngle(geometry[s], geometry[e], geometry[w]))}° elbow` : "out of view"}`;
+                                })
+                                .join(" · ")
+                        );
 
                     if (callbacks.current.onTouchGloves && d.calibrated && d.confidence >= 0.5) {
                         if (gloves.update(points, event.data.timestamp)) {
@@ -455,7 +505,7 @@ export function MotionCamera ({
 
                     const c = canvas.current?.getContext("2d");
 
-                    if (c) {
+                    if (c && canvas.current?.getClientRects().length) {
                         c.clearRect(0, 0, 640, 480);
 
                         if (showSkeleton.current && points.length) drawPose(c, points);
@@ -514,9 +564,20 @@ export function MotionCamera ({
                         setStatus("Tracking interrupted");
                     }
 
-                    if (!ready || busy || !video.current || video.current.readyState < 2) return;
+                    if (
+                        !focused ||
+                        document.hidden ||
+                        !ready ||
+                        busy ||
+                        !video.current ||
+                        video.current.readyState < 2 ||
+                        video.current.currentTime === lastVideoTime
+                    )
+                        return;
 
                     busy = true;
+                    lastVideoTime = video.current.currentTime;
+                    const capturedAt = performance.now();
 
                     try {
                         const bitmap = await createImageBitmap(video.current);
@@ -531,7 +592,7 @@ export function MotionCamera ({
                             {
                                 type: "frame",
                                 bitmap,
-                                timestamp: performance.now(),
+                                timestamp: capturedAt,
                                 recovery: callbacks.current.isRecovering()
                             },
                             [bitmap]
@@ -576,6 +637,10 @@ export function MotionCamera ({
             clearTimeout(watchdog);
 
             worker?.terminate();
+
+            window.removeEventListener("blur", blur);
+            window.removeEventListener("focus", focus);
+            document.removeEventListener("visibilitychange", visibility);
 
             stream?.getTracks().forEach((t) => t.stop());
             callbacks.current.onStream?.(null);

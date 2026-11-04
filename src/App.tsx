@@ -18,6 +18,7 @@ import { RoundHistory, type RoundRecord } from "./components/RoundHistory";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Socket } from "socket.io-client";
 import { loadSocketClient } from "./network";
+import { emitGameInput, isGameKey } from "./game/input";
 import { modelServiceUrl } from "./model-service";
 import { CONNECTING_MODEL, monitorModelHealth, type ModelHealth } from "./model-health";
 import { isPartyCode, normalizePartyCode, partyCodeFromUrl, partyInviteUrl } from "./party";
@@ -279,6 +280,9 @@ export default function App () {
         paused,
         dialogOpen: help || settings || fightMenu || playbookOpen || finished
     });
+    const inputFocused = useRef(document.hasFocus());
+    const onlinePaused = useRef(false);
+    onlinePaused.current = !!room?.paused;
 
     state.current = {
         playing,
@@ -294,9 +298,17 @@ export default function App () {
         if (!s.playing) return;
 
         // Releases must still reach the match after an overlay opens or focus is lost.
-        if ((s.paused || s.dialogOpen) && !(action === "block" && !held)) return;
+        if (
+            (s.paused ||
+                s.dialogOpen ||
+                (s.mode === "online" && onlinePaused.current) ||
+                !inputFocused.current ||
+                document.hidden) &&
+            !(action === "block" && !held)
+        )
+            return;
 
-        if (s.mode === "online") socket.current?.emit("action", { action, held });
+        if (s.mode === "online") emitGameInput(socket.current, "action", { action, held });
         else act(matchRef.current, 0, action, held);
     }, []);
 
@@ -305,18 +317,26 @@ export default function App () {
 
         if (!s.playing) return;
 
-        if ((s.paused || s.dialogOpen) && direction !== 0) return;
+        if (
+            (s.paused ||
+                s.dialogOpen ||
+                (s.mode === "online" && onlinePaused.current) ||
+                !inputFocused.current ||
+                document.hidden) &&
+            direction !== 0
+        )
+            return;
 
-        if (s.mode === "online") socket.current?.emit("movement", direction);
+        if (s.mode === "online") emitGameInput(socket.current, "movement", direction);
         else move(matchRef.current, 0, direction);
     }, []);
 
     useEffect(() => {
-        if (playbookOpen) {
+        if (help || settings || fightMenu || playbookOpen || finished) {
             send("block", false);
             sendMove(0);
         }
-    }, [playbookOpen, send, sendMove]);
+    }, [help, settings, fightMenu, playbookOpen, finished, send, sendMove]);
 
     // ------------------------------------------------------------
     // KEYBOARD CONTROLS AND WINDOW FOCUS
@@ -324,11 +344,7 @@ export default function App () {
 
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
-            if (
-                state.current.dialogOpen ||
-                (e.target as HTMLElement).matches("input,textarea,select")
-            )
-                return;
+            if (state.current.dialogOpen || !isGameKey(e)) return;
 
             if (e.key === "Escape" && state.current.playing) {
                 send("block", false);
@@ -360,11 +376,19 @@ export default function App () {
         };
 
         const blur = () => {
+            inputFocused.current = false;
             send("block", false);
 
             sendMove(0);
 
             if (state.current.playing && state.current.mode === "ai") setPaused(true);
+        };
+        const focus = () => {
+            inputFocused.current = true;
+        };
+        const visibility = () => {
+            if (document.hidden) blur();
+            else inputFocused.current = document.hasFocus();
         };
 
         window.addEventListener("keydown", down);
@@ -372,6 +396,8 @@ export default function App () {
         window.addEventListener("keyup", up);
 
         window.addEventListener("blur", blur);
+        window.addEventListener("focus", focus);
+        document.addEventListener("visibilitychange", visibility);
 
         return () => {
             window.removeEventListener("keydown", down);
@@ -379,6 +405,8 @@ export default function App () {
             window.removeEventListener("keyup", up);
 
             window.removeEventListener("blur", blur);
+            window.removeEventListener("focus", focus);
+            document.removeEventListener("visibilitychange", visibility);
         };
     }, [send, sendMove]);
 
@@ -486,9 +514,11 @@ export default function App () {
     }, [mode, connectionAttempt]);
 
     useEffect(() => {
+        send("block", false);
+        sendMove(0);
         if (mode === "online") socket.current?.emit("inputMode", input);
         else setInputMode(matchRef.current, 0, input);
-    }, [input, mode]);
+    }, [input, mode, send, sendMove]);
 
     // ------------------------------------------------------------
     // START A ROUND OR SIGNAL ONLINE READINESS
@@ -1253,8 +1283,8 @@ export default function App () {
                                                     six-character code.
                                                 </p>
                                                 <p className="party-hint">
-                                                    Cameras share automatically when both players join.
-                                                    No microphone audio is shared.
+                                                    Cameras share automatically when both players
+                                                    join. No microphone audio is shared.
                                                 </p>
                                                 <input
                                                     aria-label="Fighter name"

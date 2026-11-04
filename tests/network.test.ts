@@ -25,7 +25,7 @@ function next<T> (
         const timeout = setTimeout(() => {
             socket.off(event, listener);
 
-            reject(new Error(`Timed out waiting for ${event}`));
+            reject(new Error(`Timed out waiting for ${event}: ${predicate.toString()}`));
         }, 8000);
 
         const listener = (value: T) => {
@@ -56,6 +56,56 @@ interface Room {
     paused: boolean;
     match: Match | null;
 }
+
+test("guard and movement releases survive a saturated input budget", async () => {
+    const arena = createArenaServer();
+    const clients: Socket[] = [];
+    await new Promise<void>((resolve) => arena.http.listen(0, "127.0.0.1", resolve));
+    try {
+        const address = arena.http.address();
+        assert.ok(address && typeof address !== "string");
+        for (let i = 0; i < 2; i++) {
+            const client = io(`http://127.0.0.1:${address.port}`, { transports: ["websocket"] });
+            clients.push(client);
+            await next(client, "connect");
+        }
+        const [host, guest] = clients;
+        const created = next<Joined>(host, "joined");
+        host.emit("createRoom");
+        const { code } = await created;
+        const joined = next(guest, "joined");
+        guest.emit("joinRoom", { code });
+        await joined;
+        const started = next<Room>(host, "room", (room) => !!room.match);
+        host.emit("ready");
+        guest.emit("ready");
+        await started;
+        const match = arena.rooms.get(code)!.match!;
+        match.phase = "fight";
+        const held = next<Match>(
+            host,
+            "state",
+            (state) => state.fighters[0].blockHeld && state.fighters[0].movement === -1
+        );
+        host.emit("action", { action: "block", held: true });
+        host.emit("movement", -1);
+        await held;
+        const released = next<Match>(
+            host,
+            "state",
+            (state) => !state.fighters[0].blockHeld && state.fighters[0].movement === 0
+        );
+        for (let i = 0; i < 60; i++) host.emit("movement", -1);
+        host.emit("action", { action: "block", held: false });
+        host.emit("movement", 0);
+        await released;
+        assert.equal(match.fighters[0].blockHeld, false);
+        assert.equal(match.fighters[0].movement, 0);
+    } finally {
+        clients.forEach((client) => client.disconnect());
+        await arena.close();
+    }
+});
 
 test("camera signaling reaches only the other seated party member", async () => {
     const arena = createArenaServer();
@@ -250,10 +300,21 @@ test("authoritative two-player lobby, combat, disconnect pause, resume, rematch 
         await live;
 
         const damage = next<Match>(b, "state", (m) => m.fighters[1].hp < MAX_HP);
+        const accepted = next<Match>(
+            a,
+            "state",
+            (m) => m.fighters[0].action === "jab" && m.fighters[0].age === 0
+        );
 
         a.emit("action", { action: "jab", damage: 100000, stamina: 100000 });
 
         for (let i = 0; i < 10; i++) a.emit("action", { action: "hook", damage: 100000 });
+
+        assert.equal(
+            (await accepted).fighters[1].hp,
+            MAX_HP,
+            "accepted action is shown before its existing hit timing deals damage"
+        );
 
         const hit = await damage;
 

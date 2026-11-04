@@ -162,6 +162,17 @@ export function createArenaServer () {
                 return;
             }
 
+            // Never discard a neutral input: losing key-up leaves guard or movement held.
+            if (
+                (packet[0] === "movement" && packet[1] === 0) ||
+                (packet[0] === "action" &&
+                    packet[1]?.action === "block" &&
+                    packet[1]?.held === false)
+            ) {
+                next();
+                return;
+            }
+
             if (++events > 45) return;
 
             next();
@@ -322,8 +333,16 @@ export function createArenaServer () {
 
             const index = r.players.findIndex((p) => p.socketId === socket.id);
 
-            if (index >= 0 && ACTIONS.includes(data?.action as Action))
-                act(r.match, index, data.action!, data.held !== false);
+            if (index >= 0 && ACTIONS.includes(data?.action as Action)) {
+                const accepted = act(r.match, index, data.action!, data.held !== false);
+                // Show accepted actions immediately instead of waiting up to 50 ms
+                // for the next periodic snapshot. Damage still runs on combat ticks.
+                if (accepted && data.held !== false && r.match.phase === "fight") {
+                    // The input reply is reliable; periodic replacement frames are not.
+                    socket.emit("state", r.match);
+                    socket.to(r.code).volatile.emit("state", r.match);
+                }
+            }
         });
 
         socket.on("movement", (direction: Movement) => {
@@ -422,7 +441,9 @@ export function createArenaServer () {
 
                 if (r.players.every((p) => p.socketId)) step(r.match);
 
-                if (frame % 3 === 0) io.to(code).emit("state", r.match);
+                // Snapshots replace each other. A slow client needs the newest state,
+                // not a growing queue of obsolete frames after its connection recovers.
+                if (frame % 3 === 0) io.to(code).volatile.emit("state", r.match);
             }
         }
     }, 1000 / 60);

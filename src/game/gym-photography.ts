@@ -25,6 +25,7 @@ export function prepareGymArtwork (): void {
 }
 type Vertex = WorldPoint & { u: number; v: number };
 type CameraVertex = { side: number; depth: number; z: number; u: number; v: number };
+type ScreenVertex = { x: number; y: number; u: number; v: number };
 const RADIUS = 900,
     HEIGHT = 570,
     NEAR = 30;
@@ -107,13 +108,7 @@ function clipNear (input: CameraVertex[]): CameraVertex[] {
 }
 
 /** Project a textured triangle using an affine UV-to-screen transform. */
-function triangle (c: CanvasRenderingContext2D, image: HTMLImageElement, vertices: CameraVertex[]) {
-    const p = vertices.map((v) => ({
-        x: 500 + (v.side * 520) / v.depth,
-        y: 210 + ((140 - v.z) * 520) / v.depth,
-        u: v.u * image.naturalWidth,
-        v: v.v * image.naturalHeight
-    }));
+function triangle (c: CanvasRenderingContext2D, image: HTMLImageElement, p: ScreenVertex[]) {
     if (
         p.every((v) => v.x < -85) ||
         p.every((v) => v.x > 1085) ||
@@ -165,11 +160,26 @@ export function drawGymPhotograph (c: CanvasRenderingContext2D, camera: ArenaCam
     c.fillRect(-80, -80, 1160, 740);
     for (const surface of gymSurfaces) {
         const material = surface.every((v) => v.z === 0) ? timber : photograph;
-        const clipped = clipNear(
-            surface.map((v) => ({ ...cameraPoint(camera, v), u: v.u, v: v.v }))
-        );
-        for (let i = 1; i < clipped.length - 1; i++)
-            triangle(c, material, [clipped[0], clipped[i], clipped[i + 1]]);
+        const vertices = surface.map((v) => ({ ...cameraPoint(camera, v), u: v.u, v: v.v }));
+        if (vertices.every((v) => v.depth < NEAR)) continue;
+        const clipped = vertices.every((v) => v.depth >= NEAR) ? vertices : clipNear(vertices);
+        // Project each shared corner once, then reject whole off-screen faces before
+        // allocating triangles. The visible mesh and texture coordinates stay identical.
+        const projected = clipped.map((v) => ({
+            x: 500 + (v.side * 520) / v.depth,
+            y: 210 + ((140 - v.z) * 520) / v.depth,
+            u: v.u * material.naturalWidth,
+            v: v.v * material.naturalHeight
+        }));
+        if (
+            projected.every((v) => v.x < -85) ||
+            projected.every((v) => v.x > 1085) ||
+            projected.every((v) => v.y < -85) ||
+            projected.every((v) => v.y > 665)
+        )
+            continue;
+        for (let i = 1; i < projected.length - 1; i++)
+            triangle(c, material, [projected[0], projected[i], projected[i + 1]]);
     }
     // A structural upright hides the join between the non-seamless photo edges.
     const upright = [

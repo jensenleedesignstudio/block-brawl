@@ -1,0 +1,45 @@
+/* A quiet entrance; the arena loads underneath without exposing unfinished artwork. */
+.startup {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #14251f;
+    color: #ffdf55;
+    padding: 24px;
+    opacity: 1;
+    transition: opacity 400ms ease;
+}
+.startup-title {
+    width: min(1050px, 94vw);
+    margin: 0;
+    text-shadow: none;
+    line-height: 1;
+}
+.startup-title svg { display: block; width: 100%; overflow: visible; }
+.startup-title text { font: 76px var(--pixel); fill: #ffdf55; letter-spacing: -2px; }
+.startup-enter {
+    margin-top: clamp(28px, 5vh, 60px);
+    padding: 18px 24px;
+    font: 12px/1.5 var(--pixel);
+    color: #ffdf55;
+    border: 1px solid #ffdf5566;
+    border-radius: 0;
+    min-height: 48px;
+}
+.startup-enter span { margin-left: 16px; }
+.startup-enter:hover:not(:disabled), .startup-status button:hover:not(:disabled) { background: #ffdf5512; color: #fff0a0; }
+.startup-enter:focus-visible, .startup-status button:focus-visible { outline: 2px solid #ffdf55; outline-offset: 6px; }
+.startup-pixel { opacity: 0; }
+.startup-entered .startup-pixel { animation: startup-dissolve 450ms steps(3, end) forwards; }
+.startup-status { position: absolute; top: calc(50% + 120px); text-align: center; color: #c7d1bc; font: 14px/1.8 var(--ui-font, sans-serif); }
+.startup-status button { color: #ffdf55; font: 10px/1.6 var(--pixel); padding: 16px 24px; margin-top: 12px; }
+.startup-leaving { opacity: 0; pointer-events: none; }
+@keyframes startup-dissolve { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+    .startup { transition: none; }
+    .startup-entered .startup-pixel { animation: none; opacity: 1; }
+}

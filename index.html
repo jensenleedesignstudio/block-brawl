@@ -8,12 +8,20 @@
             name="description"
             content="Block Brawl. A boxing arcade with pixel-art fighters, keyboard and motion controls, trained opponents, and online friend matches."
         />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Block Brawl · Motion Fighting Arcade" />
+        <meta property="og:description" content="Step into the ring. Box with webcam motion controls, challenge a trained opponent, or play a friend online." />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Block Brawl · Motion Fighting Arcade" />
+        <meta name="twitter:description" content="A browser boxing arcade with webcam controls, trained opponents, and online friend matches." />
         <title>Block Brawl · Motion Fighting Arcade</title>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     </head>
     <body>
+        <div id="boot-screen" style="position:fixed;inset:0;z-index:10000;background:#14251f;display:grid;place-items:center;color:#ffdf55;font:bold clamp(28px,7vw,76px) monospace;letter-spacing:-2px" aria-label="Loading Block Brawl">BLOCK BRAWL</div>
+        <noscript><p style="position:fixed;bottom:20%;left:0;right:0;z-index:10001;text-align:center;color:#ffdf55">Enable JavaScript to enter Block Brawl.</p></noscript>
         <div id="root"></div>
         <script type="module" src="/src/main.tsx"></script>
     </body>

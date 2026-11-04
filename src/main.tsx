@@ -8,7 +8,7 @@
 
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import { Startup } from "./components/Startup";
 import "./style.css";
 import "./street-theme.css";
 import "./arcade-cabinet.css";
@@ -22,8 +22,9 @@ import "./gym-theme.css";
 import "./realistic-gym.css";
 import "./championship-polish.css";
 import "./game-shell.css";
+import "./startup.css";
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <App />
+        <Startup />
     </React.StrictMode>
 );

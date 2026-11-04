@@ -1,3 +1,19 @@
+# Portfolio review — 4 November 2026
+
+Current assessment: technically verified local candidate; complete product and visual sign-off remains pending. The historical audit below records earlier checks and must not be read as current deployment evidence.
+
+- `npm run verify` passed lint, unused-code checks, production compilation, and 154 tests (106 core plus 48 TypeScript tests).
+- The public frontend at https://block-brawl-ecru.vercel.app returned HTTP 200. Its `/api/opponent/health` returned `ok: true`, policy version 1, and 100352 training steps. These probes do not establish successful live gameplay or cold-start performance.
+- Updated the README with a play link, first-visit instructions, current architecture and presentation, and an explicit camera recovery limitation. Removed obsolete street/market scenery descriptions.
+- Added Open Graph and Twitter title/description metadata. A dedicated share image and actual platform preview still need review.
+- Browser automation failed to initialize; native Chrome capture also failed. No new visual, responsive, keyboard interaction, camera, physical-device, or two-person live review is claimed.
+- The fourth knockdown requires 200 recovery inputs in ten seconds, but the camera detector emits at most one every 80 ms. This remains a gameplay limitation; changing the previously specified recovery rules was outside this presentation review.
+- Documentation and metadata changes remain local until the owner commits and deploys them.
+
+For the employer-facing post, show a short actual gameplay recording with a motion punch, a block, and the game response. Link the playable app and repository and explain the local pose detection, trained opponent, and authoritative multiplayer architecture. Avoid claims of flawless behavior or universal device support until the outstanding checks are complete.
+
+---
+
 # Release audit — 29 October 2026
 
 Maintenance update, 30 October 2026: the code-style cleanup described below supersedes the original test count and file inventory. The release blockers remain unchanged.

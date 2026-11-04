@@ -1,10 +1,12 @@
 # Block Brawl
 
-For the trainable CPU opponent, see [the step-by-step training guide](training/README.md). Run `npm run ml:check` to verify setup, then `npm run ml:train` to train your own model.
+A browser boxing game with webcam motion controls, trained CPU opponents, and online friend matches. Pixel-art fighters meet a photographic gym, green-and-brass controls, and synthesized arcade music.
 
-See [the release QA report](docs/release-readiness.md) for verified checks, supported setup, and remaining launch blockers. Nothing is published by the build or test commands.
+[Play Block Brawl](https://block-brawl-ecru.vercel.app) · [Verification and known limits](docs/release-readiness.md) · [Train an opponent](training/README.md)
 
-A playable 2D boxing arcade: React, TypeScript and Canvas, with local MediaPipe pose recognition and a server-authoritative Socket.IO multiplayer server. Pixel-art fighters, photographic gym materials, procedural effects and synthesized music share the Iron & Oak boxing-club presentation. Spoken narration is disabled.
+For a first visit, choose keyboard controls and VS CPU. Wait for the opponent service to connect, then enter the ring. Use J / K to punch and Space to block; the guide explains the remaining moves. Motion controls require a camera and room to move. Online matches require a second player.
+
+The client uses React, TypeScript, and Canvas. MediaPipe recognizes gestures locally in a worker; the Socket.IO server owns online combat state. The CPU opponent uses a trained policy served by a separate Python service.
 
 ## Run
 
@@ -134,23 +136,23 @@ Getting punched no longer cancels an ongoing punch animation. If the opponent hi
 
 ### Circling footwork
 
-Fighters automatically circle around a shared floor position while maintaining eye contact and combat distance. Slips influence the circling direction; stepping toward or away from the camera still controls range. A perspective camera follows the circular path and turns toward the opponent. Fixed floor tiles, a painted circular boundary, and storefronts on all four sides rotate through view as fighters complete a lap. The ring-position radar shows both positions. Footwork is simulated on the authoritative combat clock and freezes during hitstop and when the round ends.
+Fighters automatically circle around a shared floor position while maintaining eye contact and combat distance. Slips influence the circling direction; stepping toward or away from the camera still controls range. A perspective camera follows the circular path and turns toward the opponent. The gym scenery rotates through view as fighters circle. The ring-position radar shows both positions. Footwork is simulated on the authoritative combat clock and freezes during hitstop and when the round ends.
 
 ### Knockdowns and getting up
 
-Zero health starts a 10-second knockdown count instead of ending the match immediately. The round clock, circling, and attacks pause. Alternate fresh **J / K** presses: **20** on your first knockdown, **60** on your second, and **100** on your third, and **200** on your fourth and later knockdowns. Counts are separate for each fighter and reset on a new match. Use the same number of inputs for camera recovery: move either or both hands vertically. Each distinct large, fast upward or downward stroke counts once; a slower upward lift also counts after a 120 ms pause at the top. Palm orientation and alternating hands are not required. A counted stroke cannot count again until a meaningful direction reversal. Holding keys, stationary hands, small jitter, and tracking reacquisition do not count. Keyboard recovery remains available in camera mode if hand tracking cannot load.
+Zero health starts a 10-second knockdown count instead of ending the match immediately. The round clock, circling, and attacks pause. Alternate fresh **J / K** presses: **20** on your first knockdown, **60** on your second, and **100** on your third, and **200** on your fourth and later knockdowns. Counts are separate for each fighter and reset on a new match. Use the same number of inputs for camera recovery: move either or both hands vertically. Each distinct large, fast upward or downward stroke counts once; a slower upward lift also counts after a 120 ms pause at the top. Palm orientation and alternating hands are not required. A counted stroke cannot count again until a meaningful direction reversal. Holding keys, stationary hands, small jitter, and tracking reacquisition do not count. Keyboard recovery remains available in camera mode. **Known limitation:** the camera detector emits at most one recovery input every 80 ms, so the fourth-knockdown target of 200 cannot be reached using camera input alone in ten seconds.
 
 A successful recovery restores **60 HP** and guard, with a one-second restart countdown. Failure to recover ends the match by knockout. Both human fighters and AI can be knocked down; online recovery progress and the countdown are server-authoritative and pause on disconnection. The additional MediaPipe hand model tracks hand Y coordinates locally and only runs hand inference during recovery.
 
-### Punch animation and street details
+### Punch animation
 
-Regular punches snap forward in three frames and retract within eight frames after contact. Jab, cross, and hook recovery now lasts 8, 12, and 18 frames respectively. Rising Breaker lowers and drives only the right fist straight upward while the left stays in guard, then plays its three small followup punches. The arena includes open ramen kitchens with bowl logos, chefs, counters, stools, lanterns and menu boards, alongside arcades, metro entrances, gyms, vending machines and plants.
+Regular punches snap forward in three frames and retract within eight frames after contact. Jab, cross, and hook recovery now lasts 8, 12, and 18 frames respectively. Rising Breaker lowers and drives only the right fist straight upward while the left stays in guard, then plays its three small followup punches.
 
 ### Illustrated recovery view
 
 Knockdowns show the downed boxer on one knee. Your own knockdown temporarily switches to a third-person view; the recovery panel sits beside the fighter. Raise and lower either hand to recover: clear vertical travel counts in either direction, including slower movements. Confident pose wrists work without the detailed hand model; switching trackers resets the stroke baseline to avoid false counts. Stationary hands and small jitter still do not count. Recovery targets are 20 / 60 / 100 / 200 from the first through fourth knockdowns, capped at 200 thereafter. The ten-second limit remains unchanged.
 
-The interface includes a pixel-drawn night-market marquee and cabinet trim. Arena art renders at 1000 × 580, with sidewalk crates, drains, posters and club spectators.
+The arena remains visible behind the floating setup panel, move library, fighter selection, and round history. The interface uses a green-and-brass palette with pixel headings.
 
 ### Stamina
 

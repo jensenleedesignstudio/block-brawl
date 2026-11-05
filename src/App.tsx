@@ -757,6 +757,7 @@ export default function App () {
             )}
 
             <header className="site-header">
+                <span className="header-pixels" aria-hidden="true"><i /><i /><i /><i /></span>
                 <a className="brand" href="/" aria-label="Block Brawl home">
                     <div>
                         BLOCK <em>BRAWL</em>

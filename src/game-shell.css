@@ -1175,3 +1175,69 @@
         max-height: calc(100dvh - var(--party-camera-bottom) - 68px);
     }
 }
+
+/* Small color accents keep the green-and-brass cabinet calm during play. */
+.app.game-shell .header-pixels {
+    position: absolute;
+    top: 3px;
+    left: 18px;
+    display: flex;
+    gap: 5px;
+    pointer-events: none;
+}
+.app.game-shell .header-pixels > i {
+    width: 4px;
+    height: 4px;
+    background: #eaa18b;
+}
+.app.game-shell .header-pixels > i:nth-child(2) { background: #f3d782; }
+.app.game-shell .header-pixels > i:nth-child(3) { background: #8ddbc0; }
+.app.game-shell .header-pixels > i:nth-child(4) { background: #b69ad5; }
+.app.game-shell .primary:not(:disabled) {
+    background: linear-gradient(115deg, #f3d782, #d4ab5e);
+    border-color: #ffe5a0;
+    color: #18241e;
+}
+.app.game-shell .primary:hover:not(:disabled) {
+    background: linear-gradient(115deg, #ffe6a2, #e3bd72);
+}
+.app.game-shell .cabinet-nav > a.active,
+.app.game-shell .tool-navigation button[aria-pressed="true"] {
+    background: #25483d;
+    border-color: #79cbb0;
+    color: #b7f0d9;
+    box-shadow: inset 0 -2px #79cbb0, 0 2px 4px #0003;
+}
+.app.game-shell .control-select > button.selected {
+    background: linear-gradient(120deg, #305344, #223c32);
+    border-color: #79cbb0;
+    color: #c5f4df;
+}
+.app.game-shell .mode-select > button.selected {
+    border-color: #e9bf76;
+}
+.app.game-shell .mode-select .selection-check {
+    color: #14251f;
+    background: #8ddbc0;
+}
+.app.game-shell .challenger-rank {
+    border-left-color: #eaa18b;
+    color: #efb7a0;
+}
+.app.game-shell .fight-tip > .pixel-icon {
+    color: #eaa18b;
+}
+
+/* Lavender stays on small labels and the selected tool, alongside mint and gold. */
+.app.game-shell .cpu-chip,
+.app.game-shell .panel-stamp {
+    background: #342e43;
+    border-color: #9983b6;
+    color: #d9c7f1;
+}
+.app.game-shell .tool-navigation button[aria-pressed="true"] {
+    background: #342e43;
+    border-color: #ad95ca;
+    color: #e2d3f7;
+    box-shadow: inset 0 -2px #ad95ca, 0 2px 4px #0003;
+}
